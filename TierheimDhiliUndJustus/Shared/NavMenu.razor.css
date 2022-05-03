@@ -12,7 +12,7 @@ li {
     padding-right: 80px;
     padding-top: 20px;
     padding-bottom: 20px;
-    
+    margin-left: 50px;
 }
 
 ul {
@@ -32,4 +32,11 @@ li > a > h1 {
 
 li:first-child {
     padding-right: 200px;
+}
+
+li > a > img {
+    height: 45px;
+    position: absolute;
+    right: 100px;
+    top: 30px;
 }
