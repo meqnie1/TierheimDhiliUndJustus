@@ -9,10 +9,9 @@ a {
 li {
     list-style: none;
     display: inline-block;
-    padding-right: 1vw;
+    padding-left: 3vw;
     padding-top: 1vw;
     padding-bottom: 1vw;
-    margin-left: 1vw;
 }
 
 ul {
@@ -20,9 +19,8 @@ ul {
 }
 
 li > a > h2 {
-    padding-bottom: 0vw;
     margin-bottom: 0vw;
-    font-size: 1vw;
+    font-size: 0.8vw;
     text-transform: capitalize;
 }
 
@@ -31,12 +29,16 @@ li > a > h1 {
 }
 
 li:first-child {
-    padding-right: 1vw;
+    padding-right: 12vw;
 }
 
 li > a > img {
-    height: 1vw;
+    height: 2.1vw;
     position: absolute;
-    right: 1vw;
-    top: 1vw;
+    right: 5vw;
+    top: 1.4vw;
+}
+
+li:last-child{
+    padding-left: 26vw;
 }
