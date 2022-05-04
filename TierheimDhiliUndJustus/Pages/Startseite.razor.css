@@ -5,12 +5,18 @@
 
 }
 
+#neuetiere{
+    background-image: url("img/bg_orange.jpg");
+    width: 100%;
+    overflow: hidden;
+}
+
 #neuetiere_ueschrift {
     margin: auto;
     display: block;
 }
 
-.neuetiere_bilder {
+.neuetiere_bild {
     height: 18vw;
     width: 18vw;
     object-fit: cover;
@@ -31,4 +37,24 @@
     text-transform: uppercase;
     color: white;
     padding: 1vw;
+    display: inline-block;
+}
+
+.neuetiere_geschlecht{
+    height: 1.8vw;
+    display: inline-block;
+    margin-top: -0.5vw;
+}
+
+#neuetiere_bilder {
+    display: flex;
+    justify-content: center;
+}
+
+#neuetiere > a > h2 {
+    display: block;
+    color: #B54B0F;
+    font-size: 1.2vw;
+    text-decoration: underline #B54B0F;
+    text-align: center;
 }
