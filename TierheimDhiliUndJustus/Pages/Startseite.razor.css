@@ -4,3 +4,15 @@
     padding: 0vw;
 
 }
+
+#neuetiere_ueschrift {
+    margin: auto;
+    display: block;
+}
+
+.neuetiere_bilder{
+    height: 18vw;
+    width: 18vw;
+    object-fit: cover;
+    display: inline-block;
+}

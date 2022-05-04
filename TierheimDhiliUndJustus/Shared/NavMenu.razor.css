@@ -15,7 +15,7 @@ li {
 }
 
 ul {
-    background-color: #519A73;
+    background-color: #339974;
 }
 
 li > a > h2 {
@@ -40,5 +40,5 @@ li > a > img {
 }
 
 li:last-child{
-    padding-left: 26vw;
+    padding-left: 25vw;
 }
