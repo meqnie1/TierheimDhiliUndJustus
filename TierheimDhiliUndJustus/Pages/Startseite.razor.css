@@ -1,14 +1,17 @@
 ﻿#startseitebanner{
     width: 100%;
-    margin: 0vw;
-    padding: 0vw;
+    margin-top: -1.8vw;
 
 }
 
-#neuetiere{
-    background-image: url("img/bg_orange.jpg");
+#neuetiere {
     width: 100%;
     overflow: hidden;
+    margin-top: -4vw;
+    background-image: url("img/bg_orange.jpg");
+    background-size: 120vw;
+    background-position: 0vw 7vw;
+    background-repeat: no-repeat;
 }
 
 #neuetiere_ueschrift {
@@ -57,4 +60,26 @@
     font-size: 1.2vw;
     text-decoration: underline #B54B0F;
     text-align: center;
+}
+
+#vermisstbanner{
+    background-image: url("img/vermisst1banner.jpg");
+    background-repeat: round;
+    width: 100%;
+    height: 30vw;
+    margin-top: 1.5vw;
+    transition: 0.3s;
+}
+
+#vermisstbanner:hover{
+    background-image: url("img/vermisst2banner.jpg");
+}
+
+#spendenbanner {
+    background-image: url("img/hilfebanner.jpg");
+    width: 100%;
+    height: 30vw;
+    background-size: contain;
+    background-repeat: round;
+    margin-top: 1.5vw;
 }
