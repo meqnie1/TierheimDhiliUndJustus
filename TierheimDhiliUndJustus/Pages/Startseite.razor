@@ -1,4 +1,8 @@
 ﻿@page "/"
+@using TierheimDhiliUndJustus.BLL
+@using TierheimDhiliUndJustus.DAL
+
+
 
 <PageTitle>Startseite</PageTitle>
 
@@ -7,17 +11,22 @@
 <div id="neuetiere">
     <img id="neuetiere_ueschrift" src="/img/neuzuganege.png" alt="Unsere Neuzugänge"/>
     <div id="neuetiere_bilder">
-        <div class="neuetiere_rahmen"><img class="neuetiere_bild" src="/img/tier_rosie.jpg" alt="Rosie"/>
-            <h1>Rosie</h1>
-            <img class="neuetiere_geschlecht" src="img/weiblich.png" /></div>
+            
+    @foreach(var item in Kacke)
+    {
+        if(counter <=2)
+        {
         <div class="neuetiere_rahmen"><img class="neuetiere_bild" src="/img/tier_sophie.jpg" alt="Sophie"/>
-            <h1>Sophie</h1>
-            <img class="neuetiere_geschlecht" src="img/weiblich.png" /></div>
-        <div class="neuetiere_rahmen"><img class="neuetiere_bild" src="/img/tier_cisco.jpg" alt="Cisco"/>
-            <h1>Cisco</h1>
-            <img class="neuetiere_geschlecht" src="img/männlich.png" /></div>
+        <h1>@item.Tiername</h1>
+        <img class="neuetiere_geschlecht" src="img/weiblich.png" /></div>
+        counter++;
+        }
+    }
     </div>
+            
     <a href=""><h2>Weitere Tiere ansehen</h2></a>
 
 </div>
+
+
 
