@@ -15,6 +15,29 @@
 
 <div id="alletiere">
     <img id="unseretiere_ueschrift" src="/img/unseretiere.png" alt="Unsere Tiere"/>
+    <div id="unseretiere_bilder">
+            
+    @foreach(var item in lsttier)
+    {
+        string srcgeschlecht = st.GetGeschlecht(item.ID_Tier);
+        string srcbild = TierheimDhiliUndJustus.DAL.Tier_DA.GetImage(item.ID_Tier);
 
+        <div class="unseretiere_rahmen"><img class="unseretiere_bild" src=@srcbild />
+        <h1>@item.Tiername</h1>
+        <img class="unseretiere_geschlecht" src=@srcgeschlecht /></div>
+    }
+    </div>
 
 </div>
+
+<aside>
+    <h1>hallo</h1>
+</aside>
+
+
+@code{
+    public int counter = 0;
+    public string geschlechtsource = "";
+    public static List<Tier> lsttier = Tier_DA.GetTier();
+    public Startseite st = new Startseite();
+}

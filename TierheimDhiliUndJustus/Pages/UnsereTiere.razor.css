@@ -23,7 +23,67 @@
   
 }
 
+#alletiere {
+    width: 70%;
+    overflow: hidden;
+    padding-bottom: 2vw;
+    display: inline-block;
+}
+
 #unseretiere_ueschrift {
     margin-left: 4vw;
     display: block;
+}
+
+.unseretiere_bild {
+    height: 18vw;
+    width: 18vw;
+    object-fit: cover;
+    display: inline-block;
+    margin: 0.5vw;
+}
+
+.unseretiere_rahmen {
+    display: inline-block;
+    height: 23vw;
+    width: 19vw;
+    margin: 0vw;
+    padding: 0vw;
+    margin-top: -1.8vw;
+    background-color: rgba(81, 154, 114, 50%);
+    margin: 2vw;
+}
+
+.unseretiere_rahmen > h1 {
+    font-size: 1.2vw;
+    text-transform: uppercase;
+    color: white;
+    padding: 1vw;
+    display: inline-block;
+}
+
+.unseretiere_geschlecht {
+    height: 1.8vw;
+    display: inline-block;
+    margin-top: -0.5vw;
+}
+
+#unseretiere_bilder {
+    display: flex;
+    justify-content: center;
+}
+
+#unseretiere > a > h2 {
+    display: block;
+    color: #B54B0F;
+    font-size: 1.2vw;
+    text-decoration: underline #B54B0F;
+    text-align: center;
+}
+
+aside {
+    display: inline-block;
+    width: 20%;
+    height: 20vw;
+    background-color: rgba(81, 154, 114, 50%);
 }
