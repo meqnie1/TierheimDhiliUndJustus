@@ -6,7 +6,7 @@
     {
         public int counter = 0;
 
-        public List<Tier> Kacke = Tier_DA.GetTier();
+        public List<Tier> lsttier = Tier_DA.GetTier();
         protected override async Task OnInitializedAsync()
         {
         
