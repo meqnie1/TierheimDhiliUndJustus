@@ -1,9 +1,12 @@
 ﻿body {
+    margin: 0;
 }
 
 #backnav {
     background-color: #A3D3B9;
     height: 2.5vw;
+    width: 100%;
+    margin-top: -1.8vw;
 }
 
 #backnav > p{
