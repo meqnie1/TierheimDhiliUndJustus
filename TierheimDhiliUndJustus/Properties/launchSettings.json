@@ -10,12 +10,13 @@
   "profiles": {
     "TierheimDhiliUndJustus": {
       "commandName": "Project",
-      "dotnetRunMessages": true,
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:7136;http://localhost:5136",
+      "launchUrl": "http://localhost:5136/unseretiere",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "applicationUrl": "https://localhost:7136;http://localhost:5136",
+      "dotnetRunMessages": true
     },
     "IIS Express": {
       "commandName": "IISExpress",
