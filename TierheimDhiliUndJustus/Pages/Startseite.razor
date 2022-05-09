@@ -14,16 +14,18 @@
             
     @foreach(var item in lsttier)
     {
+        string imagesource = GetGeschlecht(item.ID_Tier);
         if(counter <=2)
         {
         <div class="neuetiere_rahmen"><img class="neuetiere_bild" src="/img/tier_sophie.jpg" alt="Sophie"/>
         <h1>@item.Tiername</h1>
-        <img class="neuetiere_geschlecht" src="img/weiblich.png" /></div>
+        <img class="neuetiere_geschlecht" src=@imagesource /></div>
         counter++;
         }
     }
     </div>
             
+    
     <a href=""><h2>Weitere Tiere ansehen</h2></a>
 
 </div>

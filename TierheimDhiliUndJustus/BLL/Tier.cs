@@ -32,5 +32,10 @@ namespace TierheimDhiliUndJustus.BLL
             FK_Tierrasse_Tier = fktierrasse;
 
         }
+
+        public Tier()
+        {
+
+        }
     }
 }
