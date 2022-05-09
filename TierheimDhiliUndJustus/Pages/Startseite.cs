@@ -16,7 +16,7 @@
 
         public string GetGeschlecht(int tierid)
         {
-            Tier tier = TierheimDhiliUndJustus.DAL.Tier_DA.GetOneTier(tierid);
+            Tier tier = Tier_DA.GetOneTier(tierid);
            
             if (tier.Geschlecht == "w")
             {

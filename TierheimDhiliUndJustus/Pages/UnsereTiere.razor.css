@@ -1,12 +1,13 @@
 ﻿body {
-    margin: 0;
 }
 
 #backnav {
     background-color: #A3D3B9;
     height: 2.5vw;
     width: 100%;
-    margin-top: -1.8vw;
+    margin-top: -0.9vw;
+    padding-left: 4.7vw;
+    padding-top: 0.6vw
 }
 
 #backnav > p{
@@ -20,4 +21,9 @@
     text-decoration: none;
     display: inline-block;
   
+}
+
+#unseretiere_ueschrift {
+    margin-left: 4vw;
+    display: block;
 }
