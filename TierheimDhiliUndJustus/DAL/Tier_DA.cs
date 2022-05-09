@@ -3,7 +3,9 @@
     using MySqlConnector;
     using System.Drawing;
     using TierheimDhiliUndJustus.BLL;
-    using MySql.Data;
+    using System.Data.SqlClient;
+    using System.IO;
+    /*using MySql.Data*/
 
 
     public static class Tier_DA
@@ -38,17 +40,6 @@
                             (string)reader["Beschreibung"],
                             (SByte)reader["Fundtier"],
                             (int)reader["FK_Tierrasse_Tier"]); ;
-
-                            byte[] rawData;
-                            FileStream fs;
-                            UInt32 FileSize = reader.GetUInt32(reader.GetOrdinal((string)reader[5]));
-                            rawData = new byte[FileSize];
-
-                            reader.GetBytes(reader.GetOrdinal("file"), 0, rawData, 0, (int)FileSize);
-
-                            fs = new FileStream(@"C:\newfile.png", FileMode.OpenOrCreate, FileAccess.Write);
-                            fs.Write(rawData, 0, (int)FileSize);
-                            fs.Close();
 
                             tierList.Add(tier);
                         }
@@ -91,6 +82,33 @@
                 }
             }
             return neuesTier;
+
+        }
+
+        public static string GetImage(int tierid)
+        {
+            byte[] imageBytes = null;
+
+            using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
+            {
+                conn.Open();
+                sqlstatement = "SELECT Bild FROM tier WHERE ID_Tier = " + tierid;
+
+
+
+                using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
+                {
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        reader.Read();
+                        imageBytes = (byte[])reader["Bild"];
+
+                    }
+                }
+            }
+
+            return "data:image/png;base64," + Convert.ToBase64String(imageBytes, Base64FormattingOptions.None);
         }
     }  
 }
