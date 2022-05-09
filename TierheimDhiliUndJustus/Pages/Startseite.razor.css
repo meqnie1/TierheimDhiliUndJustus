@@ -1,14 +1,19 @@
-﻿#startseitebanner{
+﻿#startseitebanner {
     width: 100%;
     margin: 0vw;
     padding: 0vw;
-
+    margin-top: -1.8vw;
 }
 
-#neuetiere{
-    background-image: url("img/bg_orange.jpg");
+#neuetiere {
     width: 100%;
     overflow: hidden;
+    margin-top: -4vw;
+    background-image: url("img/bg_orange.jpg");
+    background-size: 120vw;
+    background-position: 0vw 7vw;
+    background-repeat: no-repeat;
+    padding-bottom: 2vw;
 }
 
 #neuetiere_ueschrift {
@@ -28,6 +33,9 @@
     display: inline-block;
     height: 23vw;
     width: 19vw;
+    margin: 0vw;
+    padding: 0vw;
+    margin-top: -1.8vw;
     background-color: rgba(220, 123, 68, 75%);
     margin: 2vw;
 }
