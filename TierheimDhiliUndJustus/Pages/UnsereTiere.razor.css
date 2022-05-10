@@ -24,10 +24,12 @@
 }
 
 #alletiere {
-    width: 70%;
+    width: 100%;
     overflow: hidden;
     padding-bottom: 2vw;
     display: inline-block;
+    margin-left: 2vw;
+    margin-right: 3vw;
 }
 
 #unseretiere_ueschrift {
@@ -69,8 +71,7 @@
 }
 
 #unseretiere_bilder {
-    display: flex;
-    justify-content: center;
+    margin: 2vw;
 }
 
 #unseretiere > a > h2 {
@@ -86,4 +87,8 @@ aside {
     width: 20%;
     height: 20vw;
     background-color: rgba(81, 154, 114, 50%);
+}
+
+#block {
+    clear: both;
 }
