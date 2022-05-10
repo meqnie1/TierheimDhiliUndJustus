@@ -24,7 +24,6 @@
 }
 
 #alletiere {
-    width: 100%;
     overflow: hidden;
     padding-bottom: 2vw;
     display: inline-block;
@@ -37,8 +36,8 @@
 }
 
 .unseretiere_bild {
-    height: 18vw;
-    width: 18vw;
+    height: 17vw;
+    width: 17vw;
     object-fit: cover;
     display: inline-block;
     margin: 0.5vw;
@@ -46,13 +45,13 @@
 
 .unseretiere_rahmen {
     display: inline-block;
-    height: 23vw;
-    width: 19vw;
+    height: 22vw;
+    width: 18vw;
     margin: 0vw;
     padding: 0vw;
     margin-top: -1.8vw;
     background-color: rgba(81, 154, 114, 50%);
-    margin: 2vw;
+    margin: 1.5vw;
 }
 
 .unseretiere_rahmen > h1 {
@@ -70,7 +69,7 @@
 }
 
 #unseretiere_bilder {
-    margin: 2vw;
+    margin-left: 2.5vw;
 }
 
 #unseretiere > a > h2 {

@@ -76,9 +76,9 @@
     transition: 0.3s;
 }
 
-    #vermisstbanner:hover {
-        background-image: url("img/vermisst2banner.jpg");
-    }
+#vermisstbanner:hover {
+    background-image: url("img/vermisst2banner.jpg");
+}
 
 #spendenbanner {
     background-image: url("img/hilfebanner.jpg");
