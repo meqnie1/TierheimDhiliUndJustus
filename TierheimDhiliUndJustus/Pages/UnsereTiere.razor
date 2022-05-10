@@ -37,6 +37,59 @@
 
 <aside>
     <h1>Filter</h1>
+    <h2>Tierarten</h2>
+    <hr />
+    <div class="unseretiere_tierarten">
+        @foreach(Tierart item in lsttierart)
+        {
+            <input type="checkbox" name="@item.Tierartname" value="@item.Tierartname">
+            <label for="@item.Tierartname">@item.Tierartname</label>
+        }
+    </div>
+    <h2>Tierrassen</h2>
+    <hr />
+    <div class="unseretiere_tierarten">
+        counter = 0;
+        <h3>Katzenrassen</h3>
+        @foreach(Tierrasse item in lsttierrasse_katzen)
+        {
+            counter++;
+            <input type="checkbox" name="@item.Tierrassennamen" value="@item.Tierrassennamen">
+            <label for="@item.Tierrassennamen">@item.Tierrassennamen</label>
+            if(counter % 2 == 0)
+            {
+                <div id="block"></div>
+            }
+        }
+    </div>
+    @{SetCounterTo0();
+    <div class="unseretiere_tierarten">
+        <h3>Hunderassen</h3>
+        @foreach(Tierrasse item in lsttierrasse_hunde)
+        {
+            counter++;
+            <input type="checkbox" name="@item.Tierrassennamen" value="@item.Tierrassennamen">
+            <label for="@item.Tierrassennamen">@item.Tierrassennamen</label>
+            if(counter % 2 == 0)
+            {
+                <div id="block"></div>
+            }
+        }
+    </div>
+    <div class="unseretiere_tierarten">
+        counter = 0;
+        <h3>Hamsterrassen</h3>
+        @foreach(Tierrasse item in lsttierrasse_hamster)
+        {
+            counter++;
+            <input type="checkbox" name="@item.Tierrassennamen" value="@item.Tierrassennamen">
+            <label for="@item.Tierrassennamen">@item.Tierrassennamen</label>
+            if(counter % 2 == 0)
+            {
+                <div id="block"></div>
+            }
+        }
+    </div>
 </aside>
 
 
@@ -45,4 +98,13 @@
     public string geschlechtsource = "";
     public static List<Tier> lsttier = Tier_DA.GetTier();
     public Startseite st = new Startseite();
+    public static List<Tierart> lsttierart = Tierart_DA.GetTierarten();
+    public static List<Tierrasse> lsttierrasse_katzen = Tierrasse_DA.GetTierrassen(1);
+    public static List<Tierrasse> lsttierrasse_hunde = Tierrasse_DA.GetTierrassen(2);
+    public static List<Tierrasse> lsttierrasse_hamster = Tierrasse_DA.GetTierrassen(3);
+
+    private void SetCounterTo0()
+    {
+        counter = 0;
+    }
 }

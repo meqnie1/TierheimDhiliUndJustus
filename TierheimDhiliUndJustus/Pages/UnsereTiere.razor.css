@@ -79,14 +79,50 @@
     text-decoration: underline #B54B0F;
     text-align: center;
 }
-
-aside {
-    display: inline-block;
-    width: 20%;
-    height: 20vw;
-    background-color: rgba(81, 154, 114, 50%);
-}
-
 #block {
     clear: both;
 }
+
+aside {
+    display: inline-block;
+    background-color: rgba(81, 154, 114, 20%);
+}
+
+aside > h1 {
+    font-size: 2vw;
+    margin-bottom: 1vw;
+}
+
+aside > h2{
+    font-size: 1.5vw;
+    margin-bottom: 0vw;
+    margin-left: 2vw;
+}
+
+aside > hr{
+    margin-top: 0vw;
+    margin-left: 2vw;
+
+}
+
+aside > .unseretiere_tierarten > label {
+    font-size: 1.2vw;
+    margin-right: 2vw;
+}
+
+aside > .unseretiere_tierarten > input {
+    width: 1vw;
+    height: 1vw;
+    margin-right: 0.2vw;
+}
+
+.unseretiere_tierarten{
+    margin-left: 3vw;
+    margin-bottom: 2vw;
+}
+
+.unseretiere_tierarten > h3 {
+    font-size: 1.2vw;
+    font-weight: bold;
+}
+
