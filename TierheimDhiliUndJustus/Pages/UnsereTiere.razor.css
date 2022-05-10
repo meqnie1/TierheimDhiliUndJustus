@@ -86,6 +86,7 @@
 aside {
     display: inline-block;
     background-color: rgba(81, 154, 114, 20%);
+    padding: 1vw;
 }
 
 aside > h1 {
