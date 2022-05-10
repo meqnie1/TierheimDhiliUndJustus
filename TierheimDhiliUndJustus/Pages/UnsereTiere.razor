@@ -9,13 +9,37 @@
 @code{
     public static int counter = 0;
     public string geschlechtsource = "";
-    public static List<Tier> lsttier = Tier_DA.GetTier();
     public Startseite st = new Startseite();
-    public static List<Tierart> lsttierart = Tierart_DA.GetTierarten();
-    public static List<Tierrasse> lsttierrasse_katzen = Tierrasse_DA.GetTierrassen(1);
-    public static List<Tierrasse> lsttierrasse_hunde = Tierrasse_DA.GetTierrassen(2);
-    public static List<Tierrasse> lsttierrasse_hamster = Tierrasse_DA.GetTierrassen(3);
+    public List<int> lstcheckbox_tierart = new List<int>();
+    public bool IsFilterActive = false;
 }
+
+@code{
+    public void ChangeCheckedStatus_Tierart(int tierid, object checkedValue)
+    {
+        if((bool)checkedValue == true)
+        {
+            if (!lstcheckbox_tierart.Contains(tierid))
+            {
+                lstcheckbox_tierart.Add(tierid);
+            }
+        }
+        else
+        {
+            if (lstcheckbox_tierart.Contains(tierid))
+            {
+                lstcheckbox_tierart.Remove(tierid);
+            }
+        }
+    }
+
+    public void Filter()
+    {
+        IsFilterActive = true;
+    }
+}
+
+
 <PageTitle>Unsere Tiere</PageTitle>
 
 <div id="backnav">
@@ -25,22 +49,30 @@
 <div id="alletiere">
     <img id="unseretiere_ueschrift" src="/img/unseretiere.png" alt="Unsere Tiere"/>
     <div id="unseretiere_bilder">
-            
-    @foreach(var item in lsttier)
+    
+    @if (!IsFilterActive)
     {
-        counter++;
-        string srcgeschlecht = st.GetGeschlecht(item.ID_Tier);
-        string srcimg = "img/tiere/" + @item.Tiername + ".jpg";
-
-        <div class="unseretiere_rahmen"><img class="unseretiere_bild" src="@srcimg">
-        <h1>@item.Tiername</h1>
-        <img class="unseretiere_geschlecht" src=@srcgeschlecht /></div>
-        @if(counter % 3 == 0)
+        counter = 0;
+        @foreach(var item in Tier_DA.GetTier())
         {
-             <div class="block"></div>   
-        }
+            counter++;
+            string srcgeschlecht = st.GetGeschlecht(item.ID_Tier);
+            string srcimg = "img/tiere/" + @item.Tiername + ".jpg";
+
+            <div class="unseretiere_rahmen"><img class="unseretiere_bild" src="@srcimg">
+            <h1>@item.Tiername</h1>
+            <img class="unseretiere_geschlecht" src=@srcgeschlecht /></div>
+            @if(counter % 3 == 0)
+            {
+                 <div class="block"></div>   
+            }
+            }
     }
-    </div>
+    else
+    {
+        
+    }
+</div>
 
 </div>
 
@@ -50,10 +82,10 @@
     <hr />
     <div class="unseretiere_tierarten">
         @{counter=0;}
-        @foreach(var item in lsttierart)
+        @foreach(var item in Tierart_DA.GetTierarten())
         {
             counter++;
-            <input type="checkbox" name="@item.Tierartname" value="@item.Tierartname">
+            <input type="checkbox" name="@item.Tierartname" value="@item.Tierartname" @oninput="eventArgs => { ChangeCheckedStatus_Tierart(item.ID_Tierart, eventArgs.Value); }">
             <label for="@item.Tierartname">@item.Tierartname</label>
             if(counter % 2 == 0)
             {
@@ -66,11 +98,11 @@
     <div class="unseretiere_tierarten">
         <h3>Katzenrassen</h3>
         @{counter=0;}
-        @foreach(var item in lsttierrasse_katzen)
+        @foreach(var item in Tierrasse_DA.GetTierrassen(1))
         {
             counter++;
-            <input type="checkbox" name="item.Tierartname" value="item.Tierartname">
-            <label for="@item.Tierrassennamen">item.Tierartname</label>
+            <input type="checkbox" name="@item.Tierrassennamen" value="@item.Tierrassennamen">
+            <label for="@item.Tierrassennamen">@item.Tierrassennamen</label>
             if(counter % 2 == 0)
             {
                 <div id="block"></div>
@@ -80,7 +112,7 @@
     <div class="unseretiere_tierarten">
         <h3>Hunderassen</h3>
         @{counter=0;}
-        @foreach(var item in lsttierrasse_hunde)
+        @foreach(var item in Tierrasse_DA.GetTierrassen(2))
         {
             counter++;
             <input type="checkbox" name="@item.Tierrassennamen" value="@item.Tierrassennamen">
@@ -94,7 +126,7 @@
     <div class="unseretiere_tierarten">
         <h3>Hamsterrassen</h3>
         @{counter=0;}
-        @foreach(var item in lsttierrasse_hamster)
+        @foreach(var item in Tierrasse_DA.GetTierrassen(3))
         {
             counter++;
             <input type="checkbox" name="@item.Tierrassennamen" value="@item.Tierrassennamen">
@@ -105,4 +137,7 @@
             }
         }
     </div>
+
+    <input id="btn_ausführen" type="button" name="ausführen" value="Filter ausführen" @onclick="Filter">
+    <h4>Filter löschen</h4>
 </aside>

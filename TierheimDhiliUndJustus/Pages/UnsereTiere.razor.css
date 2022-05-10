@@ -24,10 +24,11 @@
 }
 
 #alletiere {
-    overflow: hidden;
     padding-bottom: 2vw;
     display: inline-block;
     margin-left: 2vw;
+    margin-right: 0vw;
+    width: 70%;
 }
 
 #unseretiere_ueschrift {
@@ -47,7 +48,6 @@
     display: inline-block;
     height: 22vw;
     width: 18vw;
-    margin: 0vw;
     padding: 0vw;
     margin-top: -1.8vw;
     background-color: rgba(81, 154, 114, 50%);
@@ -81,12 +81,15 @@
 }
 #block {
     clear: both;
+    width: 70%;
 }
 
 aside {
     display: inline-block;
     background-color: rgba(81, 154, 114, 20%);
     padding: 1vw;
+    float: right;
+    margin-top: 12.5vw;
 }
 
 aside > h1 {
@@ -125,5 +128,25 @@ aside > .unseretiere_tierarten > input {
 .unseretiere_tierarten > h3 {
     font-size: 1.2vw;
     font-weight: bold;
+}
+
+#btn_ausführen {
+    height: 3vw;
+    width: 15vw;
+    display: block;
+    margin: auto;
+    background-color: #339974;
+    color: white;
+    font-size: 1.1vw;
+    border: none;
+}
+
+aside > h4 {
+    color: #339974;
+    font-size: 1.1vw;
+    display: flex;
+    justify-content: center;
+    margin-top: 0.8vw;
+    margin-bottom: 1vw;
 }
 
