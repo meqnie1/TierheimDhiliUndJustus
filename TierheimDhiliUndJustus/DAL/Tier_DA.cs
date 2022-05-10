@@ -84,31 +84,5 @@
             return neuesTier;
 
         }
-
-        public static string GetImage(int tierid)
-        {
-            byte[] imageBytes = null;
-
-            using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
-            {
-                conn.Open();
-                sqlstatement = "SELECT Bild FROM tier WHERE ID_Tier = " + tierid;
-
-
-
-                using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
-                {
-
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        reader.Read();
-                        imageBytes = (byte[])reader["Bild"];
-
-                    }
-                }
-            }
-
-            return "data:image/png;base64," + Convert.ToBase64String(imageBytes, Base64FormattingOptions.None);
-        }
     }  
 }

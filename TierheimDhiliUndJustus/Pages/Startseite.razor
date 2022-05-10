@@ -15,11 +15,11 @@
     @foreach(var item in lsttier)
     {
         string srcgeschlecht = GetGeschlecht(item.ID_Tier);
-        string srcbild = TierheimDhiliUndJustus.DAL.Tier_DA.GetImage(item.ID_Tier);
+        string srcimg = "img/tiere/" + @item.Tiername + ".jpg";
 
         if(counter <=2)
         {
-        <div class="neuetiere_rahmen"><img class="neuetiere_bild" src=@srcbild />
+        <div class="neuetiere_rahmen"><img class="neuetiere_bild" src="@srcimg" />
         <h1>@item.Tiername</h1>
         <img class="neuetiere_geschlecht" src=@srcgeschlecht /></div>
         counter++;
