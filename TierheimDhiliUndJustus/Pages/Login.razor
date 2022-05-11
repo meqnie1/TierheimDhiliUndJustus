@@ -1,0 +1,44 @@
+﻿@page "/login"
+@using TierheimDhiliUndJustus.BLL;
+@using TierheimDhiliUndJustus.DAL;
+@using MySqlConnector;
+@using System.Drawing;
+@using System.Data.SqlClient;
+@using System.IO;
+@layout EmptyLayout;
+
+
+<PageTitle>Login</PageTitle>
+<div id="test">
+    <div id="close"><img id="close" src="/img/close.png" /></div> 
+    <div id="logo"><h2>Tierheim</h2><h1>DHILI & JUSTUS</h1></div>
+</div>
+
+
+
+
+<div id="emailinput">
+    <img id="email" src="/img/email2.png" />
+    <a>E-Mail:</a>  
+    <input type="email" name="email" @bind="bnvalue">   
+</div>
+
+<div id="passwordinput">
+    <img id="schloss" src="/img/schloss.png" />
+    <a>Passwort:</a>  
+    <input type="password" name="password" @bind="pwvalue"> 
+    <img id="closedeye" src="/img/closedeye.png" />
+</div>
+
+<div id="anmelden"><input type="button" name="anmelden" value="Anmelden"></div>
+
+<div id="bereitsaccount">
+<a>Du hast noch kein Konto?</a><a id="registrieren" href="">Registrieren</a>
+</div>
+
+
+
+
+
+
+
