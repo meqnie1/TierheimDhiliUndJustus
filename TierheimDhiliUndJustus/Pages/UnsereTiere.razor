@@ -29,15 +29,29 @@
             if (lstcheckbox_tierart.Contains(tierid))
             {
                 lstcheckbox_tierart.Remove(tierid);
+                if(lstcheckbox_tierart.Count <= 0)
+                {
+                    FilterOff();
+                    lstcheckbox_tierart.Clear();
+
+                }
             }
         }
     }
 
-    public void Filter()
+    public void FilterOn()
     {
         if (!IsFilterActive)
         {
             IsFilterActive = true;
+        }
+    }
+
+    public void FilterOff()
+    {
+        if (IsFilterActive)
+        {
+            IsFilterActive = false;
         }
     }
 }
@@ -71,7 +85,7 @@
             }
         }
     }
-    else
+    else if(IsFilterActive)
     {
         counter = 0;
         @foreach(var item in Tier_DA.GetTierWithFilter(lstcheckbox_tierart))
@@ -98,18 +112,18 @@
     <h2>Tierarten</h2>
     <hr />
     <div class="unseretiere_tierarten">
-        @{counter=0;}
-        @foreach(var item in Tierart_DA.GetTierarten())
+    @{counter=0;}
+    @foreach(var item in Tierart_DA.GetTierarten())
+    {
+        counter++;
+        <input type="checkbox" name="@item.Tierartname" value="@item.Tierartname" @oninput="eventArgs => { ChangeCheckedStatus_Tierart(item.ID_Tierart, eventArgs.Value); }">
+        <label for="@item.Tierartname">@item.Tierartname</label>
+        if(counter % 2 == 0)
         {
-            counter++;
-            <input type="checkbox" name="@item.Tierartname" value="@item.Tierartname" @oninput="eventArgs => { ChangeCheckedStatus_Tierart(item.ID_Tierart, eventArgs.Value); }">
-            <label for="@item.Tierartname">@item.Tierartname</label>
-            if(counter % 2 == 0)
-            {
-                <div id="block"></div>
-            }
+            <div id="block"></div>
         }
-    </div>
+    }
+        </div>
     <h2>Tierrassen</h2>
     <hr />
     <div class="unseretiere_tierarten">
@@ -155,6 +169,5 @@
         }
     </div>
 
-    <input id="btn_ausführen" type="button" name="ausführen" value="Filter ausführen" @onclick="Filter">
-    <h4>Filter löschen</h4>
+    <input id="btn_ausführen" type="button" name="ausführen" value="Filter ausführen" @onclick="FilterOn">
 </aside>
