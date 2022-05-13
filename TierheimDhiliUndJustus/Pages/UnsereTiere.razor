@@ -1,4 +1,5 @@
 ﻿@page "/unseretiere"
+@inject NavigationManager UriHelper
 @using TierheimDhiliUndJustus.BLL;
 @using TierheimDhiliUndJustus.DAL;
 @using MySqlConnector;
@@ -9,7 +10,7 @@
 @code{
     public static int counter = 0;
     public string geschlechtsource = "";
-    public Startseite st = new Startseite();
+    public Startseite Startseite = new Startseite();
     public List<int> lstcheckbox_tierart = new List<int>();
     public List<int> lstcheckbox_tierrassen = new List<int>();
     public bool IsFilterActive = false;
@@ -73,6 +74,23 @@
             IsFilterActive = false;
         }
     }
+
+    public void ClickOnTier(string tierid)
+    {
+        UriHelper.NavigateTo($"/unseretiere/tierdetail/{tierid}");
+    }
+
+    public List<Tier> GetTheRightTierList()
+    {
+        if(lstcheckbox_tierrassen.Count > 0 || lstcheckbox_tierart.Count > 0)
+        {
+            return Tier_DA.GetTierWithFilterTierrasse(lstcheckbox_tierrassen, lstcheckbox_tierart);
+        }
+        else
+        {
+            return Tier_DA.GetTier();
+        }
+    }
 }
 
 
@@ -87,14 +105,14 @@
     <div id="unseretiere_bilder">
     
         @{counter = 0;}
-        @foreach(var item in lstcheckbox_tierart.Count == 0 ? (lstcheckbox_tierart.Count > 0 ? Tier_DA.GetTierWithFilterTierrasse(lstcheckbox_tierrassen) : Tier_DA.GetTierWithFilterTierart(lstcheckbox_tierart)) : Tier_DA.GetTier())
+        @foreach (var item in GetTheRightTierList())
         {
             counter++;
-            string srcgeschlecht = st.GetGeschlecht(item.ID_Tier);
+            string srcgeschlecht = Startseite.GetGeschlecht(item.ID_Tier);
             string srcimg = "img/tiere/" + @item.Tiername + ".jpg";
 
-            <div class="unseretiere_rahmen"><img class="unseretiere_bild" src="@srcimg">
-            <h1>@item.Tiername</h1>
+            <div class="unseretiere_rahmen" ><img class="unseretiere_bild" src="@srcimg" @onclick="eventArgs => { ClickOnTier(Convert.ToString(item.ID_Tier)); }">
+            <h1 @onclick="eventArgs => { ClickOnTier(Convert.ToString(item.ID_Tier)); }">@item.Tiername</h1>
             <img class="unseretiere_geschlecht" src=@srcgeschlecht /></div>
             @if(counter % 3 == 0)
             {
@@ -166,6 +184,4 @@
             }
         }
     </div>
-
-    <input id="btn_ausführen" type="button" name="ausführen" value="Filter ausführen" @onclick="FilterOn">
 </article>

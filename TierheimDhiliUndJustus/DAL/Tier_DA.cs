@@ -137,28 +137,27 @@
 
         }
 
-        public static List<Tier> GetTierWithFilterTierrasse(List<int> checkboxes)
+        public static List<Tier> GetTierWithFilterTierrasse(List<int> checkboxes_tr, List<int> checkboxes_ta)
         {
-            string whereStatement = "";
-            List<Tier> tierList = new List<Tier>();
-            if (checkboxes.Count != 0)
+            string whereStatement_tr = "IN(0)";
+            string whereStatement_ta = "IN(0)";
+
+            if (checkboxes_tr.Count != 0)
             {
-                whereStatement = "WHERE tier.FK_Tierrasse_Tier IN(";
-                foreach (int item in checkboxes)
-                {
-                    whereStatement += item;
-                    if (item != checkboxes.Last())
-                    {
-                        whereStatement += ", ";
-                    }
-                }
-                whereStatement += ")";
+                whereStatement_tr = GetWhereStatement(checkboxes_tr);
             }
+            if (checkboxes_ta.Count != 0)
+            {
+                whereStatement_ta = GetWhereStatement(checkboxes_ta);
+            }
+
+            List<Tier> tierList = new List<Tier>();
 
             using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
             {
                 conn.Open();
-                sqlstatement = "SELECT * FROM tier " + whereStatement;
+                sqlstatement = "SELECT * FROM tier JOIN tierrasse ON tier.FK_Tierrasse_Tier = " +
+                    "tierrasse.ID_Tierrasse WHERE tier.FK_Tierrasse_Tier " + whereStatement_tr + " OR tierrasse.FK_Tierart_Tierrasse " + whereStatement_ta;
 
 
 
@@ -183,10 +182,28 @@
                     }
                 }
             }
-
-            whereStatement = "";
             return tierList;
 
+        }
+
+        public static string GetWhereStatement(List<int> checkboxes)
+        {
+            string wherestatement = "";
+            if (checkboxes.Count != 0)
+            {
+                wherestatement = "IN(";
+                foreach (int item in checkboxes)
+                {
+                    wherestatement += item;
+                    if (item != checkboxes.Last())
+                    {
+                        wherestatement += ", ";
+                    }
+                }
+                wherestatement += ")";
+            }
+
+            return wherestatement;
         }
     }  
 }
