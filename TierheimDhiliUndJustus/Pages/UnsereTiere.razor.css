@@ -84,37 +84,37 @@
     width: 70%;
 }
 
-aside {
-    display: inline-block;
+article {
+    display: block;
     background-color: rgba(81, 154, 114, 20%);
     padding: 1vw;
     float: right;
     margin-top: 12.5vw;
 }
 
-aside > h1 {
+article > h1 {
     font-size: 2vw;
     margin-bottom: 1vw;
 }
 
-aside > h2{
+article > h2{
     font-size: 1.5vw;
     margin-bottom: 0vw;
     margin-left: 2vw;
 }
 
-aside > hr{
+article > hr{
     margin-top: 0vw;
     margin-left: 2vw;
 
 }
 
-aside > .unseretiere_tierarten > label {
+article > .unseretiere_tierarten > label {
     font-size: 1.2vw;
     margin-right: 2vw;
 }
 
-aside > .unseretiere_tierarten > input {
+article > .unseretiere_tierarten > input {
     width: 1vw;
     height: 1vw;
     margin-right: 0.2vw;
@@ -141,7 +141,7 @@ aside > .unseretiere_tierarten > input {
     border: none;
 }
 
-aside > h4 {
+article > h4 {
     color: #339974;
     font-size: 1.1vw;
     display: flex;

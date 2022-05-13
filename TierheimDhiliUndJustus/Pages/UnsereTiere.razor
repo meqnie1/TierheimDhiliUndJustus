@@ -11,6 +11,7 @@
     public string geschlechtsource = "";
     public Startseite st = new Startseite();
     public List<int> lstcheckbox_tierart = new List<int>();
+    public List<int> lstcheckbox_tierrassen = new List<int>();
     public bool IsFilterActive = false;
 }
 
@@ -35,6 +36,24 @@
                     lstcheckbox_tierart.Clear();
 
                 }
+            }
+        }
+    }
+
+    public void ChangeCheckedStatus_Tierrassen(int tierid, object checkedValue)
+    {
+        if((bool)checkedValue == true)
+        {
+            if (!lstcheckbox_tierrassen.Contains(tierid))
+            {
+                lstcheckbox_tierrassen.Add(tierid);
+            }
+        }
+        else
+        {
+            if (lstcheckbox_tierrassen.Contains(tierid))
+            {
+                lstcheckbox_tierrassen.Remove(tierid);
             }
         }
     }
@@ -67,10 +86,8 @@
     <img id="unseretiere_ueschrift" src="/img/unseretiere.png" alt="Unsere Tiere"/>
     <div id="unseretiere_bilder">
     
-    @if (!IsFilterActive)
-    {
-        counter = 0;
-        @foreach(var item in Tier_DA.GetTier())
+        @{counter = 0;}
+        @foreach(var item in lstcheckbox_tierart.Count == 0 ? (lstcheckbox_tierart.Count > 0 ? Tier_DA.GetTierWithFilterTierrasse(lstcheckbox_tierrassen) : Tier_DA.GetTierWithFilterTierart(lstcheckbox_tierart)) : Tier_DA.GetTier())
         {
             counter++;
             string srcgeschlecht = st.GetGeschlecht(item.ID_Tier);
@@ -81,33 +98,14 @@
             <img class="unseretiere_geschlecht" src=@srcgeschlecht /></div>
             @if(counter % 3 == 0)
             {
-                 <div class="block"></div>   
+                    <div class="block"></div>   
             }
         }
-    }
-    else if(IsFilterActive)
-    {
-        counter = 0;
-        @foreach(var item in Tier_DA.GetTierWithFilter(lstcheckbox_tierart))
-        {
-            counter++;
-            string srcgeschlecht = st.GetGeschlecht(item.ID_Tier);
-            string srcimg = "img/tiere/" + @item.Tiername + ".jpg";
-
-            <div class="unseretiere_rahmen"><img class="unseretiere_bild" src="@srcimg">
-            <h1>@item.Tiername</h1>
-            <img class="unseretiere_geschlecht" src=@srcgeschlecht /></div>
-            @if(counter % 3 == 0)
-            {
-                 <div class="block"></div>   
-            }
-        }
-    }
-</div>
+    </div>
 
 </div>
 
-<aside>
+<article>
     <h1>Filter</h1>
     <h2>Tierarten</h2>
     <hr />
@@ -132,7 +130,7 @@
         @foreach(var item in Tierrasse_DA.GetTierrassen(1))
         {
             counter++;
-            <input type="checkbox" name="@item.Tierrassennamen" value="@item.Tierrassennamen">
+            <input type="checkbox" name="@item.Tierrassennamen" value="@item.Tierrassennamen" @oninput="eventArgs => { ChangeCheckedStatus_Tierrassen(item.ID_Tierrasse, eventArgs.Value); }">
             <label for="@item.Tierrassennamen">@item.Tierrassennamen</label>
             if(counter % 2 == 0)
             {
@@ -146,7 +144,7 @@
         @foreach(var item in Tierrasse_DA.GetTierrassen(2))
         {
             counter++;
-            <input type="checkbox" name="@item.Tierrassennamen" value="@item.Tierrassennamen">
+            <input type="checkbox" name="@item.Tierrassennamen" value="@item.Tierrassennamen" @oninput="eventArgs => { ChangeCheckedStatus_Tierrassen(item.ID_Tierrasse, eventArgs.Value); }">
             <label for="@item.Tierrassennamen">@item.Tierrassennamen</label>
             if(counter % 2 == 0)
             {
@@ -160,7 +158,7 @@
         @foreach(var item in Tierrasse_DA.GetTierrassen(3))
         {
             counter++;
-            <input type="checkbox" name="@item.Tierrassennamen" value="@item.Tierrassennamen">
+            <input type="checkbox" name="@item.Tierrassennamen" value="@item.Tierrassennamen" @oninput="eventArgs => { ChangeCheckedStatus_Tierrassen(item.ID_Tierrasse, eventArgs.Value); }">
             <label for="@item.Tierrassennamen">@item.Tierrassennamen</label>
             if(counter % 2 == 0)
             {
@@ -170,4 +168,4 @@
     </div>
 
     <input id="btn_ausführen" type="button" name="ausführen" value="Filter ausführen" @onclick="FilterOn">
-</aside>
+</article>
