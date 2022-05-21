@@ -5,7 +5,7 @@
     using TierheimDhiliUndJustus.DAL;
     
    
-    public partial class Login 
+    public partial class Registrieren 
     {
         string pwvalue;
         string evalue;
@@ -63,6 +63,5 @@
             }
             
         }
-
     }
 }

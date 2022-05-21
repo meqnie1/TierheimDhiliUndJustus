@@ -8,11 +8,14 @@
 
         public string Passwort { get; set; }
 
-        public Kunde(int id, string email, string passwort)
+        public string Rolle { get; set; }
+
+        public Kunde(int id, string email, string passwort, string rolle)
         {
             ID_Kunde = id;
             Email = email;
             Passwort = passwort;
+            Rolle = rolle;
         }
     }
 }

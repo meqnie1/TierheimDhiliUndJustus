@@ -1,6 +1,7 @@
 ﻿@page "/"
 @using TierheimDhiliUndJustus.BLL
 @using TierheimDhiliUndJustus.DAL
+@using TierheimDhiliUndJustus.Pages;
 
 
 
@@ -10,7 +11,17 @@
 
 <div id="neuetiere">
     <img id="neuetiere_ueschrift" src="/img/neuzuganege.png" alt="Unsere Neuzugänge"/>
-    <div id="neuetiere_bilder">
+    <div id="neuetiere_bilder"> 
+
+
+
+
+@*    @if(Login.screenclosed == false)
+    {
+        
+    <div hidden="@Login.screenclosed" id="loginscreeen"><Login /></div>
+
+    }*@
             
     @foreach(var item in lsttier)
     {
@@ -27,7 +38,6 @@
     }
     </div>
             
-    
     <a href="unseretiere"><h2>Weitere Tiere ansehen</h2></a>
 
 </div>
@@ -36,6 +46,10 @@
 <a href=""><div id="vermisstbanner"></div></a>
 
 <a href=""><div id="spendenbanner"></div></a>
+
+
+
+
 
 
 
