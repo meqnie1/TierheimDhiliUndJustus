@@ -205,5 +205,46 @@
 
             return wherestatement;
         }
+
+        public static List<Tier> GetTierExceptTierID(int tierid)
+        {
+            List<Tier> tierList = new List<Tier>();
+
+
+            using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
+            {
+                conn.Open();
+
+
+                sqlstatement = "SELECT * FROM tier WHERE ID_Tier != " + tierid;
+
+
+                using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
+                {
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+
+                            Tier tier = new Tier(
+                            (int)reader["ID_Tier"],
+                            (string)reader["Tiername"],
+                            (DateTime)reader["Geburtsdatum"],
+                            (string)reader["Geschlecht"],
+                            (string)reader["Beschreibung"],
+                            (SByte)reader["Fundtier"],
+                            (int)reader["FK_Tierrasse_Tier"]); ;
+
+                            tierList.Add(tier);
+                        }
+
+                    }
+                }
+
+
+            }
+            return tierList;
+        }
     }  
 }

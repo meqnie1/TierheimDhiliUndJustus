@@ -13,7 +13,6 @@
     public Startseite Startseite = new Startseite();
     public List<int> lstcheckbox_tierart = new List<int>();
     public List<int> lstcheckbox_tierrassen = new List<int>();
-    public bool IsFilterActive = false;
 }
 
 @code{
@@ -31,12 +30,6 @@
             if (lstcheckbox_tierart.Contains(tierid))
             {
                 lstcheckbox_tierart.Remove(tierid);
-                if(lstcheckbox_tierart.Count <= 0)
-                {
-                    FilterOff();
-                    lstcheckbox_tierart.Clear();
-
-                }
             }
         }
     }
@@ -56,22 +49,6 @@
             {
                 lstcheckbox_tierrassen.Remove(tierid);
             }
-        }
-    }
-
-    public void FilterOn()
-    {
-        if (!IsFilterActive)
-        {
-            IsFilterActive = true;
-        }
-    }
-
-    public void FilterOff()
-    {
-        if (IsFilterActive)
-        {
-            IsFilterActive = false;
         }
     }
 
