@@ -14,6 +14,7 @@
 @{
     Tier CurrentTier = Tier_DA.GetOneTier(Convert.ToInt32(Value));
     string srcimg = "img/tiere/" + CurrentTier.Tiername + ".jpg";
+    bool ShowGassigehen = IsTierHund();
     string srcgeschlecht;
     Startseite startseite = new Startseite();
     int counter = 0;
@@ -34,6 +35,18 @@
     {
         UriHelper.NavigateTo($"/unseretiere/tierdetail/{tierid}");
     }
+
+    bool IsTierHund()
+    {
+        if(Tierrasse_DA.GetTierartWithTierID(CurrentTier.ID_Tier) == 2)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }
 
 <div id="backnav">
@@ -50,7 +63,12 @@
             <tr><td></td></tr>
             <tr><td><h1>Beschreibung:</h1></td></tr>
             <tr><td colspan="2"><h2>@CurrentTier.Beschreibung</h2></td></tr>
-            <tr><td><input type="button" value="Besichtigung buchen"/></td><td><input type="button" value="Gassigehen buchen"/></td></tr>
+            <tr><td><input type="button" value="Besichtigung buchen"/></td>
+                @if (ShowGassigehen)
+                {
+                    <td><input type="button" value="Gassigehen buchen"/></td>
+                }
+                </tr>
         </table> 
     </div>
 </div>
