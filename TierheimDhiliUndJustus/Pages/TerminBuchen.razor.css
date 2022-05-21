@@ -32,10 +32,9 @@
     display: inline-block;
     height: 22vw;
     width: 18vw;
-    padding: 0vw;
     margin-top: -1.8vw;
     background-color: rgba(81, 154, 114, 50%);
-    margin: 1.5vw;
+    margin-top: 1vw;
 }
 
 #termin_rahmen > h1 {
@@ -50,4 +49,46 @@
     height: 1.8vw;
     display: inline-block;
     margin-top: -0.5vw;
+}
+#termin_auswahlmenu {
+    display: inline-block;
+    margin-left: 3vw;
+    vertical-align: top;
+    margin-top: 7vw;
+}
+#termin_auswahlmenu > input {
+    height: 3vw;
+    width: 13vw;
+    color: white;
+    background-color: #339974;
+    border: none;
+    font-size: 1vw;
+    display: block;
+    margin-top: 2vw;
+}
+#termin_auswahlmenu > input:hover {
+    background-color: #2A8262;
+}
+#termin_ueberschrift {
+    font-size: 1.7vw;
+    text-transform: uppercase;
+    color: #339974;
+}
+#auswahl_ueberschrift {
+    font-size: 1.2vw;
+    text-transform: uppercase;
+    color: #339974;
+    margin-bottom: 1vw;
+}
+#terminauswahl {
+    height: 2vw;
+    width: 12vw;
+    font-size: 1vw;
+}
+
+#termin_alles {
+    margin-left: 19vw;
+    margin-top: 3vw;
+    width: 100%;
+    height: 27vw;
 }

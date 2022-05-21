@@ -14,6 +14,11 @@
 
         public int FK_Tier_Termin { get; set; }
 
+        public Termin()
+        {
+
+        }
+
         public Termin(int id, DateTime termin, SByte gebucht, int fkterminart)
         {
             ID_Termin = id;
