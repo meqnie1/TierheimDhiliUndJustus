@@ -50,5 +50,43 @@ namespace TierheimDhiliUndJustus.DAL
             }
             return terminlist;
         }
+
+        public static Termin GetTermin(int idtermin)
+        {
+            Termin termin = new Termin();
+            DateTime datum;
+
+
+            using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
+            {
+                conn.Open();
+
+
+                sqlstatement = "SELECT ID_Termin, Datum, Uhrzeit, Gebucht, FK_Terminart_Termin FROM termin WHERE ID_Termin = " + idtermin;
+
+
+                using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
+                {
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            datum = ((DateTime)reader["Datum"]).Date;
+                            datum = datum.Add(((TimeSpan)reader["Uhrzeit"]));
+
+                            termin.ID_Termin = (int)reader["ID_Termin"];
+                            termin.TerminDatum = (DateTime)datum;
+                            termin.Gebucht = (SByte)reader["Gebucht"];
+                            termin.FK_Terminart_Art = (int)reader["FK_Terminart_Termin"];
+                        }
+
+                    }
+                }
+
+
+            }
+            return termin;
+        }
     }
 }

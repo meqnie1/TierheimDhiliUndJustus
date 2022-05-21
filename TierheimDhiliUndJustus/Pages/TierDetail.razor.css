@@ -29,6 +29,24 @@
     top: 10vw;
     position: absolute;
 }
+img {
+    height: 17vw;
+    width: 17vw;
+    object-fit: cover;
+    display: inline;
+    padding-left: 1vw;
+    padding-top: 1vw;
+}
+
+#tierdetail_rahmen {
+    display: inline-block;
+    height: 18vw;
+    width: 18vw;
+    padding: 0vw;
+    background-color: rgba(81, 154, 114, 50%);
+    margin-top: 3vw;
+    margin-left: 19vw;
+}
 #tierdetail_info > table > tr > td{
     padding: 0.6vw;
 }
