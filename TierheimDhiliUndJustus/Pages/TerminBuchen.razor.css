@@ -1,0 +1,53 @@
+﻿body {
+}
+#backnav {
+    background-color: #A3D3B9;
+    height: 2.5vw;
+    width: 100%;
+    margin-top: -0.9vw;
+    padding-left: 4.7vw;
+    padding-top: 0.6vw
+}
+
+#backnav > p {
+    color: white;
+    display: inline-block;
+}
+
+#backnav > a {
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+}
+
+#termin_bild {
+    height: 17vw;
+    width: 17vw;
+    object-fit: cover;
+    display: inline-block;
+    margin: 0.5vw;
+}
+
+#termin_rahmen {
+    display: inline-block;
+    height: 22vw;
+    width: 18vw;
+    padding: 0vw;
+    margin-top: -1.8vw;
+    background-color: rgba(81, 154, 114, 50%);
+    margin: 1.5vw;
+}
+
+#termin_rahmen > h1 {
+    font-size: 1.2vw;
+    text-transform: uppercase;
+    color: white;
+    padding: 1vw;
+    display: inline-block;
+}
+
+#termin_geschlecht {
+    height: 1.8vw;
+    display: inline-block;
+    margin-top: -0.5vw;
+}

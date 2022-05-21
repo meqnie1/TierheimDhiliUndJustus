@@ -1,4 +1,4 @@
-﻿@page "/unseretiere/tierdetail/{value}"
+﻿@page "/unseretiere/tierdetail/{id}"
 @inject NavigationManager UriHelper
 @using TierheimDhiliUndJustus.DAL;
 @using TierheimDhiliUndJustus.BLL;
@@ -9,10 +9,10 @@
 
 @code {
     [Parameter]
-    public string Value { get; set; }
+    public string ID { get; set; }
 }
 @{
-    Tier CurrentTier = Tier_DA.GetOneTier(Convert.ToInt32(Value));
+    Tier CurrentTier = Tier_DA.GetOneTier(Convert.ToInt32(ID));
     string srcimg = "img/tiere/" + CurrentTier.Tiername + ".jpg";
     bool ShowGassigehen = IsTierHund();
     string srcgeschlecht;
@@ -47,10 +47,22 @@
             return false;
         }
     }
+
+    void ClickOnButton(bool besichtigung)
+    {
+        if (besichtigung)
+        {
+            UriHelper.NavigateTo($"/unseretiere/tierdetail/{ID}/besichtigungbuchen");
+        }
+        else
+        {
+            UriHelper.NavigateTo($"/unseretiere/tierdetail/{ID}/gassigehenbuchen");
+        }
+    }
 }
 
 <div id="backnav">
-    <a href=""><p>Startseite</p></a><p> > </p><a href="unseretiere"><p>Unsere Tiere</p></a><p> > </p><a href="unseretiere/tierdetail/@Value"><p>@CurrentTier.Tiername</p></a>
+    <a href=""><p>Startseite</p></a><p> > </p><a href="unseretiere"><p>Unsere Tiere</p></a><p> > </p><a href="unseretiere/tierdetail/@ID"><p>@CurrentTier.Tiername</p></a>
 </div>
 
 <div id="tierfull">
@@ -63,10 +75,10 @@
             <tr><td></td></tr>
             <tr><td><h1>Beschreibung:</h1></td></tr>
             <tr><td colspan="2"><h2>@CurrentTier.Beschreibung</h2></td></tr>
-            <tr><td><input type="button" value="Besichtigung buchen"/></td>
+            <tr><td><input type="button" value="Besichtigung buchen" @onclick="eventArgs => { ClickOnButton(true); }"/></td>
                 @if (ShowGassigehen)
                 {
-                    <td><input type="button" value="Gassigehen buchen"/></td>
+                    <td><input type="button" value="Gassigehen buchen" @onclick="eventArgs => { ClickOnButton(false); }"/></td>
                 }
                 </tr>
         </table> 

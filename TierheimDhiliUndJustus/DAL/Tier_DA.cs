@@ -5,7 +5,6 @@
     using TierheimDhiliUndJustus.BLL;
     using System.Data.SqlClient;
     using System.IO;
-    /*using MySql.Data*/
 
 
     public static class Tier_DA
