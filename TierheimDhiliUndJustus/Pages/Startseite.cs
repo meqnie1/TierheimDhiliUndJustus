@@ -1,12 +1,15 @@
 ﻿namespace TierheimDhiliUndJustus.Pages
 {
+    using Microsoft.AspNetCore.Components;
     using TierheimDhiliUndJustus.BLL;
     using TierheimDhiliUndJustus.DAL;
+  
     
-    public partial class Startseite
+    public partial class Startseite : ComponentBase
     {
         public int counter = 0;
         public string geschlechtsource = "";
+        
 
         public static List<Tier> lsttier = Tier_DA.GetTier();
         protected override async Task OnInitializedAsync()
@@ -29,7 +32,9 @@
             
             return geschlechtsource;
         }
+
         
+
 
     }
 }
