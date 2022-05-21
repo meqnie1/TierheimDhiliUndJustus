@@ -1,0 +1,58 @@
+﻿@page "/login"
+@inject Kunde_DA kunde_da;
+@inject IJSRuntime js;
+@inject AuthenticationStateProvider authStateProvider;
+@inject NavigationManager navManager
+@using TierheimDhiliUndJustus.BLL;
+@using TierheimDhiliUndJustus.DAL;
+@using MySqlConnector;
+@using System.Drawing;
+@using System.Data.SqlClient;
+@using System.IO;
+@*@layout EmptyLayout;*@
+
+
+<div id="loginpage">
+<PageTitle>Login</PageTitle>
+
+<div id="Upperpart">
+    @*<div id="close"><img id="close" src="/img/close.png" @onclick="Login.CloseScreen" /></div> *@
+    <div id="logo"><h1>Anmelden</h1></div>
+</div>
+
+<div id="emailinput">
+    <img id="email" src="/img/email2.png" />
+    <a>E-Mail:</a>  
+    <input type="email" name="email" @bind="evalue">   
+</div>
+
+<div id="passwordinput">
+    <img id="schloss" src="/img/schloss.png" />
+    <a>Passwort:</a>  
+    <input type="@inputtype" name="password" @bind="pwvalue"> 
+    <img id="closedeye" src="@augenart" @onclick="ShowPasswort" />
+</div>
+
+@if(fehlermeldung!="")
+{
+    <div id="fehlermeldung">@fehlermeldung</div>
+}
+
+<div id="anmelden"><input type="button" name="anmelden" value="Anmelden" @onclick="Einloggen"></div>
+
+<div id="bereitsaccount">
+<a>Du hast noch kein Konto?</a><a id="registrieren" href="">Registrieren</a>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
