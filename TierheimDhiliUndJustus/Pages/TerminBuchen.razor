@@ -12,7 +12,7 @@
     public string Buchen { get; set; }
     [Parameter]
     public string ID{ get; set; }
-    int currentdateid;
+    int currentdateid = 0;
     bool gebucht = false;
 }
 @{
@@ -86,7 +86,7 @@ else{
                     {
                         //wenn man gleich den ersten Termin auswählt, wurde noch kein Wert in die Variable 'currentdateid' reingespeichert, weil die Methode 
                         //'Change CurrentSelectedDate' nie aufgerufen wurde. Deswegen wird das erste Elemente der Liste immer zuerst in die currentdateid gespeichert.
-                        if(lst_termine.ElementAt(0).ID_Termin == item.ID_Termin && lst_termine.Count >= 0)
+                        if(lst_termine.ElementAt(0).ID_Termin == item.ID_Termin && lst_termine.Count >= 0 && currentdateid == 0)
                         {
                             currentdateid = item.ID_Termin;
                         }
