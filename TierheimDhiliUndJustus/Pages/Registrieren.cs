@@ -23,7 +23,7 @@
             var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
             foreach (Kunde kunde in lstkunde)
             {
-                if (pwvalue != "" || evalue != "")
+                if (pwvalue != null && evalue != null)
                 {
                     if (kunde.Email == evalue)
                     {
