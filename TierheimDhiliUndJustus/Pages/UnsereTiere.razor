@@ -79,7 +79,8 @@
     <a href=""><p>Startseite</p></a><p> > </p><a href=""><p>Unsere Tiere</p></a>
 </div>
 
-<div id="alletiere">
+<div id="unseretiere_container">
+    <div id="alletiere">
     <img id="unseretiere_ueschrift" src="/img/unseretiere.png" alt="Unsere Tiere"/>
     <div id="unseretiere_bilder">
     
@@ -99,7 +100,6 @@
             }
         }
     </div>
-
 </div>
 
 <aside>
@@ -108,16 +108,18 @@
     <hr />
     <div class="unseretiere_tierarten">
         @{counterForFormatting=0;}
+        <div class="checkboxes">
         @foreach(var item in Tierart_DA.GetTierarten())
         {
             counterForFormatting++;
-            <input type="checkbox" name="@item.Tierartname" value="@item.Tierartname" @oninput="eventArgs => { ChangeCheckedStatus_Tierart(item.ID_Tierart, eventArgs.Value); }">
-            <label for="@item.Tierartname">@item.Tierartname</label>
-            if(counterForFormatting % 2 == 0)
-            {
-                <div id="block"></div>
-            }
+                <input type="checkbox" id="@item.Tierartname" name="@item.Tierartname" value="@item.Tierartname" @oninput="eventArgs => { ChangeCheckedStatus_Tierart(item.ID_Tierart, eventArgs.Value); }">
+                <label for="@item.Tierartname">@item.Tierartname</label>
+                @if(counterForFormatting % 2 == 0)
+                {
+                    <div id="block"></div>
+                }
         }
+        </div>
     </div>
     <h2>Tierrassen</h2>
     <hr />
@@ -126,19 +128,21 @@
         @foreach(var art in lst_tierarten)
         {
             counterTierrassen++;
-            <h3>@art.Tierartname<span>rassen:</span></h3>
-
-            counterForFormatting = 0;
-            foreach(var rasse in Tierrasse_DA.GetTierrassen(counterTierrassen))
-            {   
-                counterForFormatting++;
-                <input type="checkbox" name="@rasse.Tierrassennamen" value="@rasse.Tierrassennamen" @oninput="eventArgs => { ChangeCheckedStatus_Tierrassen(rasse.ID_Tierrasse, eventArgs.Value); }">
-                <label for="@rasse.Tierrassennamen">@rasse.Tierrassennamen</label>
-                if(counterForFormatting % 2 == 0)
-                {
-                    <div id="block"></div>
+            <div class="checkboxes">
+                <h3>@art.Tierartname<span>rassen:</span></h3>
+                @{counterForFormatting = 0;}
+                @foreach(var rasse in Tierrasse_DA.GetTierrassen(counterTierrassen))
+                {   
+                    counterForFormatting++;
+                    <input type="checkbox" id="@rasse.Tierrassennamen" name="@rasse.Tierrassennamen" value="@rasse.Tierrassennamen" @oninput="eventArgs => { ChangeCheckedStatus_Tierrassen(rasse.ID_Tierrasse, eventArgs.Value); }">
+                    <label for="@rasse.Tierrassennamen">@rasse.Tierrassennamen</label>
+                    if(counterForFormatting % 2 == 0)
+                    {
+                        <div id="block"></div>
+                    }
                 }
-            }
+            </div>
         }
     </div>
 </aside>
+</div>
