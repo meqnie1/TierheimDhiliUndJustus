@@ -52,11 +52,11 @@
     {
         if (besichtigung)
         {
-            UriHelper.NavigateTo($"/unseretiere/tierdetail/buchen/besichtigungbuchen");
+            UriHelper.NavigateTo($"/unseretiere/tierdetail/{CurrentTier.ID_Tier}/besichtigungbuchen");
         }
         else
         {
-            UriHelper.NavigateTo($"/unseretiere/tierdetail/buchen/gassigehenbuchen");
+            UriHelper.NavigateTo($"/unseretiere/tierdetail/{CurrentTier.ID_Tier}/gassigehenbuchen");
         }
     }
 }

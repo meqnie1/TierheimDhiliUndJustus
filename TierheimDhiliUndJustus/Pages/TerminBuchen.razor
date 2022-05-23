@@ -24,43 +24,60 @@
     string terminart = Buchen == "besichtigungbuchen" ? "Besichtigung buchen" : "Gassigehen buchen";
     List<Termin> lst_termine = Buchen == "besichtigungbuchen" ? Termin_DA.GetTermineWithTerminart(2) : Termin_DA.GetTermineWithTerminart(1);
 
-    void ClickOnButton()
+    void ClickOnButtonTerminBuchen()
     {
-        string element = Convert.ToString(Termin_DA.GetTermin(currentdateid).ID_Termin);
-        UriHelper.NavigateTo($"/unseretiere/tierdetail/{element}");
+        Termin_DA.BookATermin(currentdateid, CurrentTier.ID_Tier);
+        string url = Convert.ToString(Termin_DA.GetTermin(currentdateid).ID_Termin);
+        UriHelper.NavigateTo($"/unseretiere/tierdetail/{url}");
     }
 
-    void ChangeCurrentDateSelected(object checkedValue)
+    void ChangeCurrentSelectedDate(object checkedValue)
     {
         currentdateid = Convert.ToInt32(checkedValue);
     }
-}
 
+    void ClickOnButtonToUnsereTiere(){
+        UriHelper.NavigateTo("/unseretiere");
+    }
+}
 <div id="backnav">
     <a href=""><p>Startseite</p></a><p> > </p><a href="unseretiere"><p>Unsere Tiere</p></a><p> > </p><a href="unseretiere/tierdetail/@ID"><p>@CurrentTier.Tiername</p></a>
     <p> > </p><a href="unseretiere/tierdetail/@ID/@Buchen"><p>@terminart</p></a>
 </div>
 
-<div id="termin_alles">
-    <h1 id="termin_ueberschrift">@terminart</h1>
-
-    @{srcimg = "img/tiere/" + @CurrentTier.Tiername + ".jpg";
-    srcgeschlecht = startseite.GetGeschlecht(CurrentTier.ID_Tier);}
-    <div id="termin_rahmen">
-        <img id="termin_bild" src="@srcimg"/>
-        <h1>@CurrentTier.Tiername</h1>
-        <img id="termin_geschlecht" src=@srcgeschlecht />
+@if(terminart == "Gassigehen buchen" && Tierrasse_DA.GetTierartWithTierID(CurrentTier.ID_Tier) != 2)
+{
+    <div class="submitanderror">
+        <h1>Sie können das Tier '@CurrentTier.Tiername' nicht zum Gassigehen buchen.</h1>
+        <p>Sie möchten das Tier '@CurrentTier.Tiername' zur Besichtigung buchen? <a href="unseretiere/tierdetail/@CurrentTier.ID_Tier/besichtigungbuchen">Klicken Sie hier!</a></p>
+        <h2>Oder</h2>
+        <input type="button" value="Zurück zu Unsere Tiere" @onclick="eventArgs => { ClickOnButtonToUnsereTiere(); }"/>
     </div>
+}
+else{
 
-    <div id="termin_auswahlmenu">
-        <h2 id="auswahl_ueberschrift">Wählen Sie einen Termin aus:</h2>
-        <select name="terminauswahl_dropdown" id="terminauswahl" @onchange="eventArgs => { ChangeCurrentDateSelected(eventArgs.Value); }">
-            @foreach(Termin item in lst_termine)
-            {
-                <option value="@item.ID_Termin">@item.TerminDatum</option>
-            }
-        </select>
-        <input type="button" value="Termin bestätigen" @onclick="eventArgs => { ClickOnButton(); }"/>
+    <div id="termin_alles">
+        <h1 id="termin_ueberschrift">@terminart</h1>
+
+        @{srcimg = "img/tiere/" + @CurrentTier.Tiername + ".jpg";
+        srcgeschlecht = startseite.GetGeschlecht(CurrentTier.ID_Tier);}
+        <div id="termin_rahmen">
+            <img id="termin_bild" src="@srcimg"/>
+            <h1>@CurrentTier.Tiername</h1>
+            <img id="termin_geschlecht" src=@srcgeschlecht />
+        </div>
+
+        <div id="termin_auswahlmenu">
+            <h2 id="auswahl_ueberschrift">Wählen Sie einen Termin aus:</h2>
+            <select name="terminauswahl_dropdown" id="terminauswahl" @onchange="eventArgs => { ChangeCurrentSelectedDate(eventArgs.Value); }">
+                @foreach(Termin item in lst_termine)
+                {
+                    <option value="@item.ID_Termin">@item.TerminDatum</option>
+                }
+            </select>
+            <input type="button" value="Termin bestätigen" @onclick="eventArgs => { ClickOnButtonTerminBuchen(); }"/>
+        </div>
     </div>
-</div>
+}
+
 

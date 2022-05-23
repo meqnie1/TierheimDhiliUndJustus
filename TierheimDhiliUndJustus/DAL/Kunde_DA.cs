@@ -35,9 +35,9 @@
 
         }
         
-        public static List<Kunde> CreateKunde()
-        {
+        //public static List<Kunde> CreateKunde()
+        //{
 
-        }
+        //}
     }
 }

@@ -88,5 +88,36 @@ namespace TierheimDhiliUndJustus.DAL
             }
             return termin;
         }
+
+        public static Termin BookATermin(int terminid, int tierid)
+        {
+            Termin termin = new Termin();
+
+
+            using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
+            {
+                conn.Open();
+
+
+                sqlstatement = "UPDATE termin SET FK_Tier_Termin = @tierid, Gebucht = 1 WHERE ID_Termin = @terminid";
+
+
+                using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
+                {
+                    MySqlParameter paramIDTier = new MySqlParameter("@tierid", MySqlDbType.Int32);
+                    paramIDTier.Value = tierid;
+                    cmd.Parameters.Add(paramIDTier);
+
+                    MySqlParameter paramIDTermin= new MySqlParameter("@terminid", MySqlDbType.Int32);
+                    paramIDTermin.Value = terminid;
+                    cmd.Parameters.Add(paramIDTermin);
+
+                    cmd.ExecuteNonQuery();
+                }
+
+
+            }
+            return termin;
+        }
     }
 }

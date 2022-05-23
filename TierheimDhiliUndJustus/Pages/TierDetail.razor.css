@@ -63,13 +63,16 @@ img {
 #tierdetail_info >table > tr > td:nth-last-of-type(2n+2){
     width: 30%;
 }
-#tierdetail_info > table > tr > td > input {
+input {
     height: 3vw;
     width: 13vw;
     color: white;
     background-color: #339974;
     border: none;
     font-size: 1vw;
+}
+input:hover {
+    background-color: #2A8262;
 }
 
 #weiteretiere > .weiteretiere_bild {
