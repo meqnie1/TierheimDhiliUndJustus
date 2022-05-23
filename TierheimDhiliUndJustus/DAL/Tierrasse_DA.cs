@@ -7,8 +7,11 @@
     using System.IO;
 
     public class Tierrasse_DA
+
+        //TIERRASSEN METHODE UMBENENNEN AUF TIERRASSENWITHTIERARTID
     {
         public static string sqlstatement = "";
+
         public static List<Tierrasse> GetTierrassen(int tierart_ID)
         {
             List<Tierrasse> tierrasselist = new List<Tierrasse>();
