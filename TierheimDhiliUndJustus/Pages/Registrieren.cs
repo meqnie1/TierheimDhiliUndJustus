@@ -21,6 +21,7 @@
         public async Task Kundeerstellen()
         {
             var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
+            fehlermeldung = "";
             foreach (Kunde kunde in lstkunde)
             {
                 if (pwvalue != null && evalue != null)
@@ -28,23 +29,24 @@
                     if (kunde.Email == evalue)
                     {
                         fehlermeldung = "Email bereits vorhanden!";
+                        break;
                     }
                     if (evalue.Contains("@") == false || evalue.Contains(".") == false)
                     {
                         fehlermeldung = "Bitte geben Sie eine gültige Email ein";
+                        break;
                     }
                     if (pwvalue.Length > 45 || pwvalue.Length < 5)
                     {
                         fehlermeldung = "Passwort zu lang oder zu kurz";
-                    }
-                                   
+                        break;
+                    }           
                 }
                 else
                 {
                     fehlermeldung = "Bitte füllen Sie alle Felder aus";
                 }
-               
-                
+                         
             }
             if (fehlermeldung == "")
             {
