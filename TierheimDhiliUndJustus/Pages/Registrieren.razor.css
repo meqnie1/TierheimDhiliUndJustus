@@ -94,32 +94,33 @@ input[type=button] {
  
 }
 
+
 #bereitsaccount > a {
-     position: relative;
-     top: 20%;
-     font-size:1vw;
+    position: relative;
+    top: 20%;
+    font-size: 1vw;
 }
 
-#registrieren{
-    color:black;
-    margin-left:0.2vw;
+#anmelden {
+    color: black;
+    margin-left: 0.2vw;
 }
 
-#close{
-    height:1.5vw;
-    width:1.5vw;
-    margin-left:18vw;
-    margin-top:1vw;
+#close {
+    height: 1.5vw;
+    width: 1.5vw;
+    margin-left: 18vw;
+    margin-top: 1vw;
 }
 
 #upperpart {
-    display:inline-block;
+    display: inline-block;
 }
 
-#fehlermeldung{
-    margin-left:7vw;
-    margin-top:1vw;
-    color:red;
-    font-size:0.8vw;
+#fehlermeldung {
+    margin-left: 7vw;
+    margin-top: 1vw;
+    color: red;
+    font-size: 0.8vw;
 }
 

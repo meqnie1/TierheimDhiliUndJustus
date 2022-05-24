@@ -1,5 +1,4 @@
 ﻿@page "/login"
-@inject Kunde_DA kunde_da;
 @inject IJSRuntime js;
 @inject AuthenticationStateProvider authStateProvider;
 @inject NavigationManager navManager
@@ -9,7 +8,8 @@
 @using System.Drawing;
 @using System.Data.SqlClient;
 @using System.IO;
-@*@layout EmptyLayout;*@
+@using TierheimDhiliUndJustus.Authentication;
+@layout EmptyLayout;
 
 
 <div id="loginpage">
@@ -40,13 +40,80 @@
 
 <div id="anmelden"><input type="button" name="anmelden" value="Anmelden" @onclick="Einloggen"></div>
 
+
 <div id="bereitsaccount">
-<a>Du hast noch kein Konto?</a><a id="registrieren" href="">Registrieren</a>
+<a>Du hast noch kein Konto?</a><a id="registrieren" href="registrieren">Registrieren</a>
 </div>
 </div>
+@*<CascadingValue Value="@Angemeldet" Name="Angemeldet">
+    <NavMenu></NavMenu>
+</CascadingValue>*@
 
 
+@code{
+    public static bool Angemeldet { get; set; } = false;
 
+
+    string pwvalue;
+    string evalue;
+    string augenart="/img/closedeye.png";
+    string inputtype="password";
+    string fehlermeldung = "";
+    public static bool screenclosed = true;
+    bool eingeloggt;
+    Kunde eingeloggterKunde;
+
+    public static List<Kunde> lstkunde = Kunde_DA.GetKunde();
+
+    private async Task Einloggen()
+    {
+
+        var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
+
+
+        foreach (Kunde kunde in lstkunde)
+        {
+            if (kunde.Email == evalue && kunde.Passwort == pwvalue)
+            {
+                Angemeldet = true;
+                eingeloggterKunde = kunde;
+                fehlermeldung = "";
+                await customAuthStateProvider.UpdateAuthenticationState(new UserSession
+                    {
+                        Email = eingeloggterKunde.Email,
+                        Rolle = eingeloggterKunde.Rolle
+                    });
+                LoginConfig.Angemeldet = eingeloggterKunde.ID_Kunde;
+                
+                navManager.NavigateTo("/");
+
+                    break;                     
+                }
+                if (kunde.Email != evalue || kunde.Passwort != pwvalue)
+                {
+                    fehlermeldung = "Fehleingabe, versuchen Sie es nocheinmal";
+
+                }                          
+            }
+            
+        }
+       
+        public void ShowPasswort()
+        {
+            if (inputtype == "password")
+            {
+                inputtype = "text";
+                augenart = "/img/openedeye.png";
+
+            }
+            else
+            {
+                inputtype = "password";
+                augenart = "/img/closedeye.png";
+            }
+            
+        }   
+}
 
 
 

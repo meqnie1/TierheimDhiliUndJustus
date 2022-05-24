@@ -1,13 +1,15 @@
 ﻿using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 using System.Security.Claims;
+using TierheimDhiliUndJustus.Authentication;
 
-namespace TierheimDhiliUndJustus.Authentication
+namespace TierheimDhiliUndJustus
 {
     public class CustomAuthenticationStateProvider : AuthenticationStateProvider
     {
         private readonly ProtectedSessionStorage _sessionstorage;
         private ClaimsPrincipal _anonymous = new ClaimsPrincipal(new ClaimsIdentity());
+
 
         public CustomAuthenticationStateProvider(ProtectedSessionStorage sessionstorage)
         {
@@ -30,7 +32,7 @@ namespace TierheimDhiliUndJustus.Authentication
                 }, "CustomAuth"));
                 return await Task.FromResult(new AuthenticationState(claimsPrincipal));
             }
-            catch
+            catch(Exception)
             {
                 return await Task.FromResult(new AuthenticationState(_anonymous));
             }
@@ -50,8 +52,8 @@ namespace TierheimDhiliUndJustus.Authentication
                 }));
             }
             else
-            {
-                await _sessionstorage.DeleteAsync("UserSession");
+            {               
+                await _sessionstorage.DeleteAsync("UserSession");               
                 claimsPrincipal = _anonymous;
             }
 
