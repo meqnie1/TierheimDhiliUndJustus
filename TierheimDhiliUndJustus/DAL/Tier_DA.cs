@@ -20,7 +20,7 @@
                 conn.Open();
 
                
-                sqlstatement = "SELECT * FROM tier";
+                sqlstatement = "SELECT * FROM tier WHERE Fundtier = 0";
 
 
                 using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
@@ -84,57 +84,57 @@
 
         }
 
-        public static List<Tier> GetTierWithFilterTierart(List<int> checkboxes)
-        {
-            string whereStatement = "";
-            List<Tier> tierList = new List<Tier>();
-            if (checkboxes.Count != 0)
-            {
-                whereStatement = "WHERE tierrasse.FK_Tierart_Tierrasse IN(";
-                foreach (int item in checkboxes)
-                {
-                    whereStatement += item;
-                    if (item != checkboxes.Last())
-                    {
-                        whereStatement += ", ";
-                    }
-                }
-                whereStatement += ")";
-            }
+        //public static List<Tier> GetTierWithFilterTierart(List<int> checkboxes)
+        //{
+        //    string whereStatement = "";
+        //    List<Tier> tierList = new List<Tier>();
+        //    if (checkboxes.Count != 0)
+        //    {
+        //        whereStatement = "WHERE tierrasse.FK_Tierart_Tierrasse IN(";
+        //        foreach (int item in checkboxes)
+        //        {
+        //            whereStatement += item;
+        //            if (item != checkboxes.Last())
+        //            {
+        //                whereStatement += ", ";
+        //            }
+        //        }
+        //        whereStatement += ")";
+        //    }
 
-            using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
-            {
-                conn.Open();
-                sqlstatement = "SELECT * FROM tier JOIN tierrasse ON tier.FK_Tierrasse_Tier = tierrasse.ID_Tierrasse " + whereStatement;
+        //    using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
+        //    {
+        //        conn.Open();
+        //        sqlstatement = "SELECT * FROM tier JOIN tierrasse ON tier.FK_Tierrasse_Tier = tierrasse.ID_Tierrasse " + whereStatement;
 
 
 
-                using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
-                {
+        //        using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
+        //        {
 
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            Tier tier = new Tier(
-                            (int)reader["ID_Tier"],
-                            (string)reader["Tiername"],
-                            (DateTime)reader["Geburtsdatum"],
-                            (string)reader["Geschlecht"],
-                            (string)reader["Beschreibung"],
-                            (SByte)reader["Fundtier"],
-                            (int)reader["FK_Tierrasse_Tier"]); ;
+        //            using (MySqlDataReader reader = cmd.ExecuteReader())
+        //            {
+        //                while (reader.Read())
+        //                {
+        //                    Tier tier = new Tier(
+        //                    (int)reader["ID_Tier"],
+        //                    (string)reader["Tiername"],
+        //                    (DateTime)reader["Geburtsdatum"],
+        //                    (string)reader["Geschlecht"],
+        //                    (string)reader["Beschreibung"],
+        //                    (SByte)reader["Fundtier"],
+        //                    (int)reader["FK_Tierrasse_Tier"]); ;
 
-                            tierList.Add(tier);
-                        }
-                    }
-                }
-            }
+        //                    tierList.Add(tier);
+        //                }
+        //            }
+        //        }
+        //    }
 
-            whereStatement = "";
-            return tierList;
+        //    whereStatement = "";
+        //    return tierList;
 
-        }
+        //}
 
         public static List<Tier> GetTierWithFilterTierrasse(List<int> checkboxes_tr, List<int> checkboxes_ta)
         {
@@ -245,5 +245,96 @@
             }
             return tierList;
         }
-    }  
+
+        public static List<Tier> GetFundtiere()
+        {
+            List<Tier> tierList = new List<Tier>();
+
+
+            using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
+            {
+                conn.Open();
+
+
+                sqlstatement = "SELECT * FROM tier WHERE Fundtier = 1";
+
+
+                using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
+                {
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+
+                            Tier tier = new Tier(
+                            (int)reader["ID_Tier"],
+                            (string)reader["Tiername"],
+                            (DateTime)reader["Geburtsdatum"],
+                            (string)reader["Geschlecht"],
+                            (string)reader["Beschreibung"],
+                            (SByte)reader["Fundtier"],
+                            (int)reader["FK_Tierrasse_Tier"]); ;
+
+                            tierList.Add(tier);
+                        }
+
+                    }
+                }
+
+
+            }
+            return tierList;
+        }
+
+        public static List<Tier> GetFundtierWithFilterTierrasse(List<int> checkboxes_tr, List<int> checkboxes_ta)
+        {
+            string whereStatement_tr = "IN(0)";
+            string whereStatement_ta = "IN(0)";
+
+            if (checkboxes_tr.Count != 0)
+            {
+                whereStatement_tr = GetWhereStatement(checkboxes_tr);
+            }
+            if (checkboxes_ta.Count != 0)
+            {
+                whereStatement_ta = GetWhereStatement(checkboxes_ta);
+            }
+
+            List<Tier> tierList = new List<Tier>();
+
+            using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
+            {
+                conn.Open();
+                sqlstatement = "SELECT * FROM tier JOIN tierrasse ON tier.FK_Tierrasse_Tier = " +
+                    "tierrasse.ID_Tierrasse WHERE Fundtier = 1 AND (tier.FK_Tierrasse_Tier " + whereStatement_tr + " OR tierrasse.FK_Tierart_Tierrasse " + whereStatement_ta + ")";
+
+
+
+                using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
+                {
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Tier tier = new Tier(
+                            (int)reader["ID_Tier"],
+                            (string)reader["Tiername"],
+                            (DateTime)reader["Geburtsdatum"],
+                            (string)reader["Geschlecht"],
+                            (string)reader["Beschreibung"],
+                            (SByte)reader["Fundtier"],
+                            (int)reader["FK_Tierrasse_Tier"]); ;
+
+                            tierList.Add(tier);
+                        }
+                    }
+                }
+            }
+            return tierList;
+
+        }
+    }
+    
 }
