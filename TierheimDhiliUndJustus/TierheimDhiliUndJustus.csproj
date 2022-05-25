@@ -14,6 +14,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\css\UnsereFundTiere.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\css\UnsereFundTiere.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="6.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.4">
       <PrivateAssets>all</PrivateAssets>

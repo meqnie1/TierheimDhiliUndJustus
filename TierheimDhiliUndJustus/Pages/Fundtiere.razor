@@ -1,4 +1,4 @@
-﻿@page "/unseretiere"
+﻿@page "/fundtiere"
 @inject NavigationManager UriHelper;
 @using TierheimDhiliUndJustus.BLL;
 @using TierheimDhiliUndJustus.DAL;
@@ -15,6 +15,7 @@
     public List<int> lstcheckbox_tierart = new List<int>();
     public List<int> lstcheckbox_tierrassen = new List<int>();
     public List<Tierart> lst_tierarten = Tierart_DA.GetTierarten();
+    public static List<Tier> lst_filtertiere = new List<Tier>();
 }
 
 @code{
@@ -63,11 +64,11 @@
     {
         if(lstcheckbox_tierrassen.Count > 0 || lstcheckbox_tierart.Count > 0)
         {
-            return Tier_DA.GetTierWithFilterTierrasse(lstcheckbox_tierrassen, lstcheckbox_tierart);
+            return Tier_DA.GetFundtierWithFilterTierrasse(lstcheckbox_tierrassen, lstcheckbox_tierart);
         }
         else
         {
-            return Tier_DA.GetTier();
+            return Tier_DA.GetFundtiere();
         }
     }
 }
@@ -81,7 +82,7 @@
 </head>
 
 <div id="backnav">
-    <a href=""><p>Startseite</p></a><p> > </p><a href="/unseretiere"><p>Unsere Tiere</p></a>
+    <a href=""><p>Startseite</p></a><p> > </p><a href="/fundtiere"><p>Fundtiere</p></a>
 </div>
 
 <div id="unseretiere_container">
@@ -89,20 +90,30 @@
     <img id="unseretiere_ueschrift" src="/img/unseretiere.png" alt="Unsere Tiere"/>
     <div id="unseretiere_bilder">
     
-        @{counterForFormatting = 0;}
-        @foreach (var item in GetTheRightTierList())
+        @{
+            counterForFormatting = 0;
+            lst_filtertiere = GetTheRightTierList();
+        }
+        @if(lst_filtertiere.Count == 0)
         {
-            counterForFormatting++;
-            string srcgeschlecht = Startseite.GetGeschlecht(item.ID_Tier);
-            string srcimg = "img/tiere/" + @item.Tiername + ".jpg";
-
-            <div class="unseretiere_rahmen" ><img class="unseretiere_bild" src="@srcimg" @onclick="eventArgs => { ClickOnTier(Convert.ToString(item.ID_Tier)); }">
-            <h1 @onclick="eventArgs => { ClickOnTier(Convert.ToString(item.ID_Tier)); }">@item.Tiername</h1>
-            <img class="unseretiere_geschlecht" src=@srcgeschlecht /></div>
-            @if(counterForFormatting % 3 == 0)
+            <h1 id="fehler_filter">Es gibt keine Tiere mit diesem Filter.</h1>
+        }
+        else
+        {
+            foreach (var item in lst_filtertiere)
             {
-                    <div class="block"></div>   
-            }
+                counterForFormatting++;
+                string srcgeschlecht = Startseite.GetGeschlecht(item.ID_Tier);
+                string srcimg = "img/tiere/" + @item.Tiername + ".jpg";
+
+                <div class="unseretiere_rahmen" ><img class="unseretiere_bild" src="@srcimg" @onclick="eventArgs => { ClickOnTier(Convert.ToString(item.ID_Tier)); }">
+                <h1 @onclick="eventArgs => { ClickOnTier(Convert.ToString(item.ID_Tier)); }">@item.Tiername</h1>
+                <img class="unseretiere_geschlecht" src=@srcgeschlecht /></div>
+                if(counterForFormatting % 3 == 0)
+                {
+                        <div class="block"></div>   
+                }
+            } 
         }
     </div>
 </div>
