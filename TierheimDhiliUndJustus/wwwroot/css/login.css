@@ -1,36 +1,49 @@
-﻿#loginpage{
-    margin-left:25vw;
-    margin-top:5vw;
+﻿#loginpage {
+    margin-left: 25vw;
+    margin-top: 5vw;
    
 }
 
+#backtohome {
+    position:absolute;
+    left:4vw;
+    top:2vw;
+}
+
+#backtohome > a{
+   
+    color: rgb(81,154,114);
+}
 
 h1 {
     font-size: 1.5vw;
-    margin-bottom:3vw;
+    margin-bottom: 3vw;
 }
 
 #logo {
     margin-left: 3vw;
     color: rgb(81,154,114);
-    margin-bottom:2vw;
+    margin-bottom: 2vw;
 }
 
-#emailinput, #passwordinput{
+#emailinput, #passwordinput {
     margin-left: 7vw;
     background-color: rgba(81,154,114,11%);
     width: 27vw;
     border-radius: 15px;
-    height:2.5vw;
-    font-size:1vw;
-    
+    height: 2.5vw;
+    font-size: 1vw;
 }
 
-input[type=email]:focus, input[type=password]:focus, input[type=text]:focus {
-    outline: none !important;
-    border-color: #719ECE;
-    box-shadow: 0 0 0px;
+input[type=email] {
+    padding-left: 1.2vw;
 }
+
+    input[type=email]:focus, input[type=password]:focus, input[type=text]:focus {
+        outline: none !important;
+        border-color: #719ECE;
+        box-shadow: 0 0 0px;
+    }
 
 input[type=email], input[type=password], input[type=text] {
     background-color: rgba(81,154,114,0%);
@@ -52,10 +65,10 @@ input[type=email], input[type=password], input[type=text] {
     width: 1.5vw;
     position: relative;
     top: 17%;
-    margin-left:1vw;
+    margin-left: 1vw;
 }
 
-#passwordinput{
+#passwordinput {
     margin-top: 1vw;
 }
 
@@ -74,24 +87,22 @@ input[type=button] {
     color: white;
     background-color: #519A72;
     border-style: none;
-    height:2.5vw;
+    height: 2.5vw;
     margin-top: 2vw;
     margin-left: 15vw;
-    border-radius:5px;
-    font-size:1vw;
+    border-radius: 5px;
+    font-size: 1vw;
 }
 
 #bereitsaccount {
-
     margin-top: 2vw;
     width: 40vw;
-    height:3vw;
-    color:black;
-    text-align:center;
-    margin-bottom:4vw;
-    border-bottom-left-radius:15px;
-    border-bottom-right-radius:15px
- 
+    height: 3vw;
+    color: black;
+    text-align: center;
+    margin-bottom: 4vw;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px
 }
 
 
@@ -124,3 +135,7 @@ input[type=button] {
     font-size: 0.8vw;
 }
 
+#registrieren {
+    color: black;
+    margin-left: 0.2vw;
+}

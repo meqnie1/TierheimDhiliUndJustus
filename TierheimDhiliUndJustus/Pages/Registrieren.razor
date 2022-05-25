@@ -1,5 +1,4 @@
 ﻿@page "/registrieren"
-@inject Kunde_DA kunde_da;
 @inject IJSRuntime js;
 @inject AuthenticationStateProvider authStateProvider;
 @inject NavigationManager navManager
@@ -9,11 +8,17 @@
 @using System.Drawing;
 @using System.Data.SqlClient;
 @using System.IO;
-@*@layout EmptyLayout;*@
+@layout EmptyLayout;
 
+
+<head>
+    <link href="css/login.css" rel="stylesheet" type="text/css" />
+</head>
 
 <div id="loginpage">
 <PageTitle>Login</PageTitle>
+
+<div id="backtohome"><a href="/">Zurück zur Startseite</a></div>
 
 <div id="Upperpart">
     <div id="logo"><h1>Registrieren</h1></div>
