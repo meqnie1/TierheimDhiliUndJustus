@@ -12,22 +12,13 @@
 <div id="neuetiere">
     <img id="neuetiere_ueschrift" src="/img/neuzuganege.png" alt="Unsere Neuzugänge"/>
     <div id="neuetiere_bilder"> 
-
-
-
-
-@*    @if(Login.screenclosed == false)
-    {
-        
-    <div hidden="@Login.screenclosed" id="loginscreeen"><Login /></div>
-
-    }*@
             
     @foreach(var item in lsttier)
     {
         string srcgeschlecht = GetGeschlecht(item.ID_Tier);
         string srcimg = "img/tiere/" + @item.Tiername + ".jpg";
 
+        //Counter, sodass nur 3 Tiere dargestellt werden
         if(counter <=2)
         {
         <div class="neuetiere_rahmen"><img class="neuetiere_bild" src="@srcimg" />

@@ -12,10 +12,12 @@
         
 
         public static List<Tier> lsttier = Tier_DA.GetTier();
-        protected override async Task OnInitializedAsync()
-        {
+
         
-        }
+        //protected override async Task OnInitializedAsync()
+        //{
+        
+        //}
 
         public string GetGeschlecht(int tierid)
         {
