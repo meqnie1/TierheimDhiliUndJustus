@@ -12,34 +12,12 @@
         
 
         public static List<Tier> lsttier = Tier_DA.GetTier();
+        public WichtigeMethoden WichtigeMethoden = new WichtigeMethoden();
 
-        
+
         //protected override async Task OnInitializedAsync()
         //{
-        
+
         //}
-
-        public string GetGeschlecht(int tierid)
-        {
-            Tier tier = Tier_DA.GetOneTier(tierid);
-           
-            if (tier.Geschlecht == "w")
-            {
-                geschlechtsource= "img/weiblich.png";
-            }
-            else
-            {
-                geschlechtsource = "img/männlich.png";
-            }             
-            
-            return geschlechtsource;
-        }
-
-        public void ClickOnTier(string tierid)
-        {
-            UriHelper.NavigateTo($"/unseretiere/tierdetail/{tierid}");
-        }
-
-
     }
 }

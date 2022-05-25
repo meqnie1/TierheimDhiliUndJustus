@@ -2,29 +2,19 @@
 @inject NavigationManager UriHelper;
 @using TierheimDhiliUndJustus.BLL;
 @using TierheimDhiliUndJustus.DAL;
+@using TierheimDhiliUndJustus.Pages;
 @using MySqlConnector;
 @using System.Drawing;
 @using System.Data.SqlClient;
 @using System.IO;
-@using TierheimDhiliUndJustus.Pages;
-
-@code{
-    public static int counterForFormatting = 0;
-    public static int counterTierrassen = 0;
-    public string geschlechtsource = "";
-    public Startseite Startseite = new Startseite();
-    public List<int> lstcheckbox_tierart = new List<int>();
-    public List<int> lstcheckbox_tierrassen = new List<int>();
-    public List<Tierart> lst_tierarten = Tierart_DA.GetTierarten();
-    public WichtigeMethoden WichtigeMethoden = new WichtigeMethoden();
-}
 
 
 <PageTitle>Unsere Tiere</PageTitle>
 
-@*Verlinkung des CSS's per head link, weil das CSS auf mehreren Seiten verwendet wird. (UnsereTiere.razor und Fundtiere.razor)*@
+@*Verlinkung des CSS's per head link, weil das CSS auf mehreren Seiten verwendet wird.*@
 <head>
     <link href="css/UnsereFundTiere.css" rel="stylesheet" type="text/css" />
+    <link href="css/backnav.css" rel="stylesheet" type="text/css" />
 </head>
 
 <div id="backnav">
@@ -33,26 +23,26 @@
 
 <div id="unseretiere_container">
     <div id="alletiere">
-    <img id="unseretiere_ueschrift" src="/img/unseretiere.png" alt="Unsere Tiere"/>
-    <div id="unseretiere_bilder">
-    
-        @{counterForFormatting = 0;}
-        @foreach (var item in WichtigeMethoden.GetTheRightTierList(lstcheckbox_tierrassen, lstcheckbox_tierart))
-        {
-            counterForFormatting++;
-            string srcgeschlecht = Startseite.GetGeschlecht(item.ID_Tier);
-            string srcimg = "img/tiere/" + @item.Tiername + ".jpg";
+        <img id="unseretiere_ueschrift" src="/img/unseretiere.png" alt="Unsere Tiere"/>
 
-            <div class="unseretiere_rahmen" ><img class="unseretiere_bild" src="@srcimg" @onclick="@(()=>UriHelper.NavigateTo($"/unseretiere/tierdetail/{@item.ID_Tier}"))">
-            <h1 @onclick="@(()=>UriHelper.NavigateTo($"/unseretiere/tierdetail/{@item.ID_Tier}"))">@item.Tiername</h1>
-            <img class="unseretiere_geschlecht" src=@srcgeschlecht /></div>
-            @if(counterForFormatting % 3 == 0)
+        <div id="unseretiere_bilder">
+            @{counterForFormatting = 0;}
+            @foreach (var item in WichtigeMethoden.GetTheRightTierList(lstcheckbox_tierrassen, lstcheckbox_tierart))
             {
-                    <div class="block"></div>   
+                counterForFormatting++;
+                string srcgeschlecht = WichtigeMethoden.GetGeschlecht(item.ID_Tier);
+                string srcimg = "img/tiere/" + @item.Tiername + ".jpg";
+
+                <div class="unseretiere_rahmen" ><img class="unseretiere_bild" src="@srcimg" @onclick="@(()=>UriHelper.NavigateTo($"/unseretiere/tierdetail/{@item.ID_Tier}"))">
+                <h1 @onclick="@(()=>UriHelper.NavigateTo($"/unseretiere/tierdetail/{@item.ID_Tier}"))">@item.Tiername</h1>
+                <img class="unseretiere_geschlecht" src=@srcgeschlecht /></div>
+                @if(counterForFormatting % 3 == 0)
+                {
+                        <div class="block"></div>   
+                }
             }
-        }
+        </div>
     </div>
-</div>
 
 <aside>
     <h1>Filter</h1>
@@ -61,16 +51,16 @@
     <div class="unseretiere_tierarten">
         @{counterForFormatting=0;}
         <div class="checkboxes">
-        @foreach(var item in Tierart_DA.GetTierarten())
-        {
-            counterForFormatting++;
+            @foreach(var item in lst_tierarten)
+            {
+                counterForFormatting++;
                 <input type="checkbox" id="@item.Tierartname" name="@item.Tierartname" value="@item.Tierartname" @oninput="eventArgs => { WichtigeMethoden.ChangeCheckedStatus(lstcheckbox_tierart,item.ID_Tierart, eventArgs.Value); }">
                 <label for="@item.Tierartname">@item.Tierartname</label>
                 @if(counterForFormatting % 2 == 0)
                 {
                     <div id="block"></div>
                 }
-        }
+            }
         </div>
     </div>
     <h2>Tierrassen</h2>

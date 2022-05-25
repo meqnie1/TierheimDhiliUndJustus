@@ -7,7 +7,6 @@
 @inject NavigationManager UriHelper;
 
 @code{
-
     public void ChangeCheckedStatus(List<int> lst_checkbox, int tierid, object checkedValue)
     {
         if ((bool)checkedValue == true)
@@ -36,5 +35,19 @@
         {
             return Tier_DA.GetTier();
         }
+    }
+
+    public string GetGeschlecht(int tierid)
+    {
+        Tier tier = Tier_DA.GetOneTier(tierid);
+           
+        if (tier.Geschlecht == "w")
+        {
+            return "img/weiblich.png";
+        }
+        else
+        {
+            return "img/männlich.png";
+        }             
     }
 }

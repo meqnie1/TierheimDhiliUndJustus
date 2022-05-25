@@ -2,6 +2,7 @@
 @inject NavigationManager UriHelper
 @using TierheimDhiliUndJustus.DAL;
 @using TierheimDhiliUndJustus.BLL;
+@using TierheimDhiliUndJustus.Pages;
 @using MySqlConnector;
 @using System.Drawing;
 @using System.Data.SqlClient;
@@ -20,6 +21,7 @@
     string srcgeschlecht;
     Startseite startseite = new Startseite();
     int counter = 0;
+    WichtigeMethoden WichtigeMethoden = new WichtigeMethoden();
 
     string GetGeschlecht()
     {
@@ -106,7 +108,7 @@
         @foreach(var item in Tier_DA.GetTierExceptTierID(CurrentTier.ID_Tier))
         {
             srcimg = "img/tiere/" + @item.Tiername + ".jpg";
-            srcgeschlecht = startseite.GetGeschlecht(item.ID_Tier);
+            srcgeschlecht = WichtigeMethoden.GetGeschlecht(item.ID_Tier);
             if(counter <=2)
             {
                 <div class="weiteretiere_rahmen"><img class="weiteretiere_bild" src="@srcimg" @onclick="eventArgs => { ClickOnTier(Convert.ToString(item.ID_Tier)); }"/>
