@@ -1,0 +1,53 @@
+﻿@using TierheimDhiliUndJustus.BLL;
+@using TierheimDhiliUndJustus.DAL;
+@using MySqlConnector;
+@using System.Drawing;
+@using System.Data.SqlClient;
+@using System.IO;
+@inject NavigationManager UriHelper;
+
+@code{
+    public void ChangeCheckedStatus(List<int> lst_checkbox, int tierid, object checkedValue)
+    {
+        if ((bool)checkedValue == true)
+        {
+            if (!lst_checkbox.Contains(tierid))
+            {
+                lst_checkbox.Add(tierid);
+            }
+        }
+        else
+        {
+            if (lst_checkbox.Contains(tierid))
+            {
+                lst_checkbox.Remove(tierid);
+            }
+        }
+    }
+
+    public List<Tier> GetTheRightTierList(List<int> lstcheckbox_tierrassen, List<int> lstcheckbox_tierart)
+    {
+        if(lstcheckbox_tierrassen.Count > 0 || lstcheckbox_tierart.Count > 0)
+        {
+            return Tier_DA.GetTierWithFilterTierrasse(lstcheckbox_tierrassen, lstcheckbox_tierart);
+        }
+        else
+        {
+            return Tier_DA.GetTier();
+        }
+    }
+
+    public string GetGeschlecht(int tierid)
+    {
+        Tier tier = Tier_DA.GetOneTier(tierid);
+           
+        if (tier.Geschlecht == "w")
+        {
+            return "img/weiblich.png";
+        }
+        else
+        {
+            return "img/männlich.png";
+        }             
+    }
+}

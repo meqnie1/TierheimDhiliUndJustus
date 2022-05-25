@@ -2,82 +2,19 @@
 @inject NavigationManager UriHelper;
 @using TierheimDhiliUndJustus.BLL;
 @using TierheimDhiliUndJustus.DAL;
+@using TierheimDhiliUndJustus.Pages;
 @using MySqlConnector;
 @using System.Drawing;
 @using System.Data.SqlClient;
 @using System.IO;
 
-@code{
-    public static int counterForFormatting = 0;
-    public static int counterTierrassen = 0;
-    public string geschlechtsource = "";
-    public Startseite Startseite = new Startseite();
-    public List<int> lstcheckbox_tierart = new List<int>();
-    public List<int> lstcheckbox_tierrassen = new List<int>();
-    public List<Tierart> lst_tierarten = Tierart_DA.GetTierarten();
-}
-
-@code{
-    public void ChangeCheckedStatus_Tierart(int tierid, object checkedValue)
-    {
-        if((bool)checkedValue == true)
-        {
-            if (!lstcheckbox_tierart.Contains(tierid))
-            {
-                lstcheckbox_tierart.Add(tierid);
-            }
-        }
-        else
-        {
-            if (lstcheckbox_tierart.Contains(tierid))
-            {
-                lstcheckbox_tierart.Remove(tierid);
-            }
-        }
-    }
-
-    public void ChangeCheckedStatus_Tierrassen(int tierid, object checkedValue)
-    {
-        if((bool)checkedValue == true)
-        {
-            if (!lstcheckbox_tierrassen.Contains(tierid))
-            {
-                lstcheckbox_tierrassen.Add(tierid);
-            }
-        }
-        else
-        {
-            if (lstcheckbox_tierrassen.Contains(tierid))
-            {
-                lstcheckbox_tierrassen.Remove(tierid);
-            }
-        }
-    }
-
-    public void ClickOnTier(string tierid)
-    {
-        UriHelper.NavigateTo($"/unseretiere/tierdetail/{tierid}");
-    }
-
-    public List<Tier> GetTheRightTierList()
-    {
-        if(lstcheckbox_tierrassen.Count > 0 || lstcheckbox_tierart.Count > 0)
-        {
-            return Tier_DA.GetTierWithFilterTierrasse(lstcheckbox_tierrassen, lstcheckbox_tierart);
-        }
-        else
-        {
-            return Tier_DA.GetTier();
-        }
-    }
-}
-
 
 <PageTitle>Unsere Tiere</PageTitle>
 
-@*Verlinkung des CSS's per head link, weil das CSS auf mehreren Seiten verwendet wird. (UnsereTiere.razor und Fundtiere.razor)*@
+@*Verlinkung des CSS's per head link, weil das CSS auf mehreren Seiten verwendet wird.*@
 <head>
     <link href="css/UnsereFundTiere.css" rel="stylesheet" type="text/css" />
+    <link href="css/backnav.css" rel="stylesheet" type="text/css" />
 </head>
 
 <div id="backnav">
@@ -86,26 +23,26 @@
 
 <div id="unseretiere_container">
     <div id="alletiere">
-    <img id="unseretiere_ueschrift" src="/img/unseretiere.png" alt="Unsere Tiere"/>
-    <div id="unseretiere_bilder">
-    
-        @{counterForFormatting = 0;}
-        @foreach (var item in GetTheRightTierList())
-        {
-            counterForFormatting++;
-            string srcgeschlecht = Startseite.GetGeschlecht(item.ID_Tier);
-            string srcimg = "img/tiere/" + @item.Tiername + ".jpg";
+        <img id="unseretiere_ueschrift" src="/img/unseretiere.png" alt="Unsere Tiere"/>
 
-            <div class="unseretiere_rahmen" ><img class="unseretiere_bild" src="@srcimg" @onclick="eventArgs => { ClickOnTier(Convert.ToString(item.ID_Tier)); }">
-            <h1 @onclick="eventArgs => { ClickOnTier(Convert.ToString(item.ID_Tier)); }">@item.Tiername</h1>
-            <img class="unseretiere_geschlecht" src=@srcgeschlecht /></div>
-            @if(counterForFormatting % 3 == 0)
+        <div id="unseretiere_bilder">
+            @{counterForFormatting = 0;}
+            @foreach (var item in WichtigeMethoden.GetTheRightTierList(lstcheckbox_tierrassen, lstcheckbox_tierart))
             {
-                    <div class="block"></div>   
+                counterForFormatting++;
+                string srcgeschlecht = WichtigeMethoden.GetGeschlecht(item.ID_Tier);
+                string srcimg = "img/tiere/" + @item.Tiername + ".jpg";
+
+                <div class="unseretiere_rahmen" ><img class="unseretiere_bild" src="@srcimg" @onclick="@(()=>UriHelper.NavigateTo($"/unseretiere/tierdetail/{@item.ID_Tier}"))">
+                <h1 @onclick="@(()=>UriHelper.NavigateTo($"/unseretiere/tierdetail/{@item.ID_Tier}"))">@item.Tiername</h1>
+                <img class="unseretiere_geschlecht" src=@srcgeschlecht /></div>
+                @if(counterForFormatting % 3 == 0)
+                {
+                        <div class="block"></div>   
+                }
             }
-        }
+        </div>
     </div>
-</div>
 
 <aside>
     <h1>Filter</h1>
@@ -114,16 +51,16 @@
     <div class="unseretiere_tierarten">
         @{counterForFormatting=0;}
         <div class="checkboxes">
-        @foreach(var item in Tierart_DA.GetTierarten())
-        {
-            counterForFormatting++;
-                <input type="checkbox" id="@item.Tierartname" name="@item.Tierartname" value="@item.Tierartname" @oninput="eventArgs => { ChangeCheckedStatus_Tierart(item.ID_Tierart, eventArgs.Value); }">
+            @foreach(var item in lst_tierarten)
+            {
+                counterForFormatting++;
+                <input type="checkbox" id="@item.Tierartname" name="@item.Tierartname" value="@item.Tierartname" @oninput="eventArgs => { WichtigeMethoden.ChangeCheckedStatus(lstcheckbox_tierart,item.ID_Tierart, eventArgs.Value); }">
                 <label for="@item.Tierartname">@item.Tierartname</label>
                 @if(counterForFormatting % 2 == 0)
                 {
                     <div id="block"></div>
                 }
-        }
+            }
         </div>
     </div>
     <h2>Tierrassen</h2>
@@ -133,13 +70,14 @@
         @foreach(var art in lst_tierarten)
         {
             counterTierrassen++;
+
             <div class="checkboxes">
                 <h3>@art.Tierartname<span>rassen:</span></h3>
                 @{counterForFormatting = 0;}
                 @foreach(var rasse in Tierrasse_DA.GetTierrassen(counterTierrassen))
                 {   
                     counterForFormatting++;
-                    <input type="checkbox" id="@rasse.Tierrassennamen" name="@rasse.Tierrassennamen" value="@rasse.Tierrassennamen" @oninput="eventArgs => { ChangeCheckedStatus_Tierrassen(rasse.ID_Tierrasse, eventArgs.Value); }">
+                    <input type="checkbox" id="@rasse.Tierrassennamen" name="@rasse.Tierrassennamen" value="@rasse.Tierrassennamen" @oninput="eventArgs => { WichtigeMethoden.ChangeCheckedStatus(lstcheckbox_tierrassen,rasse.ID_Tierrasse, eventArgs.Value); }">
                     <label for="@rasse.Tierrassennamen">@rasse.Tierrassennamen</label>
                     if(counterForFormatting % 2 == 0)
                     {

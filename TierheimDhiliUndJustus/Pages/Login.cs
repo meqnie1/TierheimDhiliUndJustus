@@ -1,5 +1,6 @@
 ﻿namespace TierheimDhiliUndJustus.Pages
 {
+    using Microsoft.AspNetCore.Components;
     using TierheimDhiliUndJustus.Authentication;
     using TierheimDhiliUndJustus.BLL;
     using TierheimDhiliUndJustus.DAL;
@@ -7,8 +8,8 @@
 
     public partial class Login
     {
-        public static bool Angemeldet { get; set; } = false;
 
+        public static bool Angemeldet { get; set; } = false;
 
         string pwvalue;
         string evalue;
@@ -16,7 +17,6 @@
         string inputtype = "password";
         string fehlermeldung = "";
         public static bool screenclosed = true;
-        bool eingeloggt;
         Kunde eingeloggterKunde;
 
         public static List<Kunde> lstkunde = Kunde_DA.GetKunde();
@@ -41,7 +41,7 @@
                     });
                     LoginConfig.Angemeldet = eingeloggterKunde.ID_Kunde;
 
-                    navManager.NavigateTo("/");
+                    navManager.NavigateTo("/login");
 
                     break;
                 }
