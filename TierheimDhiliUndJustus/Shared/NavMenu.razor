@@ -5,14 +5,14 @@
 <ul>
     <li><a href=""><h2>Tierheim</h2><h1>Dhili & Justus</h1></a></li>
     <li><a href="unseretiere">Unsere Tiere</a></li>
-    <li><a href="">Fundtiere</a></li>
+    <li><a href="fundtiere">Fundtiere</a></li>
     <li><a href="">Spenden</a></li>
     <li><a href="">Kontakt</a></li>
     <li><a @onclick="Abmelden" href=@link>@anmelden<img src="img/user.png"/></a></li>  
 </ul>
 
 @code{
-    string link = "Login";
+    string link = "login";
     static int counter = 0;
     string email = "";
     string anmelden = "Anmelden";
@@ -52,7 +52,7 @@
         {
             anmelden = "anmelden";
             LoginConfig.Angemeldet = 0;
-            link = "Login";
+            link = "login";
         }
     }
 

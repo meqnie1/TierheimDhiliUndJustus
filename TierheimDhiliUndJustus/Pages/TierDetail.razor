@@ -10,6 +10,8 @@
 @code {
     [Parameter]
     public string ID { get; set; }
+
+    bool fehleranmelden = false;
 }
 @{
     Tier CurrentTier = Tier_DA.GetOneTier(Convert.ToInt32(ID));
@@ -50,14 +52,23 @@
 
     void ClickOnButton(bool besichtigung)
     {
-        if (besichtigung)
+        if(LoginConfig.Angemeldet == 0)
         {
-            UriHelper.NavigateTo($"/unseretiere/tierdetail/{CurrentTier.ID_Tier}/besichtigungbuchen");
+            fehleranmelden = true;
         }
         else
         {
-            UriHelper.NavigateTo($"/unseretiere/tierdetail/{CurrentTier.ID_Tier}/gassigehenbuchen");
+            if (besichtigung)
+            {
+                UriHelper.NavigateTo($"/unseretiere/tierdetail/{CurrentTier.ID_Tier}/besichtigungbuchen");
+            }
+            else
+            {
+                UriHelper.NavigateTo($"/unseretiere/tierdetail/{CurrentTier.ID_Tier}/gassigehenbuchen");
+            }
+            fehleranmelden = false;
         }
+
     }
 }
 
@@ -81,6 +92,10 @@
                     <td><input type="button" value="Gassigehen buchen" @onclick="eventArgs => { ClickOnButton(false); }"/></td>
                 }
                 </tr>
+            @if (fehleranmelden)
+            {
+                <tr><td colspan="2"><h2 class="fehleranmelden">Sie müssen sich zuerst anmelden oder registrieren. </h2><a href="login" class="fehleranmelden">Klicken Sie hier! </a></td></tr>
+            }
         </table> 
     </div>
 </div>

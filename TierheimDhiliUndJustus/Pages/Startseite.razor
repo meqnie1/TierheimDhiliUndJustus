@@ -2,7 +2,7 @@
 @using TierheimDhiliUndJustus.BLL
 @using TierheimDhiliUndJustus.DAL
 @using TierheimDhiliUndJustus.Pages;
-
+@inject NavigationManager UriHelper;
 
 
 <PageTitle>Startseite</PageTitle>
@@ -31,7 +31,7 @@
         if(counter <=2)
         {
         <div class="neuetiere_rahmen"><img class="neuetiere_bild" src="@srcimg" />
-        <h1>@item.Tiername</h1>
+        <h1 @onclick="eventArgs => { ClickOnTier(Convert.ToString(item.ID_Tier)); }">@item.Tiername</h1>
         <img class="neuetiere_geschlecht" src=@srcgeschlecht /></div>
         counter++;
         }
@@ -43,7 +43,7 @@
 </div>
 
 
-<a href=""><div id="vermisstbanner"></div></a>
+<a href="fundtiere"><div id="vermisstbanner"></div></a>
 
 <a href=""><div id="spendenbanner"></div></a>
 

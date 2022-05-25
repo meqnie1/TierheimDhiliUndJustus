@@ -1,5 +1,6 @@
 ﻿@page "/unseretiere/tierdetail/{id}/{buchen}"
 @inject NavigationManager UriHelper
+@inject AuthenticationStateProvider authStateProvider;
 @using TierheimDhiliUndJustus.DAL;
 @using TierheimDhiliUndJustus.BLL;
 @using MySqlConnector;
@@ -26,7 +27,7 @@
 
     void ClickOnButtonTerminBuchen()
     {
-        Termin_DA.BookATermin(currentdateid, CurrentTier.ID_Tier);
+        Termin_DA.BookATermin(currentdateid, CurrentTier.ID_Tier, LoginConfig.Angemeldet);
         gebucht = true;
     }    
 

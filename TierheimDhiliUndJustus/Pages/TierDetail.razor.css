@@ -126,3 +126,9 @@ input:hover {
     margin-left: -0.8vw;
     width: auto;
 }
+
+#tierdetail_info > table > tr > td > .fehleranmelden {
+    font-size: 1vw;
+    color: #2A8262;
+    display: inline;
+}

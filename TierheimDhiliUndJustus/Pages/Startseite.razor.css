@@ -48,6 +48,10 @@
     display: inline-block;
 }
 
+.neuetiere_rahmen > h1:hover {
+    cursor: pointer;
+}
+
 .neuetiere_geschlecht{
     height: 1.8vw;
     display: inline-block;
