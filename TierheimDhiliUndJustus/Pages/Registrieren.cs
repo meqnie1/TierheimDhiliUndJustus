@@ -18,36 +18,48 @@
         
         public static List<Kunde> lstkunde = Kunde_DA.GetKunde();
 
-        public async Task Einloggen()
+        public async Task Kundeerstellen()
         {
-      
             var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
-           
-
             foreach (Kunde kunde in lstkunde)
             {
-                if (kunde.Email == evalue && kunde.Passwort == pwvalue)
+                if (pwvalue != null && evalue != null)
                 {
-                    eingeloggterKunde = kunde;
-                    fehlermeldung = "";
-                    await customAuthStateProvider.UpdateAuthenticationState(new UserSession
+                    if (kunde.Email == evalue)
                     {
-                        Email = eingeloggterKunde.Email,
-                        Rolle = eingeloggterKunde.Rolle
-                    });
-                    navManager.NavigateTo("/", true);
-
-                    break;                     
+                        fehlermeldung = "Email bereits vorhanden!";
+                    }
+                    if (evalue.Contains("@") == false || evalue.Contains(".") == false)
+                    {
+                        fehlermeldung = "Bitte geben Sie eine gültige Email ein";
+                    }
+                    if (pwvalue.Length > 45 || pwvalue.Length < 5)
+                    {
+                        fehlermeldung = "Passwort zu lang oder zu kurz";
+                    }
+                                   
                 }
-                if (kunde.Email != evalue || kunde.Passwort != pwvalue)
+                else
                 {
-                    fehlermeldung = "Fehleingabe, versuchen Sie es nocheinmal";
+                    fehlermeldung = "Bitte füllen Sie alle Felder aus";
+                }
+               
+                
+            }
+            if (fehlermeldung == "")
+            {
+                Kunde neuerKunde = new Kunde(8, evalue, pwvalue, "Kunde");
+                Kunde_DA.InsertKunde(neuerKunde);
 
-                }                          
+
+                navManager.NavigateTo("/", true);
             }
             
+
         }
-       
+
+
+
         public void ShowPasswort()
         {
             if (inputtype == "password")

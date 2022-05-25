@@ -2,7 +2,7 @@
 {
     public class UserSession
     {
-        public string Email { get; set; }
+        public string Email { get; set; }   
 
         public string Rolle { get; set; }
     }
