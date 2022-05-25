@@ -33,7 +33,10 @@
             return geschlechtsource;
         }
 
-        
+        public void ClickOnTier(string tierid)
+        {
+            UriHelper.NavigateTo($"/unseretiere/tierdetail/{tierid}");
+        }
 
 
     }

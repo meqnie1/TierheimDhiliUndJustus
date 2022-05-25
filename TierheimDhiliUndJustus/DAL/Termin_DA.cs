@@ -89,7 +89,7 @@ namespace TierheimDhiliUndJustus.DAL
             return termin;
         }
 
-        public static Termin BookATermin(int terminid, int tierid)
+        public static Termin BookATermin(int terminid, int tierid, int kundenid)
         {
             Termin termin = new Termin();
 
@@ -99,7 +99,7 @@ namespace TierheimDhiliUndJustus.DAL
                 conn.Open();
 
 
-                sqlstatement = "UPDATE termin SET FK_Tier_Termin = @tierid, Gebucht = 1 WHERE ID_Termin = @terminid";
+                sqlstatement = "UPDATE termin SET FK_Tier_Termin = @tierid, Gebucht = 1, FK_Kunde_Termin = @kundenid WHERE ID_Termin = @terminid";
 
 
                 using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
@@ -111,6 +111,10 @@ namespace TierheimDhiliUndJustus.DAL
                     MySqlParameter paramIDTermin= new MySqlParameter("@terminid", MySqlDbType.Int32);
                     paramIDTermin.Value = terminid;
                     cmd.Parameters.Add(paramIDTermin);
+
+                    MySqlParameter paramIDKunde = new MySqlParameter("@kundenid", MySqlDbType.Int32);
+                    paramIDKunde.Value = kundenid;
+                    cmd.Parameters.Add(paramIDKunde);
 
                     cmd.ExecuteNonQuery();
                 }
