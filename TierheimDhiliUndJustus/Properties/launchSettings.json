@@ -11,7 +11,7 @@
     "TierheimDhiliUndJustus": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "https://localhost:7136/unseretiere/tierdetail/3",
+      "launchUrl": "https://localhost:7136/accountansicht",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
