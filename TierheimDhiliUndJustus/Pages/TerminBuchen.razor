@@ -24,6 +24,7 @@
     string terminart = Buchen == "besichtigungbuchen" ? "Besichtigung buchen" : "Gassigehen buchen";
     Termin selectedTermin = Termin_DA.GetTermin(currentdateid);
     List<Termin> lst_termine = Buchen == "besichtigungbuchen" ? Termin_DA.GetTermineWithTerminart(2) : Termin_DA.GetTermineWithTerminart(1);
+    WichtigeMethoden WichtigeMethoden = new WichtigeMethoden();
 
     void ClickOnButtonTerminBuchen()
     {
@@ -73,7 +74,7 @@ else{
             <h1 id="termin_ueberschrift">@terminart</h1>
 
             @{srcimg = "img/tiere/" + @CurrentTier.Tiername + ".jpg";
-            srcgeschlecht = startseite.GetGeschlecht(CurrentTier.ID_Tier);}
+            srcgeschlecht = WichtigeMethoden.GetGeschlecht(CurrentTier.ID_Tier);}
             <div id="termin_rahmen">
                 <img id="termin_bild" src="@srcimg"/>
                 <h1>@CurrentTier.Tiername</h1>

@@ -8,23 +8,12 @@
 @using System.IO;
 @using TierheimDhiliUndJustus.Pages;
 
-@code{
-    public static int counterForFormatting = 0;
-    public static int counterTierrassen = 0;
-    public string geschlechtsource = "";
-    public Startseite Startseite = new Startseite();
-    public List<int> lstcheckbox_tierart = new List<int>();
-    public List<int> lstcheckbox_tierrassen = new List<int>();
-    public List<Tierart> lst_tierarten = Tierart_DA.GetTierarten();
-    public WichtigeMethoden WichtigeMethoden = new WichtigeMethoden();
-}
-
-
 <PageTitle>Unsere Tiere</PageTitle>
 
 @*Verlinkung des CSS's per head link, weil das CSS auf mehreren Seiten verwendet wird. (UnsereTiere.razor und Fundtiere.razor)*@
 <head>
     <link href="css/UnsereFundTiere.css" rel="stylesheet" type="text/css" />
+    <link href="css/backnav.css" rel="stylesheet" type="text/css" />
 </head>
 
 <div id="backnav">
@@ -40,7 +29,7 @@
         @foreach (var item in WichtigeMethoden.GetTheRightTierList(lstcheckbox_tierrassen, lstcheckbox_tierart))
         {
             counterForFormatting++;
-            string srcgeschlecht = Startseite.GetGeschlecht(item.ID_Tier);
+            string srcgeschlecht = WichtigeMethoden.GetGeschlecht(item.ID_Tier);
             string srcimg = "img/tiere/" + @item.Tiername + ".jpg";
 
             <div class="unseretiere_rahmen" ><img class="unseretiere_bild" src="@srcimg" @onclick="@(()=>UriHelper.NavigateTo($"/unseretiere/tierdetail/{@item.ID_Tier}"))">

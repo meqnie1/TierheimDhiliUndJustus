@@ -37,4 +37,54 @@
             return Tier_DA.GetTier();
         }
     }
+
+    public string GetGeschlecht(int tierid)
+    {
+        Tier tier = Tier_DA.GetOneTier(tierid);
+           
+        if (tier.Geschlecht == "w")
+        {
+            return "img/weiblich.png";
+        }
+        else
+        {
+            return "img/männlich.png";
+        }             
+    }
+
+    public string GetGeschlechtAsText(Tier CurrentTier)
+    { 
+        if (CurrentTier.Geschlecht == "w")
+        {
+            return "weiblch";
+        }
+        else
+        {
+            return "männlich";
+        }             
+    }
+
+    public bool IsTierHund(Tier CurrentTier)
+    {
+        if (Tierrasse_DA.GetTierartWithTierID(CurrentTier.ID_Tier) == 2)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    public bool IsUserAngemeldet()
+    {
+        if (LoginConfig.Angemeldet == 0)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
 }

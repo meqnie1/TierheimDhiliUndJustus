@@ -16,6 +16,7 @@
     public List<int> lstcheckbox_tierrassen = new List<int>();
     public List<Tierart> lst_tierarten = Tierart_DA.GetTierarten();
     public static List<Tier> lst_filtertiere = new List<Tier>();
+    WichtigeMethoden WichtigeMethoden = new WichtigeMethoden();
 }
 
 @code{
@@ -103,7 +104,7 @@
             foreach (var item in lst_filtertiere)
             {
                 counterForFormatting++;
-                string srcgeschlecht = Startseite.GetGeschlecht(item.ID_Tier);
+                string srcgeschlecht = WichtigeMethoden.GetGeschlecht(item.ID_Tier);
                 string srcimg = "img/tiere/" + @item.Tiername + ".jpg";
 
                 <div class="unseretiere_rahmen" ><img class="unseretiere_bild" src="@srcimg" @onclick="eventArgs => { ClickOnTier(Convert.ToString(item.ID_Tier)); }">

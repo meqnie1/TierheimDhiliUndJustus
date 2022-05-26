@@ -9,8 +9,10 @@
     using System.IO;
     using TierheimDhiliUndJustus.Pages;
 
-    public partial class Tierdetail : ComponentBase
+    public partial class TierDetail : ComponentBase
     {
-
+        string srcgeschlecht;
+        int counter = 0;
+        static WichtigeMethoden WichtigeMethoden = new WichtigeMethoden();
     }
 }

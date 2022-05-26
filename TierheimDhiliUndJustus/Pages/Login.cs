@@ -41,7 +41,7 @@
                     });
                     LoginConfig.Angemeldet = eingeloggterKunde.ID_Kunde;
 
-                    navManager.NavigateTo("/login");
+                    navManager.NavigateTo("/");
 
                     break;
                 }

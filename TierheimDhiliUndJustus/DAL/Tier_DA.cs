@@ -156,7 +156,7 @@
             {
                 conn.Open();
                 sqlstatement = "SELECT * FROM tier JOIN tierrasse ON tier.FK_Tierrasse_Tier = " +
-                    "tierrasse.ID_Tierrasse WHERE tier.FK_Tierrasse_Tier " + whereStatement_tr + " OR tierrasse.FK_Tierart_Tierrasse " + whereStatement_ta;
+                    "tierrasse.ID_Tierrasse WHERE fundtier = 0 and (tier.FK_Tierrasse_Tier " + whereStatement_tr + " OR tierrasse.FK_Tierart_Tierrasse " + whereStatement_ta + ")";
 
 
 
