@@ -3,7 +3,6 @@
 @inject AuthenticationStateProvider authStateProvider;
 @using TierheimDhiliUndJustus.DAL;
 @using TierheimDhiliUndJustus.BLL;
-@using TierheimDhiliUndJustus.Pages;
 @using MySqlConnector;
 @using System.Drawing;
 @using System.Data.SqlClient;
@@ -14,102 +13,100 @@
     public string Buchen { get; set; }
     [Parameter]
     public string ID{ get; set; }
-    int currentdateid = 0;
-    bool gebucht = false;
 }
 @{
     Tier CurrentTier = Tier_DA.GetOneTier(Convert.ToInt32(ID));
-    string srcimg = "";
-    string srcgeschlecht = "";
-    Startseite startseite = new Startseite();
     string terminart = Buchen == "besichtigungbuchen" ? "Besichtigung buchen" : "Gassigehen buchen";
-    Termin selectedTermin = Termin_DA.GetTermin(currentdateid);
     List<Termin> lst_termine = Buchen == "besichtigungbuchen" ? Termin_DA.GetTermineWithTerminart(2) : Termin_DA.GetTermineWithTerminart(1);
-    WichtigeMethoden WichtigeMethoden = new WichtigeMethoden();
 
     void ClickOnButtonTerminBuchen()
     {
         Termin_DA.BookATermin(currentdateid, CurrentTier.ID_Tier, LoginConfig.Angemeldet);
         gebucht = true;
-    }    
-
-    void ClickOnButtonToUnsereTiere(){
-        UriHelper.NavigateTo("/unseretiere");
-    }
-
-    void ClickOnButtonToStartseite(){
-        UriHelper.NavigateTo("");
-    }
-
-    void ChangeCurrentSelectedDate(object checkedValue)
-    {
-        currentdateid = Convert.ToInt32(checkedValue);
     }
 }
+
+<head>
+    <link href="css/backnav.css" rel="stylesheet" type="text/css" />
+</head>
+
 <div id="backnav">
     <a href=""><p>Startseite</p></a><p> > </p><a href="unseretiere"><p>Unsere Tiere</p></a><p> > </p><a href="unseretiere/tierdetail/@ID"><p>@CurrentTier.Tiername</p></a>
     <p> > </p><a href="unseretiere/tierdetail/@ID/@Buchen"><p>@terminart</p></a>
 </div>
 
-@if(terminart == "Gassigehen buchen" && Tierrasse_DA.GetTierartWithTierID(CurrentTier.ID_Tier) != 2)
+@if (WichtigeMethoden.IsUserAngemeldet())
 {
+    if(terminart == "Gassigehen buchen" && !WichtigeMethoden.IsTierHund(CurrentTier))
+    {
     <div class="submitanderror">
         <h1>Sie können das Tier '@CurrentTier.Tiername' nicht zum Gassigehen buchen.</h1>
         <p>Sie möchten das Tier '@CurrentTier.Tiername' zur Besichtigung buchen? <a href="unseretiere/tierdetail/@CurrentTier.ID_Tier/besichtigungbuchen">Klicken Sie hier!</a></p>
         <h2>Oder</h2>
-        <input type="button" value="Zurück zu Unsere Tiere" @onclick="eventArgs => { ClickOnButtonToUnsereTiere(); }"/>
+        <input type="button" value="Zurück zu Unsere Tiere" @onclick="@(()=>UriHelper.NavigateTo("/unseretiere"))"/>
     </div>
-}
-else if(lst_termine.Count == 0)
-{
+    }
+    else if(lst_termine.Count == 0 && !gebucht)
+    {
     <div class="submitanderror">
         <h1>Derzeit sind keine Termine für @terminart verfügbar!</h1>
         <p>Bitte versuchen Sie es wann anders wieder.</p>
-        <input type="button" value="Zurück zu Unsere Tiere" @onclick="eventArgs => { ClickOnButtonToUnsereTiere(); }"/>
+        <input type="button" value="Zurück zu Unsere Tiere" @onclick="@(()=>UriHelper.NavigateTo("/unseretiere"))"/>
     </div>
-}
-else{
-    @if (!gebucht)
-    {
-        <div id="termin_alles">
-            <h1 id="termin_ueberschrift">@terminart</h1>
+    }
+    else{
+        if (!gebucht)
+        {
+            <div id="termin_alles">
+                <h1 id="termin_ueberschrift">@terminart</h1>
 
-            @{srcimg = "img/tiere/" + @CurrentTier.Tiername + ".jpg";
-            srcgeschlecht = WichtigeMethoden.GetGeschlecht(CurrentTier.ID_Tier);}
-            <div id="termin_rahmen">
-                <img id="termin_bild" src="@srcimg"/>
-                <h1>@CurrentTier.Tiername</h1>
-                <img id="termin_geschlecht" src=@srcgeschlecht />
-            </div>
+                @{srcimg = "img/tiere/" + @CurrentTier.Tiername + ".jpg";
+                srcgeschlecht = WichtigeMethoden.GetGeschlecht(CurrentTier.ID_Tier);}
+                <div id="termin_rahmen">
+                    <img id="termin_bild" src="@srcimg"/>
+                    <h1>@CurrentTier.Tiername</h1>
+                    <img id="termin_geschlecht" src=@srcgeschlecht />
+                </div>
 
-            <div id="termin_auswahlmenu">
-                <h2 id="auswahl_ueberschrift">Wählen Sie einen Termin aus:</h2>
-                <select name="terminauswahl_dropdown" id="terminauswahl" @onchange="eventArgs => { ChangeCurrentSelectedDate(eventArgs.Value); }">
-                    @foreach(Termin item in lst_termine)
-                    {
-                        //wenn man gleich den ersten Termin auswählt, wurde noch kein Wert in die Variable 'currentdateid' reingespeichert, weil die Methode 
-                        //'Change CurrentSelectedDate' nie aufgerufen wurde. Deswegen wird das erste Elemente der Liste immer zuerst in die currentdateid gespeichert.
-                        if(lst_termine.ElementAt(0).ID_Termin == item.ID_Termin && lst_termine.Count >= 0 && currentdateid == 0)
+                <div id="termin_auswahlmenu">
+                    <h2 id="auswahl_ueberschrift">Wählen Sie einen Termin aus:</h2>
+                    <select name="terminauswahl_dropdown" id="terminauswahl" @onchange="eventArgs => { ChangeCurrentSelectedDate(eventArgs.Value); }">
+                        @foreach(Termin item in lst_termine)
                         {
-                            currentdateid = item.ID_Termin;
+                            //wenn man gleich den ersten Termin auswählt, wurde noch kein Wert in die Variable 'currentdateid' reingespeichert, weil die Methode 
+                            //'Change CurrentSelectedDate' nie aufgerufen wurde. Deswegen wird das erste Elemente der Liste immer zuerst in die currentdateid gespeichert.
+                            if(lst_termine.ElementAt(0).ID_Termin == item.ID_Termin && lst_termine.Count >= 0 && currentdateid == 0)
+                            {
+                                currentdateid = item.ID_Termin;
+                            }
+                            <option value="@item.ID_Termin">@item.TerminDatum </option>
                         }
-                        <option value="@item.ID_Termin">@item.TerminDatum </option>
-                    }
-                </select>
-                <input type="button" value="Termin bestätigen" @onclick="eventArgs => { ClickOnButtonTerminBuchen(); }"/>
+                    </select>
+                    <input type="button" value="Termin bestätigen" @onclick="eventArgs => { ClickOnButtonTerminBuchen(); }"/>
+                </div>
             </div>
-        </div>
+        }
+        else
+        {
+            selectedTermin = Termin_DA.GetTermin(currentdateid);
+            <div class="submitanderror">
+                <h1>Termin wurde gebucht!</h1>
+                <p>Sie haben einen Termin für @CurrentTier.Tiername am @selectedTermin.TerminDatum.ToShortDateString() um @selectedTermin.TerminDatum.ToShortTimeString() gebucht.</p>
+                <p>Sie möchten alle Ihre Termine sehen? <a href="accountansicht">Klicken Sie hier!</a></p>
+                <h2>Oder</h2>
+                <input type="button" value="Zurück zur Startseite" @onclick="@(()=>UriHelper.NavigateTo(""))"/>
+            </div>
+        }
     }
-    else
-    {
-        <div class="submitanderror">
-            <h1>Termin wurde gebucht!</h1>
-            <p>Sie haben einen Termin für @CurrentTier.Tiername am @selectedTermin.TerminDatum.ToShortDateString() um @selectedTermin.TerminDatum.ToShortTimeString() gebucht.</p>
-            <p>Sie möchten alle Ihre Termine sehen? <a href="">Klicken Sie hier!</a></p>
-            <h2>Oder</h2>
-            <input type="button" value="Zurück zur Startseite" @onclick="eventArgs => { ClickOnButtonToStartseite(); }"/>
-        </div>
-    }
+}
+else
+{
+    <div class="submitanderror">
+        <h1>Sie müssen sich zuerst anmelden.</h1>
+        <input type="button" value="Zum Anmelden" @onclick="@(()=>UriHelper.NavigateTo("/login"))"/>
+        <h2>Oder</h2>
+        <p>Registrieren Sie sich kostenlos. <a href="registrieren">Klicken Sie hier!</a></p>
+    </div>
 }
 
 

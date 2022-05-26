@@ -1,65 +1,29 @@
 ﻿@page "/unseretiere/tierdetail/{id}"
-@inject NavigationManager UriHelper
-@using TierheimDhiliUndJustus.DAL;
+@inject NavigationManager UriHelper;
 @using TierheimDhiliUndJustus.BLL;
+@using TierheimDhiliUndJustus.DAL
 @using TierheimDhiliUndJustus.Pages;
 @using MySqlConnector;
 @using System.Drawing;
 @using System.Data.SqlClient;
 @using System.IO;
 
-@code {
+
+@*Den Parameter und alle Elemente, die damit verbunden sind, konnte ich nicht in die TierDetail.cs Klasse speichern, da diese imemr einen Fehler geworfen haben*@
+@*Ebenfalls funktioniert das NavigationManager Objekt 'uriHelper' nicht in der Klasse*@
+@code{
     [Parameter]
     public string ID { get; set; }
-
-    bool fehleranmelden = false;
 }
 @{
     Tier CurrentTier = Tier_DA.GetOneTier(Convert.ToInt32(ID));
+
     string srcimg = "img/tiere/" + CurrentTier.Tiername + ".jpg";
-    bool ShowGassigehen = IsTierHund();
-    string srcgeschlecht;
-    Startseite startseite = new Startseite();
-    int counter = 0;
-    WichtigeMethoden WichtigeMethoden = new WichtigeMethoden();
-
-    string GetGeschlecht()
-    {
-        if(CurrentTier.Geschlecht == "w")
-        {
-            return "weiblich";
-        }
-        else
-        {
-            return "männlich";
-        }
-    }
-
-    void ClickOnTier(string tierid)
-    {
-        UriHelper.NavigateTo($"/unseretiere/tierdetail/{tierid}");
-    }
-
-    bool IsTierHund()
-    {
-        if(Tierrasse_DA.GetTierartWithTierID(CurrentTier.ID_Tier) == 2)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
 
     void ClickOnButton(bool besichtigung)
     {
-        if(LoginConfig.Angemeldet == 0)
-        {
-            fehleranmelden = true;
-        }
-        else
-        {
+        if (WichtigeMethoden.IsUserAngemeldet())
+        {            
             if (besichtigung)
             {
                 UriHelper.NavigateTo($"/unseretiere/tierdetail/{CurrentTier.ID_Tier}/besichtigungbuchen");
@@ -68,11 +32,15 @@
             {
                 UriHelper.NavigateTo($"/unseretiere/tierdetail/{CurrentTier.ID_Tier}/gassigehenbuchen");
             }
-            fehleranmelden = false;
         }
 
     }
 }
+
+@*Verlinkung des CSS's per head link, weil das CSS auf mehreren Seiten verwendet wird.*@
+<head>
+    <link href="css/backnav.css" rel="stylesheet" type="text/css" />
+</head>
 
 <div id="backnav">
     <a href=""><p>Startseite</p></a><p> > </p><a href="unseretiere"><p>Unsere Tiere</p></a><p> > </p><a href="unseretiere/tierdetail/@ID"><p>@CurrentTier.Tiername</p></a>
@@ -83,18 +51,18 @@
     <div id="tierdetail_info">
         <table>
             <tr><td><h1>Name:</h1></td><td><h2>@CurrentTier.Tiername</h2></td></tr>
-            <tr><td><h1>Geschlecht:</h1></td><td><h2>@GetGeschlecht()</h2></td></tr>
+            <tr><td><h1>Geschlecht:</h1></td><td><h2>@WichtigeMethoden.GetGeschlechtAsText(CurrentTier)</h2></td></tr>
             <tr><td><h1>Geburtstag:</h1></td><td><h2>@CurrentTier.Geburtsdatum.ToShortDateString()</h2></td></tr>
             <tr><td></td></tr>
             <tr><td><h1>Beschreibung:</h1></td></tr>
             <tr><td colspan="2"><h2>@CurrentTier.Beschreibung</h2></td></tr>
             <tr><td><input type="button" value="Besichtigung buchen" @onclick="eventArgs => { ClickOnButton(true); }"/></td>
-                @if (ShowGassigehen)
+                @if (WichtigeMethoden.IsTierHund(CurrentTier))
                 {
                     <td><input type="button" value="Gassigehen buchen" @onclick="eventArgs => { ClickOnButton(false); }"/></td>
                 }
-                </tr>
-            @if (fehleranmelden)
+            </tr>
+            @if (!WichtigeMethoden.IsUserAngemeldet())
             {
                 <tr><td colspan="2"><h2 class="fehleranmelden">Sie müssen sich zuerst anmelden oder registrieren. </h2><a href="login" class="fehleranmelden">Klicken Sie hier! </a></td></tr>
             }
@@ -111,8 +79,8 @@
             srcgeschlecht = WichtigeMethoden.GetGeschlecht(item.ID_Tier);
             if(counter <=2)
             {
-                <div class="weiteretiere_rahmen"><img class="weiteretiere_bild" src="@srcimg" @onclick="eventArgs => { ClickOnTier(Convert.ToString(item.ID_Tier)); }"/>
-                <h1 @onclick="eventArgs => { ClickOnTier(Convert.ToString(item.ID_Tier)); }">@item.Tiername</h1>
+                <div class="weiteretiere_rahmen"><img class="weiteretiere_bild" src="@srcimg" @onclick="@(()=>UriHelper.NavigateTo($"/unseretiere/tierdetail/{@item.ID_Tier}"))"/>
+                <h1 @onclick="@(()=>UriHelper.NavigateTo($"/unseretiere/tierdetail/{@item.ID_Tier}"))">@item.Tiername</h1>
                 <img class="weiteretiere_geschlecht" src=@srcgeschlecht />
                 </div>
                 counter++;

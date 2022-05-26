@@ -2,16 +2,15 @@
 @inject NavigationManager UriHelper;
 @using TierheimDhiliUndJustus.BLL;
 @using TierheimDhiliUndJustus.DAL;
-@using TierheimDhiliUndJustus.Pages;
 @using MySqlConnector;
 @using System.Drawing;
 @using System.Data.SqlClient;
 @using System.IO;
-
+@using TierheimDhiliUndJustus.Pages;
 
 <PageTitle>Unsere Tiere</PageTitle>
 
-@*Verlinkung des CSS's per head link, weil das CSS auf mehreren Seiten verwendet wird.*@
+@*Verlinkung des CSS's per head link, weil das CSS auf mehreren Seiten verwendet wird. (UnsereTiere.razor und Fundtiere.razor)*@
 <head>
     <link href="css/UnsereFundTiere.css" rel="stylesheet" type="text/css" />
     <link href="css/backnav.css" rel="stylesheet" type="text/css" />
@@ -23,11 +22,19 @@
 
 <div id="unseretiere_container">
     <div id="alletiere">
-        <img id="unseretiere_ueschrift" src="/img/unseretiere.png" alt="Unsere Tiere"/>
-
-        <div id="unseretiere_bilder">
-            @{counterForFormatting = 0;}
-            @foreach (var item in WichtigeMethoden.GetTheRightTierList(lstcheckbox_tierrassen, lstcheckbox_tierart))
+    <img id="unseretiere_ueschrift" src="/img/unseretiere.png" alt="Unsere Tiere"/>
+    <div id="unseretiere_bilder">
+        @{
+            counterForFormatting = 0;
+            lst_filtertiere = WichtigeMethoden.GetTheRightTierList(lstcheckbox_tierrassen, lstcheckbox_tierart, false);
+        }
+        @if(lst_filtertiere.Count == 0)
+        {
+                <h1 id="fehler_filter">Es gibt keine Tiere mit diesem Filter.</h1>
+        }
+        else
+        {
+            @foreach (var item in lst_filtertiere)
             {
                 counterForFormatting++;
                 string srcgeschlecht = WichtigeMethoden.GetGeschlecht(item.ID_Tier);
@@ -41,8 +48,10 @@
                         <div class="block"></div>   
                 }
             }
-        </div>
+        }
+
     </div>
+</div>
 
 <aside>
     <h1>Filter</h1>
@@ -51,16 +60,16 @@
     <div class="unseretiere_tierarten">
         @{counterForFormatting=0;}
         <div class="checkboxes">
-            @foreach(var item in lst_tierarten)
-            {
-                counterForFormatting++;
+        @foreach(var item in Tierart_DA.GetTierarten())
+        {
+            counterForFormatting++;
                 <input type="checkbox" id="@item.Tierartname" name="@item.Tierartname" value="@item.Tierartname" @oninput="eventArgs => { WichtigeMethoden.ChangeCheckedStatus(lstcheckbox_tierart,item.ID_Tierart, eventArgs.Value); }">
                 <label for="@item.Tierartname">@item.Tierartname</label>
                 @if(counterForFormatting % 2 == 0)
                 {
                     <div id="block"></div>
                 }
-            }
+        }
         </div>
     </div>
     <h2>Tierrassen</h2>
