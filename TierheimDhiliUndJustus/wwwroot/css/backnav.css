@@ -1,22 +1,2 @@
 ﻿body {
 }
-
-#backnav {
-    background-color: #A3D3B9;
-    height: 2.5vw;
-    width: 100%;
-    margin-top: -0.9vw;
-    padding-left: 4.7vw;
-    padding-top: 0.6vw
-}
-
-#backnav > p {
-    color: white;
-    display: inline-block;
-}
-
-#backnav > a {
-    color: white;
-    text-decoration: none;
-    display: inline-block;
-}

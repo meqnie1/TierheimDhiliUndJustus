@@ -1,65 +1,76 @@
 ﻿@page "/unseretiere/tierdetail/{id}"
-@inject NavigationManager UriHelper;
-@using TierheimDhiliUndJustus.BLL;
+@inject NavigationManager UriHelper
 @using TierheimDhiliUndJustus.DAL;
-@using TierheimDhiliUndJustus.Pages;
+@using TierheimDhiliUndJustus.BLL;
 @using MySqlConnector;
 @using System.Drawing;
 @using System.Data.SqlClient;
 @using System.IO;
 
-@code{
-        [Parameter]
-        public string ID { get; set; }
+@code {
+    [Parameter]
+    public string ID { get; set; }
 
-        public bool fehleranmelden = false;
+    bool fehleranmelden = false;
 }
 @{
-        public Tier CurrentTier = Tier_DA.GetOneTier(Convert.ToInt32(ID));
-        public string srcimg = "img/tiere/" + CurrentTier.Tiername + ".jpg";
-        public bool ShowGassigehen = IsTierHund();
-        public string srcgeschlecht;
-        public int counter = 0;
-        public WichtigeMethoden WichtigeMethoden = new WichtigeMethoden();
+    Tier CurrentTier = Tier_DA.GetOneTier(Convert.ToInt32(ID));
+    string srcimg = "img/tiere/" + CurrentTier.Tiername + ".jpg";
+    bool ShowGassigehen = IsTierHund();
+    string srcgeschlecht;
+    Startseite startseite = new Startseite();
+    int counter = 0;
 
-        public static bool IsTierHund()
+    string GetGeschlecht()
+    {
+        if(CurrentTier.Geschlecht == "w")
         {
-            if (Tierrasse_DA.GetTierartWithTierID(CurrentTier.ID_Tier) == 2)
+            return "weiblich";
+        }
+        else
+        {
+            return "männlich";
+        }
+    }
+
+    void ClickOnTier(string tierid)
+    {
+        UriHelper.NavigateTo($"/unseretiere/tierdetail/{tierid}");
+    }
+
+    bool IsTierHund()
+    {
+        if(Tierrasse_DA.GetTierartWithTierID(CurrentTier.ID_Tier) == 2)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    void ClickOnButton(bool besichtigung)
+    {
+        if(LoginConfig.Angemeldet == 0)
+        {
+            fehleranmelden = true;
+        }
+        else
+        {
+            if (besichtigung)
             {
-                return true;
+                UriHelper.NavigateTo($"/unseretiere/tierdetail/{CurrentTier.ID_Tier}/besichtigungbuchen");
             }
             else
             {
-                return false;
+                UriHelper.NavigateTo($"/unseretiere/tierdetail/{CurrentTier.ID_Tier}/gassigehenbuchen");
             }
+            fehleranmelden = false;
         }
 
-        public void ClickOnButton(bool besichtigung)
-        {
-            if (LoginConfig.Angemeldet == 0)
-            {
-                fehleranmelden = true;
-            }
-            else
-            {
-                if (besichtigung)
-                {
-                    UriHelper.NavigateTo($"/unseretiere/tierdetail/{CurrentTier.ID_Tier}/besichtigungbuchen");
-                }
-                else
-                {
-                    UriHelper.NavigateTo($"/unseretiere/tierdetail/{CurrentTier.ID_Tier}/gassigehenbuchen");
-                }
-                fehleranmelden = false;
-            }
-
-        }
+    }
 }
-
-@*Verlinkung des CSS's per head link, weil das CSS auf mehreren Seiten verwendet wird.*@
-<head>
-    <link href="css/backnav.css" rel="stylesheet" type="text/css" />
-</head>
 
 <div id="backnav">
     <a href=""><p>Startseite</p></a><p> > </p><a href="unseretiere"><p>Unsere Tiere</p></a><p> > </p><a href="unseretiere/tierdetail/@ID"><p>@CurrentTier.Tiername</p></a>
@@ -70,7 +81,7 @@
     <div id="tierdetail_info">
         <table>
             <tr><td><h1>Name:</h1></td><td><h2>@CurrentTier.Tiername</h2></td></tr>
-            <tr><td><h1>Geschlecht:</h1></td><td><h2>@WichtigeMethoden.GetGeschlechtAsText(CurrentTier)</h2></td></tr>
+            <tr><td><h1>Geschlecht:</h1></td><td><h2>@GetGeschlecht()</h2></td></tr>
             <tr><td><h1>Geburtstag:</h1></td><td><h2>@CurrentTier.Geburtsdatum.ToShortDateString()</h2></td></tr>
             <tr><td></td></tr>
             <tr><td><h1>Beschreibung:</h1></td></tr>
@@ -95,11 +106,11 @@
         @foreach(var item in Tier_DA.GetTierExceptTierID(CurrentTier.ID_Tier))
         {
             srcimg = "img/tiere/" + @item.Tiername + ".jpg";
-            srcgeschlecht = WichtigeMethoden.GetGeschlecht(item.ID_Tier);
+            srcgeschlecht = startseite.GetGeschlecht(item.ID_Tier);
             if(counter <=2)
             {
-                <div class="weiteretiere_rahmen"><img class="weiteretiere_bild" src="@srcimg" @onclick="@(()=>UriHelper.NavigateTo($"/unseretiere/tierdetail/{@item.ID_Tier}"))"/>
-                <h1 @onclick="@(()=>UriHelper.NavigateTo($"/unseretiere/tierdetail/{@item.ID_Tier}"))">@item.Tiername</h1>
+                <div class="weiteretiere_rahmen"><img class="weiteretiere_bild" src="@srcimg" @onclick="eventArgs => { ClickOnTier(Convert.ToString(item.ID_Tier)); }"/>
+                <h1 @onclick="eventArgs => { ClickOnTier(Convert.ToString(item.ID_Tier)); }">@item.Tiername</h1>
                 <img class="weiteretiere_geschlecht" src=@srcgeschlecht />
                 </div>
                 counter++;
