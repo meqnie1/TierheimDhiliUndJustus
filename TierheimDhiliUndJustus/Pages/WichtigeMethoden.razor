@@ -50,4 +50,16 @@
             return "img/männlich.png";
         }             
     }
+
+    public string GetGeschlechtAsText(Tier CurrentTier)
+    {
+        if(CurrentTier.Geschlecht == "w")
+        {
+            return "weiblich";
+        }
+        else
+        {
+            return "männlich";
+        }
+    }
 }
