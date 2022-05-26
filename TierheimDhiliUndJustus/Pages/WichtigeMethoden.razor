@@ -4,7 +4,6 @@
 @using System.Drawing;
 @using System.Data.SqlClient;
 @using System.IO;
-@inject NavigationManager UriHelper;
 
 @code{
 
@@ -26,15 +25,15 @@
         }
     }
 
-    public List<Tier> GetTheRightTierList(List<int> lstcheckbox_tierrassen, List<int> lstcheckbox_tierart)
+    public List<Tier> GetTheRightTierList(List<int> lstcheckbox_tierrassen, List<int> lstcheckbox_tierart, bool fundtiere)
     {
         if(lstcheckbox_tierrassen.Count > 0 || lstcheckbox_tierart.Count > 0)
         {
-            return Tier_DA.GetTierWithFilterTierrasse(lstcheckbox_tierrassen, lstcheckbox_tierart);
+            return fundtiere ? Tier_DA.GetFundtierWithFilterTierrasse(lstcheckbox_tierrassen, lstcheckbox_tierart) : Tier_DA.GetTierWithFilterTierrasse(lstcheckbox_tierrassen, lstcheckbox_tierart);
         }
         else
         {
-            return Tier_DA.GetTier();
+            return fundtiere ? Tier_DA.GetFundtiere() : Tier_DA.GetTier();
         }
     }
 
