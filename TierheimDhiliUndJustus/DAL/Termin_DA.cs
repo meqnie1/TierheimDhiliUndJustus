@@ -166,8 +166,6 @@ namespace TierheimDhiliUndJustus.DAL
             DateTime datum;
             string tiername = "";
            
-
-
             using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
             {
                 conn.Open();
@@ -190,6 +188,22 @@ namespace TierheimDhiliUndJustus.DAL
                 }
             }
             return tiername;
+        }
+
+        public static void RemoveKundefromTermin(int terminid)
+        {
+            using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
+            {
+                conn.Open();
+
+                string sqlstatement = "UPDATE termin SET FK_Kunde_Termin = null, FK_Tier_Termin = null,Gebucht = 0 WHERE ID_Termin = " + terminid;
+
+                using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+            }
         }
     }
     

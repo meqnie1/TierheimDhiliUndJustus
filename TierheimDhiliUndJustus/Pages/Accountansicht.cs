@@ -46,7 +46,7 @@ namespace TierheimDhiliUndJustus.Pages
         
         public void Datenaendern()
         {
-            
+            fehlermeldung = "";
             foreach (Kunde kunde in lstkunde)
             {
                 if (kunde.Email != evalue)
@@ -85,6 +85,11 @@ namespace TierheimDhiliUndJustus.Pages
                 
             }
                      
+        }
+
+        public void Terminentfernen(int terminid)
+        {
+            Termin_DA.RemoveKundefromTermin(terminid);                   
         }
     }
 }

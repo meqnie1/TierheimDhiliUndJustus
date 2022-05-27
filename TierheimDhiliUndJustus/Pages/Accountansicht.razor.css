@@ -130,3 +130,14 @@ input[type=button] {
     font-size: 0.8vw;
 }
 
+#remove > img {
+    width:0.8vw;
+    height: 0.8vw;
+    margin-right: 0.5vw;
+}
+
+#remove > a {
+    color: #e6223e;
+    font-size:0.6vw;
+}
+

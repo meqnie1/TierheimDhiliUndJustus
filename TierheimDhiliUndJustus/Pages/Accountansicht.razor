@@ -74,7 +74,7 @@ else
         <th>Tier</th>
     </tr>
     
-    @foreach(Termin termin in lstkundentermine)
+    @foreach(Termin termin in Termin_DA.GetTermineWithKunde(LoginConfig.Angemeldet))
     {
         counter++;
 
@@ -83,6 +83,7 @@ else
         <td>@termin.TerminDatum.ToString("dd.MM.yyyy")</td>
         <td>@termin.TerminDatum.ToString("HH:mm")</td>
         <td>@Termin_DA.GetTierfromTermin(termin.ID_Termin)</td>
+        <td id="remove" @onclick="() => Terminentfernen(termin.ID_Termin)"><img src="img/remove.png"><a>Termin entfernen</a></td>
         </tr>
         
     }
