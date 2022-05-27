@@ -8,9 +8,12 @@
 @using System.Data.SqlClient;
 @using System.IO;
 
+<head>
+    <link href="css/backnav.css" rel="stylesheet" type="text/css" />
+</head>
 
 <div id="backnav">
-    <a href=""><p>Startseite</p></a><a href=""><p>Meine Daten</p></a>
+    <a href=""><p>Startseite</p></a><p> > </p><a href="/accountansicht"><p>Meine Daten</p></a>
 </div>
 
 <div id="ueberschrift"><h1>Meine Daten</h1></div>
@@ -38,7 +41,7 @@
         {
             <div id="fehlermeldung">@fehlermeldung</div>
         }
-        <div id="akzeptieren"><input type="button" name="akzeptieren" @onclick="Datenaendern" value="Akzeptieren" /></div>
+        <div><input type="button" name="akzeptieren" @onclick="Datenaendern" value="Akzeptieren" /></div>
 
         
     </div>
@@ -78,6 +81,8 @@ else
         <th>Tier</th>
     </tr>
     
+    @{counter = 0;}
+
     @foreach(Termin termin in Termin_DA.GetTermineWithKunde(LoginConfig.Angemeldet))
     {
         counter++;

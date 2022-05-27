@@ -1,25 +1,4 @@
-﻿#backnav {
-    background-color: #A3D3B9;
-    height: 2.5vw;
-    width: 100%;
-    margin-top: -0.9vw;
-    padding-left: 4.7vw;
-    padding-top: 0.6vw
-}
-
-#backnav > p {
-     color: white;
-     display: inline-block;
-
-}
-
-#backnav > a {
-     color: white;
-     text-decoration: none;
-     display: inline-block;
-}
-
-h1 {
+﻿h1 {
     font-size: 1.5vw;
     margin-bottom: 1vw;
 }
@@ -114,20 +93,19 @@ tr > td{
 }
 
 input[type=button] {
+    color: white;
     background-color: #339974;
-    color:white;
-    margin-top: 2vw;
-    margin-left:27.5vw;
-    border-style:none;
-    padding:0.2vw 0.5vw 0.2vw 0.5vw;
-    
+    border: none;
+    font-size: 1vw;
+    display: block;
+    height: 2.5vw;
+    width: 9vw;
 }
 
 #fehlermeldung {
-    margin-left: 7vw;
-    margin-top: 1vw;
     color: red;
     font-size: 0.8vw;
+    margin-right: 7vw;
 }
 
 #remove > img {
@@ -141,6 +119,8 @@ input[type=button] {
     font-size:0.6vw;
 }
 
-#confirmerror{
-    display:inline-block;
+#confirmerror {
+    display: flex;
+    margin-left: 7vw;
+    margin-top: 2vw;
 }
