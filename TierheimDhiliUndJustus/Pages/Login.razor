@@ -1,4 +1,4 @@
-﻿@page "/login"
+@page "/login"
 @inject IJSRuntime js;
 @inject AuthenticationStateProvider authStateProvider;
 @inject NavigationManager navManager
@@ -8,7 +8,7 @@
 @using System.Drawing;
 @using System.Data.SqlClient;
 @using System.IO;
-@using TierheimDhiliUndJustus.Authentication;
+
 @layout EmptyLayout;
 
 <PageTitle>Login</PageTitle>
@@ -22,7 +22,6 @@
     <div id="backtohome"><a href="/">Zurück zur Startseite</a></div>
 
     <div id="Upperpart">
-        @*<div id="close"><img id="close" src="/img/close.png" @onclick="Login.CloseScreen" /></div> *@
         <div id="logo"><h1>Anmelden</h1></div>
     </div>
 

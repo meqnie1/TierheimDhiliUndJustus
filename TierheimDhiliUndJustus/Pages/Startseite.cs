@@ -17,11 +17,5 @@
         public List<Tier> lsttier = Tier_DA.GetTier();
         WichtigeMethoden WichtigeMethoden = new WichtigeMethoden();
 
-        //protected override async Task OnInitializedAsync()
-        //{
-
-        //}
-
-
     }
 }

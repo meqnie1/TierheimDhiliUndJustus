@@ -1,62 +1,44 @@
-﻿@inject AuthenticationStateProvider authstateprovider;
-@inject IJSRuntime js;
-@using TierheimDhiliUndJustus.Authentication;
 @using TierheimDhiliUndJustus.Pages
+
 <ul>
     <li><a href=""><h2>Tierheim</h2><h1>Dhili & Justus</h1></a></li>
     <li><a href="unseretiere">Unsere Tiere</a></li>
     <li><a href="fundtiere">Fundtiere</a></li>
     <li><a href="">Spenden</a></li>
     <li><a href="">Kontakt</a></li>
-    <li><a @onclick="Abmelden" href=@link>@anmelden<img src="img/user.png"/></a></li>  
+    <li><a id="anorabmelden" @onclick="Abmelden" href=@link>@anmelden</a></li>
+    <li><a href="@link2"><img src="img/user.png"/></a></li>  
 </ul>
 
 @code{
-    string link = "login";
+    string link = "Login";
+    string link2 = "Login";
     static int counter = 0;
     string email = "";
     string anmelden = "Anmelden";
-    [CascadingParameter]
-    private Task<AuthenticationState> authenticationState{ get; set; }
     [CascadingParameter(Name ="Angemeldet")]
     public bool Angemeldet { get; set; }
 
 
     protected override async Task OnInitializedAsync()
     {
-
-        //if(counter == 0)
-        //{
-        //    var customauthstateprovider = (CustomAuthenticationStateProvider)authstateprovider;
-        //    await customauthstateprovider.UpdateAuthenticationState(null);
-        //    counter++;
-        //}
-        //else
-        //{
         if(LoginConfig.Angemeldet != 0)
         {
-            //var authstate = await authenticationState;
-            //email = authstate.User.Identity.Name;
-            //if(email != "")
-            //{
             anmelden = "Abmelden";
             link = "";
-            //}
+            link2 = "accountansicht";          
         }
-
-        //    }
     }
+
     private void Abmelden()
     {
         if(anmelden!="Anmelden")
         {
             anmelden = "anmelden";
             LoginConfig.Angemeldet = 0;
-            link = "login";
+            link = "Login";
+            link2 = "Login";                     
         }
-    }
-
-    
-    
+    }   
 }
 
