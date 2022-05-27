@@ -1,7 +1,6 @@
 namespace TierheimDhiliUndJustus.Pages
 {
     using Microsoft.AspNetCore.Components;
-    using TierheimDhiliUndJustus.Authentication;
     using TierheimDhiliUndJustus.BLL;
     using TierheimDhiliUndJustus.DAL;
 
@@ -24,9 +23,6 @@ namespace TierheimDhiliUndJustus.Pages
         private async Task Einloggen()
         {
 
-            var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
-
-
             foreach (Kunde kunde in lstkunde)
             {
                 if (kunde.Email == evalue && kunde.Passwort == pwvalue)
@@ -34,11 +30,6 @@ namespace TierheimDhiliUndJustus.Pages
                     Angemeldet = true;
                     eingeloggterKunde = kunde;
                     fehlermeldung = "";
-                    await customAuthStateProvider.UpdateAuthenticationState(new UserSession
-                    {
-                        Email = eingeloggterKunde.Email,
-                        Rolle = eingeloggterKunde.Rolle
-                    });
                     LoginConfig.Angemeldet = eingeloggterKunde.ID_Kunde;
 
                     navManager.NavigateTo("/");

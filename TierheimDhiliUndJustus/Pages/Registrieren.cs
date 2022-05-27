@@ -1,6 +1,5 @@
 ﻿namespace TierheimDhiliUndJustus.Pages
 {
-    using TierheimDhiliUndJustus.Authentication;
     using TierheimDhiliUndJustus.BLL;
     using TierheimDhiliUndJustus.DAL;
     
@@ -20,7 +19,6 @@
 
         public async Task Kundeerstellen()
         {
-            var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
             fehlermeldung = "";
             foreach (Kunde kunde in lstkunde)
             {
@@ -55,15 +53,7 @@
             {
                 Kunde neuerKunde = new Kunde(8, evalue, pwvalue, "Kunde");
                 Kunde_DA.InsertKunde(neuerKunde);
-
-                await customAuthStateProvider.UpdateAuthenticationState(new UserSession
-                {
-                    Email = neuerKunde.Email,
-                    Rolle = neuerKunde.Rolle
-                });
                 LoginConfig.Angemeldet = neuerKunde.ID_Kunde;
-
-
                 navManager.NavigateTo("/", true);
             }
             

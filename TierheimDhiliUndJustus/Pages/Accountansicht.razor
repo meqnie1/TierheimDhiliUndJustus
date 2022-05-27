@@ -32,12 +32,16 @@
             <img id="closedeye" src="@augenart" @onclick="ShowPasswort" />
         </div>
     </div>
-    <div id="akzeptieren"><input type="button" name="akzeptieren" @onclick="Datenaendern" value="Akzeptieren" /></div>
 
-    @if(fehlermeldung!="")
-    {
-        <div id="fehlermeldung">@fehlermeldung</div>
-    }
+    <div id="confirmerror">
+        @if(fehlermeldung!="")
+        {
+            <div id="fehlermeldung">@fehlermeldung</div>
+        }
+        <div id="akzeptieren"><input type="button" name="akzeptieren" @onclick="Datenaendern" value="Akzeptieren" /></div>
+
+        
+    </div>
 }
     
 else

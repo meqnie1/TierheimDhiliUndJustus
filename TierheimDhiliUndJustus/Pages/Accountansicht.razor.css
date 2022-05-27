@@ -141,3 +141,6 @@ input[type=button] {
     font-size:0.6vw;
 }
 
+#confirmerror{
+    display:inline-block;
+}

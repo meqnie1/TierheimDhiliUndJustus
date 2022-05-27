@@ -40,7 +40,15 @@ namespace TierheimDhiliUndJustus.Pages
         } 
         public void EnorDisable()
         {
-            enabled = true;
+            if (enabled)
+            {
+                enabled = false;
+            }
+            else
+            {
+                enabled = true;
+            }
+            
        
         }
         
