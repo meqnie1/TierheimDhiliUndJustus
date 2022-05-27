@@ -22,7 +22,7 @@ namespace TierheimDhiliUndJustus.Pages
 
         private async Task Einloggen()
         {
-
+            //Es werden auf alle Anforderungen bezüglich Email (ob Email bereits vorhanden) und Passwort geprüft  
             foreach (Kunde kunde in lstkunde)
             {
                 if (kunde.Email == evalue && kunde.Passwort == pwvalue)
@@ -45,6 +45,7 @@ namespace TierheimDhiliUndJustus.Pages
 
         }
 
+        //Je nach Status wird der Inputtype geändert um das Passwort anzuzeigen
         public void ShowPasswort()
         {
             if (inputtype == "password")
