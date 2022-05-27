@@ -11,7 +11,7 @@
 
 @layout EmptyLayout;
 
-<PageTitle>Login</PageTitle>
+<PageTitle>Anmelden</PageTitle>
 
 <head>
     <link href="css/login.css" rel="stylesheet" type="text/css" />
@@ -43,16 +43,13 @@
         <div id="fehlermeldung">@fehlermeldung</div>
     }
 
-    <div id="anmelden"><input type="button" name="anmelden" value="Anmelden" @onclick="Einloggen"></div>
+    <div id="anmelden"><input type="button" name="anmelden" value="Anmelden" @onclick="Anmelden"></div>
 
 
     <div id="bereitsaccount">
         <a>Du hast noch kein Konto?</a><a id="registrieren" href="registrieren">Registrieren</a>
     </div>
 </div>
-@*<CascadingValue Value="@Angemeldet" Name="Angemeldet">
-    <NavMenu></NavMenu>
-</CascadingValue>*@
 
 
 

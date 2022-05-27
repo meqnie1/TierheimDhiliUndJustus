@@ -21,7 +21,7 @@ namespace TierheimDhiliUndJustus.Pages
 
         public static List<Kunde> lstkunde = Kunde_DA.GetKunde();
 
-        private async Task Einloggen()
+        private async Task Anmelden()
         {
             //Es werden auf alle Anforderungen bezüglich Email (ob Email bereits vorhanden) und Passwort geprüft  
             foreach (Kunde kunde in lstkunde)
