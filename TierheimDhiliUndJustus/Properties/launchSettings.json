@@ -11,7 +11,7 @@
     "TierheimDhiliUndJustus": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "https://localhost:7136/fundtiere",
+      "launchUrl": "https://localhost:7136",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

@@ -39,11 +39,11 @@ input[type=email] {
     padding-left: 1.2vw;
 }
 
-    input[type=email]:focus, input[type=password]:focus, input[type=text]:focus {
-        outline: none !important;
-        border-color: #719ECE;
-        box-shadow: 0 0 0px;
-    }
+input[type=email]:focus, input[type=password]:focus, input[type=text]:focus {
+    outline: none !important;
+    border-color: #719ECE;
+    box-shadow: 0 0 0px;
+}
 
 input[type=email], input[type=password], input[type=text] {
     background-color: rgba(81,154,114,0%);

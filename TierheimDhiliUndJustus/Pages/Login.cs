@@ -17,7 +17,7 @@
         string fehlermeldung = "";
         public static bool screenclosed = true;
         bool eingeloggt;
-        Kunde eingeloggterKunde;
+        static Kunde eingeloggterKunde;
 
         public static List<Kunde> lstkunde = Kunde_DA.GetKunde();
 
