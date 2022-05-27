@@ -93,6 +93,9 @@ input[type=button] {
     margin-left: 15vw;
     font-size: 1vw;
 }
+input[type=button]:hover {
+    background-color: #2A8262;
+}
 
 #bereitsaccount {
     margin-top: 2vw;

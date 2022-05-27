@@ -101,6 +101,9 @@ input[type=button] {
     height: 2.5vw;
     width: 9vw;
 }
+input[type=button]:hover {
+    background-color: #2A8262;
+}
 
 #fehlermeldung {
     color: red;

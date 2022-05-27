@@ -16,7 +16,7 @@ namespace TierheimDhiliUndJustus.Pages
         string fehlermeldung = "";
         public static string account_augenart = "/img/closedeye.png";
         public static string account_inputtype = "password";
-        static bool enabled = false;
+        bool enabled = false;
         //static Kunde eingeloggterkunde;
         List<Kunde> lstkunde = Kunde_DA.GetKunde();
         List<Termin> lstkundentermine = Termin_DA.GetTermineWithKunde(LoginConfig.Angemeldet);
