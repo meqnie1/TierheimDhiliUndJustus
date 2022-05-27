@@ -80,11 +80,8 @@ namespace TierheimDhiliUndJustus.DAL
                             termin.Gebucht = (SByte)reader["Gebucht"];
                             termin.FK_Terminart_Art = (int)reader["FK_Terminart_Termin"];
                         }
-
                     }
                 }
-
-
             }
             return termin;
         }
@@ -123,5 +120,77 @@ namespace TierheimDhiliUndJustus.DAL
             }
             return termin;
         }
+        
+        public static List<Termin> GetTermineWithKunde(int kundenid)
+        {
+            
+            DateTime datum;
+            List<Termin> lstkundentermine = new List<Termin>();
+
+
+            using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
+            {
+                conn.Open();
+
+
+                sqlstatement = "SELECT ID_Termin, Datum, Uhrzeit, Gebucht, FK_Terminart_Termin FROM termin WHERE FK_Kunde_Termin = " + kundenid + " ORDER BY Datum";
+
+
+                using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
+                {
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            datum = ((DateTime)reader["Datum"]).Date;
+                            datum = datum.Add(((TimeSpan)reader["Uhrzeit"]));
+
+                            Termin termin = new Termin(
+                            (int)reader["ID_Termin"],
+                            (DateTime)datum,
+                            (SByte)reader["Gebucht"],
+                            (int)reader["FK_Terminart_Termin"]);
+
+                            lstkundentermine.Add(termin);
+                        }
+
+                    }
+                }
+            }
+            return lstkundentermine;
+        }
+
+        public static string GetTierfromTermin(int terminid)
+        {
+            DateTime datum;
+            string tiername = "";
+           
+
+
+            using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
+            {
+                conn.Open();
+
+
+                sqlstatement = "SELECT tier.Tiername FROM termin JOIN tier ON termin.FK_Tier_Termin = tier.ID_Tier WHERE termin.ID_Termin = " + terminid;
+
+
+                using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
+                {
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            tiername = (string)reader["Tiername"];
+                        }
+
+                    }
+                }
+            }
+            return tiername;
+        }
     }
+    
 }

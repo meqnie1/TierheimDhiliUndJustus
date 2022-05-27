@@ -17,5 +17,10 @@
             Passwort = passwort;
             Rolle = rolle;
         }
+
+        public Kunde()
+        {
+
+        }
     }
 }

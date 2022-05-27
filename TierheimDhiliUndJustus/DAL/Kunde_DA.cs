@@ -35,6 +35,32 @@ namespace TierheimDhiliUndJustus.DAL
 
         }
 
+        public static Kunde GetoneKunde(int id_kunde)
+        {
+            Kunde kunde = new Kunde();
+            using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
+            {
+                conn.Open();
+                using (MySqlCommand cmd = new MySqlCommand("SELECT * FROM kunde WHERE ID_Kunde = " + id_kunde , conn))
+                {
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                                kunde = new Kunde(
+                                (int)reader["ID_Kunde"],
+                                (string)reader["Email"],
+                                (string)reader["Passwort"],
+                                (string)reader["Rolle"]);
+                          
+                        }
+                    }
+                }
+            }
+            return kunde;
+
+        }
+
         public static void InsertKunde(Kunde neuerKunde)
         {
             using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
@@ -51,6 +77,26 @@ namespace TierheimDhiliUndJustus.DAL
 
                     cmd.ExecuteNonQuery();
                     neuerKunde.ID_Kunde = (int)cmd.LastInsertedId;
+                }
+
+            }
+        }
+
+        public static void UpdateKunde(int idkunde, string email, string passwort)
+        {
+            using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
+            {
+                conn.Open();
+
+                string sqlstatement = "UPDATE kunde SET Email = '" + email + "' ,Passwort = '" + passwort + "' WHERE ID_Kunde = " + idkunde;
+
+                using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
+                {
+                    cmd.Parameters.Add(new MySqlParameter("@email", MySqlDbType.VarChar, 100) { Value = email });
+                    cmd.Parameters.Add(new MySqlParameter("@passwort", MySqlDbType.VarChar, 45) { Value = passwort });
+           
+                    cmd.ExecuteNonQuery();
+                    
                 }
 
             }

@@ -1,4 +1,4 @@
-﻿namespace TierheimDhiliUndJustus.Pages
+namespace TierheimDhiliUndJustus.Pages
 {
     using Microsoft.AspNetCore.Components;
     using TierheimDhiliUndJustus.Authentication;
