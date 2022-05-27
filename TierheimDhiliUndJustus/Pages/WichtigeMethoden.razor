@@ -44,7 +44,7 @@
     public string GetGeschlecht(int tierid)
     {
         Tier tier = Tier_DA.GetOneTier(tierid);
-           
+
         if (tier.Geschlecht == "w")
         {
             return "img/weiblich.png";
@@ -78,7 +78,7 @@
             return false;
         }
     }
-    
+
     public bool IsUserAngemeldet()
     {
         if (LoginConfig.Angemeldet == 0)
@@ -89,5 +89,52 @@
         {
             return true;
         }
+    }
+
+    //Je nach Status wird der Inputtype geändert um das Passwort anzuzeigen
+    //Der Parameter typeofsite steht für die verschiedenen Seite, die diese Methode benutzen(Login, Registrieren, oder Accountansicht)
+    public void ShowPasswort(int typeofsite)
+    {
+
+        switch (typeofsite)
+        {
+            case 1:
+                if(Login.anmelden_inputtype == "password")
+                {
+                    Login.anmelden_inputtype = "text";
+                    Login.anmelden_augenart = "/img/openedeye.png";
+                }
+                else
+                {
+                    Login.anmelden_inputtype = "password";
+                    Login.anmelden_augenart = "/img/closedeye.png";
+                }
+                break;
+            case 2:
+                if(Registrieren.registrieren_inputtype == "password")
+                {
+                    Registrieren.registrieren_inputtype = "text";
+                    Registrieren.registrieren_augenart = "/img/openedeye.png";
+                }
+                else
+                {
+                    Registrieren.registrieren_inputtype = "password";
+                    Registrieren.registrieren_augenart = "/img/closedeye.png";
+                }
+                break;
+            case 3:
+                if(Accountansicht.account_inputtype == "password")
+                {
+                    Accountansicht.account_inputtype = "text";
+                    Accountansicht.account_augenart = "/img/openedeye.png";
+                }
+                else
+                {
+                    Accountansicht.account_inputtype = "password";
+                    Accountansicht.account_augenart = "/img/closedeye.png";
+                }
+                break;
+            }
+
     }
 }

@@ -12,11 +12,12 @@ namespace TierheimDhiliUndJustus.Pages
 
         string pwvalue;
         string evalue;
-        string augenart = "/img/closedeye.png";
-        string inputtype = "password";
+        public static string anmelden_augenart = "/img/closedeye.png";
+        public static string anmelden_inputtype = "password";
         string fehlermeldung = "";
         public static bool screenclosed = true;
         Kunde eingeloggterKunde;
+        WichtigeMethoden WichtigeMethoden = new WichtigeMethoden();
 
         public static List<Kunde> lstkunde = Kunde_DA.GetKunde();
 
@@ -41,23 +42,6 @@ namespace TierheimDhiliUndJustus.Pages
                     fehlermeldung = "Fehleingabe, versuchen Sie es nocheinmal";
 
                 }
-            }
-
-        }
-
-        //Je nach Status wird der Inputtype geändert um das Passwort anzuzeigen
-        public void ShowPasswort()
-        {
-            if (inputtype == "password")
-            {
-                inputtype = "text";
-                augenart = "/img/openedeye.png";
-
-            }
-            else
-            {
-                inputtype = "password";
-                augenart = "/img/closedeye.png";
             }
 
         }
