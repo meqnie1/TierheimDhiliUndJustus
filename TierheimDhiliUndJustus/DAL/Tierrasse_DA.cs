@@ -79,5 +79,36 @@
             }
             return tierart;
         }
+
+        public static int GetTierartWithTierrasseID(int tierrasseid)
+        {
+            int tierart = 0;
+
+
+            using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
+            {
+                conn.Open();
+
+
+                sqlstatement = "SELECT FK_Tierart_Tierrasse FROM tierrasse WHERE ID_Tierrasse = " + tierrasseid;
+
+
+                using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
+                {
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            tierart = (int)reader[0];
+                        }
+
+                    }
+                }
+
+
+            }
+            return tierart;
+        }
     }
 }
