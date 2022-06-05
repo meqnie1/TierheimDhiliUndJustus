@@ -21,13 +21,18 @@ img {
 
 #tierdetail_rahmen {
     display: inline-block;
-    height: 18vw;
+    height: 22vw;
     width: 18vw;
     padding: 0vw;
-    background-color: rgba(81, 154, 114, 50%);
+    background-color: rgba(81, 154, 114, 30%);
     margin-top: 3vw;
     margin-left: 19vw;
 }
+#button_adoptieren {
+    margin-top: 1vw;
+    margin-left: 2.5vw;
+}
+
 #tierdetail_info > table > tr > td{
     padding: 0.6vw;
 }
@@ -95,7 +100,7 @@ input:hover {
 }
 
 #tierdetail_weiteretiere{
-    margin-top: 16vw;
+    margin-top: 22vw;
     margin-left: 18vw;
     margin-bottom: 3vw;
 }

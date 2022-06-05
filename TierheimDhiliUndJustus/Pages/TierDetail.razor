@@ -20,17 +20,21 @@
 
     string srcimg = "img/tiere/" + CurrentTier.Tiername + ".jpg";
 
-    void ClickOnButton(bool besichtigung)
+    void ClickOnButton(int terminart)
     {
         if (WichtigeMethoden.IsUserAngemeldet())
-        {            
-            if (besichtigung)
+        {
+            switch (terminart)
             {
-                UriHelper.NavigateTo($"/unseretiere/tierdetail/{CurrentTier.ID_Tier}/besichtigungbuchen");
-            }
-            else
-            {
-                UriHelper.NavigateTo($"/unseretiere/tierdetail/{CurrentTier.ID_Tier}/gassigehenbuchen");
+                case 1:
+                    UriHelper.NavigateTo($"/unseretiere/tierdetail/{CurrentTier.ID_Tier}/besichtigungbuchen");
+                    break;
+                case 2:
+                    UriHelper.NavigateTo($"/unseretiere/tierdetail/{CurrentTier.ID_Tier}/gassigehenbuchen");
+                    break;
+                case 3:
+                    UriHelper.NavigateTo($"/unseretiere/tierdetail/{CurrentTier.ID_Tier}/adoptieren");
+                    break;
             }
         }
 
@@ -47,7 +51,10 @@
 </div>
 
 <div id="tierfull">
-    <div id="tierdetail_rahmen" ><img src=@srcimg alt="@CurrentTier.Tiername"/></div>
+    <div id="tierdetail_rahmen" >
+        <img src=@srcimg alt="@CurrentTier.Tiername"/>
+        <input id="button_adoptieren" type="button" value="Adoptieren" @onclick="eventArgs => { ClickOnButton(3); }"/>
+    </div>
     <div id="tierdetail_info">
         <table>
             <tr><td><h1>Name:</h1></td><td><h2>@CurrentTier.Tiername</h2></td></tr>
@@ -56,15 +63,15 @@
             <tr><td></td></tr>
             <tr><td><h1>Beschreibung:</h1></td></tr>
             <tr><td colspan="2"><h2>@CurrentTier.Beschreibung</h2></td></tr>
-            <tr><td><input type="button" value="Besichtigung buchen" @onclick="eventArgs => { ClickOnButton(true); }"/></td>
+            <tr><td><input type="button" value="Besichtigung buchen" @onclick="eventArgs => { ClickOnButton(1); }"/></td>
                 @if (WichtigeMethoden.IsTierHund(CurrentTier))
                 {
-                    <td><input type="button" value="Gassigehen buchen" @onclick="eventArgs => { ClickOnButton(false); }"/></td>
+                    <td><input type="button" value="Gassigehen buchen" @onclick="eventArgs => { ClickOnButton(2); }"/></td>
                 }
             </tr>
             @if (!WichtigeMethoden.IsUserAngemeldet())
             {
-                <tr><td colspan="2"><h2 class="fehleranmelden">Sie müssen sich zuerst anmelden oder registrieren. </h2><a href="login" class="fehleranmelden">Klicken Sie hier! </a></td></tr>
+                <tr><td colspan="2"><h2 class="fehleranmelden">Sie müssen sich zuerst anmelden oder registrieren, um einen Termin buchen zu können. </h2><a href="login" class="fehleranmelden">Klicken Sie hier! </a></td></tr>
             }
         </table> 
     </div>

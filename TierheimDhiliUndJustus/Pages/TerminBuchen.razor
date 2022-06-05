@@ -16,12 +16,12 @@
 }
 @{
     Tier CurrentTier = Tier_DA.GetOneTier(Convert.ToInt32(ID));
-    string terminart = Buchen == "besichtigungbuchen" ? "Besichtigung buchen" : "Gassigehen buchen";
-    List<Termin> lst_termine = Buchen == "besichtigungbuchen" ? Termin_DA.GetTermineWithTerminart(2) : Termin_DA.GetTermineWithTerminart(1);
+    string terminart = Buchen == "besichtigungbuchen" ? "Besichtigung buchen" : (Buchen == "gassigehenbuchen" ? "Gassigehen buchen" : "Adoptionstermin buchen");
+    List<Termin> lst_termine = Buchen == "besichtigungbuchen" ? Termin_DA.GetTermineWithTerminart(2) : (Buchen == "gassigehenbuchen" ? Termin_DA.GetTermineWithTerminart(1) : Termin_DA.GetTermineWithTerminart(3));
 
     void ClickOnButtonTerminBuchen()
     {
-        Termin_DA.BookATermin(currentdateid, CurrentTier.ID_Tier, LoginConfig.Angemeldet);
+        Termin_DA.BookATermin(currentdateid, CurrentTier.ID_Tier);
         gebucht = true;
     }
 }
@@ -52,7 +52,17 @@
         <h1>Derzeit sind keine Termine für @terminart verfügbar!</h1>
         <p>Bitte versuchen Sie es wann anders wieder.</p>
         <input type="button" value="Zurück zu Unsere Tiere" @onclick="@(()=>UriHelper.NavigateTo("/unseretiere"))"/>
-    </div>
+        </div>
+    }
+    else if(Termin_DA.GetTermineWithKundeForCertainTier(CurrentTier.ID_Tier) == 0 && terminart == "Adoptionstermin buchen")
+    {
+        <div class="submitanderror">
+            <h1>Sie können das Tier '@CurrentTier.Tiername' noch nicht adoptieren.</h1>
+            <p>Sie müssen das Tier mind. einmal besichtigt haben, bevor sie es adoptieren können.</p>
+            <p>Sie möchten das Tier '@CurrentTier.Tiername' zur Besichtigung buchen? <a href="unseretiere/tierdetail/@CurrentTier.ID_Tier/besichtigungbuchen">Klicken Sie hier!</a></p>
+            <h2>Oder</h2>
+            <input type="button" value="Zurück zu Unsere Tiere" @onclick="@(()=>UriHelper.NavigateTo("/unseretiere"))"/>
+        </div>
     }
     else{
         if (!gebucht)

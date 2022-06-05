@@ -86,7 +86,7 @@ namespace TierheimDhiliUndJustus.DAL
             return termin;
         }
 
-        public static void BookATermin(int terminid, int tierid, int kundenid)
+        public static void BookATermin(int terminid, int tierid)
         {
             using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
             {
@@ -107,7 +107,7 @@ namespace TierheimDhiliUndJustus.DAL
                     cmd.Parameters.Add(paramIDTermin);
 
                     MySqlParameter paramIDKunde = new MySqlParameter("@kundenid", MySqlDbType.Int32);
-                    paramIDKunde.Value = kundenid;
+                    paramIDKunde.Value = LoginConfig.Angemeldet;
                     cmd.Parameters.Add(paramIDKunde);
 
                     cmd.ExecuteNonQuery();
@@ -200,6 +200,34 @@ namespace TierheimDhiliUndJustus.DAL
                 }
 
             }
+        }
+
+        public static long GetTermineWithKundeForCertainTier(int tierid)
+        {
+            long count = 0;
+
+            using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
+            {
+                conn.Open();
+
+
+                sqlstatement = "SELECT COUNT(ID_Termin) AS 'count' FROM termin WHERE FK_Kunde_Termin = " + LoginConfig.Angemeldet + " AND FK_Tier_Termin = " + tierid;
+
+
+                using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
+                {
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            count = (long)reader["count"];
+                        }
+
+                    }
+                }
+            }
+            return count;
         }
     }
     
