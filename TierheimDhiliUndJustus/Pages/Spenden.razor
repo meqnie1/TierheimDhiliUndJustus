@@ -1,0 +1,41 @@
+﻿@page "/spenden"
+@inject NavigationManager UriHelper;
+@using TierheimDhiliUndJustus.BLL;
+@using TierheimDhiliUndJustus.DAL;
+@using MySqlConnector;
+@using System.Drawing;
+@using System.Data.SqlClient;
+@using System.IO;
+
+<PageTitle>Spenden</PageTitle>
+
+@*Verlinkung des CSS's per head link, weil das CSS auf mehreren Seiten verwendet wird. (UnsereTiere.razor und Fundtiere.razor)*@
+<head>
+    <link href="css/backnav.css" rel="stylesheet" type="text/css" />
+</head>
+
+<div id="backnav">
+    <a href=""><p>Startseite</p></a><p> > </p><a href="/spenden"><p>Spenden</p></a>
+</div>
+
+<div id="spenden_full">
+    <p>Spenden an</p>
+    <h1>Tierheim Dhili & Justus</h1>
+    <input type="number" id="spende" name="spende" value="spende" @onchange="eventArgs => { ChangeCurrentBetrag(eventArgs.Value); }">
+    <label for="spende">EUR</label>
+
+    <label for="zahlungsart">Zahlungsmethode</label>
+    <select name="zahlungsart_dropdown" id="zahlungsarten" @onchange="eventArgs => { ChangeCurrentSelectedZahlungsart(eventArgs.Value); }">
+        @foreach (Zahlungsart art in lst_zahlungsarten)
+        {
+            //wenn man gleich den ersten Termin auswählt, wurde noch kein Wert in die Variable 'currentzahlungsart' reingespeichert, weil die Methode 
+            //'Change CurrentSelectedDate' nie aufgerufen wurde. Deswegen wird das erste Elemente der Liste immer zuerst in die currentdateid gespeichert.
+            if(lst_zahlungsarten.ElementAt(0).ID_Zahlungsart == art.ID_Zahlungsart && lst_zahlungsarten.Count >= 0 && currentzahlungsart == 0)
+            {
+                currentzahlungsart = art.ID_Zahlungsart;
+            }
+            <option value="@art.ID_Zahlungsart">@art.Zahlungsartname</option>
+        }
+    </select>
+    <input type="button" value="Zahlung bestätigen" @onclick="eventArgs => { ClickOnButtonSpenden(); }"/>
+</div>

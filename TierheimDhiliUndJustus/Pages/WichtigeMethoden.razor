@@ -31,8 +31,19 @@
     //Diese Methode wird noch überarbeitet, der Filter funktioniert also noch nicht so wie im Prototypen
     public List<Tier> GetTheRightTierList(List<int> lstcheckbox_tierrassen, List<int> lstcheckbox_tierart, bool fundtiere)
     {
+        List<int> TierartenToRemove = new List<int>();
+        int tierart = 0;
         if(lstcheckbox_tierrassen.Count > 0 || lstcheckbox_tierart.Count > 0)
         {
+            foreach (int tierrasse in lstcheckbox_tierrassen)
+            {
+                tierart = Tierrasse_DA.GetTierartWithTierrasseID(tierrasse);
+                if (lstcheckbox_tierart.Contains(tierart))
+                {
+                    lstcheckbox_tierart.Remove(tierart);
+                }
+            }
+
             return fundtiere ? Tier_DA.GetFundtierWithFilterTierrasse(lstcheckbox_tierrassen, lstcheckbox_tierart) : Tier_DA.GetTierWithFilterTierrasse(lstcheckbox_tierrassen, lstcheckbox_tierart);
         }
         else

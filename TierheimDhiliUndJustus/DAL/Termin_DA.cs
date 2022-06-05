@@ -86,11 +86,8 @@ namespace TierheimDhiliUndJustus.DAL
             return termin;
         }
 
-        public static Termin BookATermin(int terminid, int tierid, int kundenid)
+        public static void BookATermin(int terminid, int tierid, int kundenid)
         {
-            Termin termin = new Termin();
-
-
             using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
             {
                 conn.Open();
@@ -118,7 +115,6 @@ namespace TierheimDhiliUndJustus.DAL
 
 
             }
-            return termin;
         }
         
         public static List<Termin> GetTermineWithKunde(int kundenid)
