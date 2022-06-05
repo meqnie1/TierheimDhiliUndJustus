@@ -10,7 +10,7 @@ namespace TierheimDhiliUndJustus.DAL
     {
         public static string sqlstatement = "";
 
-        public static void BookASpende(double betrag, int kundeid, int zahlungsartid)
+        public static void BookASpende(double betrag, int zahlungsartid)
         {
             using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
             {
@@ -27,7 +27,7 @@ namespace TierheimDhiliUndJustus.DAL
                     cmd.Parameters.Add(paramBetrag);
 
                     MySqlParameter paramIDKunde = new MySqlParameter("@kundeid", MySqlDbType.Int32);
-                    paramIDKunde.Value = kundeid;
+                    paramIDKunde.Value = LoginConfig.Angemeldet;
                     cmd.Parameters.Add(paramIDKunde);
 
                     MySqlParameter paramIDZahlung = new MySqlParameter("@zahlungsartid", MySqlDbType.Int32);

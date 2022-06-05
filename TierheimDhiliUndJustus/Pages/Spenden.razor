@@ -9,7 +9,7 @@
 
 <PageTitle>Spenden</PageTitle>
 
-@*Verlinkung des CSS's per head link, weil das CSS auf mehreren Seiten verwendet wird. (UnsereTiere.razor und Fundtiere.razor)*@
+@*Verlinkung des CSS's per head link, weil das CSS auf mehreren Seiten verwendet wird.*@
 <head>
     <link href="css/backnav.css" rel="stylesheet" type="text/css" />
 </head>
@@ -18,24 +18,49 @@
     <a href=""><p>Startseite</p></a><p> > </p><a href="/spenden"><p>Spenden</p></a>
 </div>
 
-<div id="spenden_full">
-    <p>Spenden an</p>
-    <h1>Tierheim Dhili & Justus</h1>
-    <input type="number" id="spende" name="spende" value="spende" @onchange="eventArgs => { ChangeCurrentBetrag(eventArgs.Value); }">
-    <label for="spende">EUR</label>
-
-    <label for="zahlungsart">Zahlungsmethode</label>
-    <select name="zahlungsart_dropdown" id="zahlungsarten" @onchange="eventArgs => { ChangeCurrentSelectedZahlungsart(eventArgs.Value); }">
-        @foreach (Zahlungsart art in lst_zahlungsarten)
-        {
-            //wenn man gleich den ersten Termin auswählt, wurde noch kein Wert in die Variable 'currentzahlungsart' reingespeichert, weil die Methode 
-            //'Change CurrentSelectedDate' nie aufgerufen wurde. Deswegen wird das erste Elemente der Liste immer zuerst in die currentdateid gespeichert.
-            if(lst_zahlungsarten.ElementAt(0).ID_Zahlungsart == art.ID_Zahlungsart && lst_zahlungsarten.Count >= 0 && currentzahlungsart == 0)
+@if (WichtigeMethoden.IsUserAngemeldet())
+{
+    @if (!gespendet)
+    {   
+        <div id="spenden_full">
+            <p>Spenden an</p>
+            <h1>Tierheim Dhili & Justus</h1>
+            <input type="number" id="typespende" name="spende" value="spende" @onchange="eventArgs => { ChangeCurrentBetrag(eventArgs.Value); }">
+            <label for="typespende">EUR</label>
+            <select name="zahlungsart_dropdown" id="zahlungsarten" @onchange="eventArgs => { ChangeCurrentSelectedZahlungsart(eventArgs.Value); }">
+                @foreach (Zahlungsart art in lst_zahlungsarten)
+                {
+                    //wenn man gleich den ersten Termin auswählt, wurde noch kein Wert in die Variable 'currentzahlungsart' reingespeichert, weil die Methode 
+                    //'Change CurrentSelectedDate' nie aufgerufen wurde. Deswegen wird das erste Elemente der Liste immer zuerst in die currentdateid gespeichert.
+                    if(lst_zahlungsarten.ElementAt(0).ID_Zahlungsart == art.ID_Zahlungsart && lst_zahlungsarten.Count >= 0 && currentzahlungsart == 0)
+                    {
+                        currentzahlungsart = art.ID_Zahlungsart;
+                    }
+                    <option value="@art.ID_Zahlungsart">@art.Zahlungsartname</option>
+                }
+            </select>
+            <label for="zahlungsart">Zahlungsmethode</label>
+            @if (betragIsNull)
             {
-                currentzahlungsart = art.ID_Zahlungsart;
+                <p id="error_spenden">Sie müssen einen Betrag über 0 Euro angeben.</p>
             }
-            <option value="@art.ID_Zahlungsart">@art.Zahlungsartname</option>
-        }
-    </select>
-    <input type="button" value="Zahlung bestätigen" @onclick="eventArgs => { ClickOnButtonSpenden(); }"/>
-</div>
+            <input class="buttoncss" type="button" value="Zahlung bestätigen" @onclick="eventArgs => { ClickOnButtonSpenden(); }"/>
+        </div>
+    }
+    else
+    {
+        <div class="submitanderror">
+            <h1>Vielen Dank für Ihre Spende von @currentbetrag Euro!</h1>
+            <input class="buttoncss" type="button" value="Zurück zur Startseite" @onclick="@(()=>UriHelper.NavigateTo("/"))"/>
+        </div>
+    }
+}
+else
+{
+    <div class="submitanderror">
+        <h1>Sie müssen sich zuerst anmelden.</h1>
+        <input class="buttoncss" type="button" value="Zum Anmelden" @onclick="@(()=>UriHelper.NavigateTo("/login"))"/>
+        <h2>Oder</h2>
+        <p>Registrieren Sie sich kostenlos. <a href="registrieren">Klicken Sie hier!</a></p>
+    </div>
+}

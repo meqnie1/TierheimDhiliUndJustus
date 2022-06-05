@@ -1,2 +1,88 @@
 ﻿body {
 }
+
+#spenden_full{
+    text-align: center;
+    margin: 5vw;
+}
+#spenden_full > h1 {
+    font-size: 1.7vw;
+    text-transform: uppercase;
+    color: #339974;
+    margin-bottom: 1vw;
+}
+#spenden_full > p {
+    font-size: 1vw;
+    margin-bottom: 0.5vw;
+}
+#typespende{
+    height: 2vw;
+    width: 4vw;
+    border: none;
+    border-bottom: 0.1vw solid black;
+    text-align: center;
+    font-size: 1vw;
+
+}
+label {
+    font-weight: bold;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 1vw;
+}
+#zahlungsarten {
+    height: 2vw;
+    width: 8vw;
+    border: none;
+    border-bottom: 0.1vw solid black;
+    text-align: center;
+    font-size: 1vw;
+}
+
+.submitanderror {
+    text-align: center;
+    margin: 11vw;
+}
+.submitanderror > h1 {
+    font-size: 1.7vw;
+    text-transform: uppercase;
+    color: #339974;
+    margin-bottom: 1vw;
+}
+
+.submitanderror > h2 {
+    font-size: 1.2vw;
+    text-transform: uppercase;
+    margin: 2vw;
+}
+
+.submitanderror > input {
+    display: block;
+    margin: auto;
+}
+
+.submitanderror > p > a {
+    color: black;
+}
+
+.submitanderror > p {
+    font-size: 1vw;
+}
+.buttoncss{
+    height: 3vw;
+    width: 13vw;
+    color: white;
+    background-color: #339974;
+    border: none;
+    font-size: 1vw;
+    display: block;
+    margin: auto;
+    margin-top: 2vw;
+}
+
+.buttoncss:hover {
+    background-color: #2A8262;
+}
+#error_spenden {
+    color: #339974;
+}

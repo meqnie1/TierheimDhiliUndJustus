@@ -96,10 +96,11 @@ input:hover {
     text-align: center;
     margin: 9vw;
 }
-.submitanderror > h1{
+.submitanderror > h1 {
     font-size: 1.7vw;
     text-transform: uppercase;
     color: #339974;
+    margin-bottom: 1vw;
 }
 .submitanderror > h2 {
     font-size: 1.2vw;
