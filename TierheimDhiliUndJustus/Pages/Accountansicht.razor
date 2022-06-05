@@ -3,6 +3,7 @@
 @using TierheimDhiliUndJustus.BLL;
 @using TierheimDhiliUndJustus.DAL;
 @using TierheimDhiliUndJustus.Pages;
+@using TierheimDhiliUndJustus.Shared;
 @using MySqlConnector;
 @using System.Drawing;
 @using System.Data.SqlClient;
@@ -93,11 +94,39 @@ else
         <td>@termin.TerminDatum.ToString("HH:mm")</td>
         <td>@Termin_DA.GetTierfromTermin(termin.ID_Termin)</td>
         <td id="remove" @onclick="() => Terminentfernen(termin.ID_Termin)"><img src="img/remove.png"><a>Termin entfernen</a></td>
-        </tr>
-        
+        </tr>      
     }
-
 </table>
+
+
+
+<div id="ueberschrift"><h1>Account verwalten</h1></div>
+
+<div id="accountverwalten">
+    <input type="button" @onclick="Abmelden" name="abmelden"  value="Abmelden" />
+    <input type="button" @onclick="Accountloeschenabbrechenoderausfuehren" name="Loeschen"  value="Account löschen" />
+</div>
+
+@if(accountloeschen == true)
+{
+    <div id="loeschen">
+        <a>Geben Sie ihr Passwort ein um die Löschung zu bestätigen</a>
+
+        <div id="passwordinput">
+            <img id="schloss" src="/img/schloss.png" />
+            <a>Passwort:</a>  
+            <input type="@inputtype" name="password" @bind=pwinput/>
+            <img id="closedeye" src="@augenart" @onclick="ShowPasswort" />
+        </div>
+
+        <div id="actionbuttons">
+            <input type="button" @onclick="Accountloeschen" name="bestaetigen"  value="Bestätigen" />
+            <input type="button" @onclick="Accountloeschenabbrechenoderausfuehren" name="abbrechen"  value="Abbrechen" />  
+        </div>
+    </div>
+}
+
+
 
 
 

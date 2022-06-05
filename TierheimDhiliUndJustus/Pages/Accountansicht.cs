@@ -2,8 +2,7 @@
 using TierheimDhiliUndJustus.DAL;
 using TierheimDhiliUndJustus.BLL;
 using TierheimDhiliUndJustus.Pages;
-
-
+using TierheimDhiliUndJustus.Shared;
 
 namespace TierheimDhiliUndJustus.Pages
 {
@@ -13,10 +12,12 @@ namespace TierheimDhiliUndJustus.Pages
         int counter = 0;
         string pwvalue = Kunde_DA.GetoneKunde(LoginConfig.Angemeldet).Passwort;
         string evalue = Kunde_DA.GetoneKunde(LoginConfig.Angemeldet).Email;
+        string pwinput = "";
         string fehlermeldung = "";
         string augenart = "/img/closedeye.png";
         string inputtype = "password";
         static bool enabled = false;
+        static bool accountloeschen = false;
         //static Kunde eingeloggterkunde;
         List<Kunde> lstkunde = Kunde_DA.GetKunde();
         List<Termin> lstkundentermine = Termin_DA.GetTermineWithKunde(LoginConfig.Angemeldet);
@@ -97,7 +98,45 @@ namespace TierheimDhiliUndJustus.Pages
 
         public void Terminentfernen(int terminid)
         {
-            Termin_DA.RemoveKundefromTermin(terminid);                   
+            Termin_DA.RemoveKundefromspecificTermin(terminid);                   
         }
+
+        public void Accountenfernen()
+        {
+            Termin_DA.RemoveKundefromTermin(Kunde_DA.GetoneKunde(LoginConfig.Angemeldet).ID_Kunde);
+            Kunde_DA.DeleteKunde(Kunde_DA.GetoneKunde(LoginConfig.Angemeldet).ID_Kunde);
+        }
+
+        public void Abmelden()
+        {
+
+            NavMenu.Abmelden();
+            UriHelper.NavigateTo("/", true);
+           
+        }
+
+        public void Accountloeschen()
+        {
+            Abmelden();
+            accountloeschen = true;
+            Termin_DA.RemoveKundefromTermin(Kunde_DA.GetoneKunde(LoginConfig.Angemeldet).ID_Kunde);
+            Kunde_DA.DeleteKunde(Kunde_DA.GetoneKunde(LoginConfig.Angemeldet).ID_Kunde);
+        }
+
+        public void Accountloeschenabbrechenoderausfuehren()
+        {
+            if (accountloeschen == false)
+            {
+                accountloeschen = true;
+            }
+            else
+            {
+                accountloeschen = false;
+            }
+            
+        }
+
+
+
     }
 }

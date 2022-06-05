@@ -89,7 +89,11 @@ tr > td{
     margin-left:7.5vw;
     margin-top:1.5vw;
     text-decoration:underline;
-    
+      
+}
+
+#remove:hover{
+    cursor:pointer;
 }
 
 input[type=button] {
@@ -119,8 +123,39 @@ input[type=button] {
     font-size:0.6vw;
 }
 
+#remove > a:hover{
+    cursor:pointer;
+}
+
 #confirmerror {
     display: flex;
     margin-left: 7vw;
     margin-top: 2vw;
 }
+
+#accountverwalten{
+    margin-left: 7.5vw;
+    display:flex;
+}
+
+#accountverwalten > input[type=button] {
+    margin-top: 1vw;
+    margin-right: 0.8vw;
+    background-color: #A3D3B9;
+}
+
+#loeschen{
+    margin-left:7.5vw;
+    margin-top:2vw;
+}
+
+#loeschen > input[type=button] {
+    margin-top: 1vw;
+    margin-right: 0.8vw;
+    background-color: #A3D3B9;
+}
+
+#actionbuttons {
+    display: flex;
+}
+
