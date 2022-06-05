@@ -12,7 +12,8 @@
 <div id="neuetiere">
     <img id="neuetiere_ueschrift" src="/img/neuzuganege.png" alt="Unsere Neuzugänge"/>
     <div id="neuetiere_bilder"> 
-            
+    
+    @{counter = 0;}
     @foreach(var item in lsttier)
     {
         string srcgeschlecht = WichtigeMethoden.GetGeschlecht(item.ID_Tier);
@@ -36,7 +37,7 @@
 
 <a href="fundtiere"><div id="vermisstbanner"></div></a>
 
-<a href=""><div id="spendenbanner"></div></a>
+<a href="spenden"><div id="spendenbanner"></div></a>
 
 
 

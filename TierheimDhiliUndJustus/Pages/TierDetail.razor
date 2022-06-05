@@ -73,6 +73,7 @@
 <div id="tierdetail_weiteretiere">
     <h1 id="weiteretiere_ueberschrift">Weitere Tiere zum Anschauen</h1>
     <div id=weiteretiere>
+        @{counter = 0;}
         @foreach(var item in Tier_DA.GetTierExceptTierID(CurrentTier.ID_Tier))
         {
             srcimg = "img/tiere/" + @item.Tiername + ".jpg";
