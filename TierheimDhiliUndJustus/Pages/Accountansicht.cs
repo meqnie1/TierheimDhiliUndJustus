@@ -14,31 +14,15 @@ namespace TierheimDhiliUndJustus.Pages
         string evalue = Kunde_DA.GetoneKunde(LoginConfig.Angemeldet).Email;
         string pwinput = "";
         string fehlermeldung = "";
-        string augenart = "/img/closedeye.png";
-        string inputtype = "password";
-        static bool enabled = false;
-        static bool accountloeschen = false;
+        public static string account_augenart = "/img/closedeye.png";
+        public static string account_inputtype = "password";
+        bool enabled = false;
         //static Kunde eingeloggterkunde;
         List<Kunde> lstkunde = Kunde_DA.GetKunde();
         List<Termin> lstkundentermine = Termin_DA.GetTermineWithKunde(LoginConfig.Angemeldet);
+        WichtigeMethoden WichtigeMethoden = new WichtigeMethoden();
         
 
-
-        public void ShowPasswort()
-        {
-            if (inputtype == "password")
-            {
-                inputtype = "text";
-                augenart = "/img/openedeye.png";
-
-            }
-            else
-            {
-                inputtype = "password";
-                augenart = "/img/closedeye.png";
-            }
-
-        } 
         public void EnorDisable()
         {
             if (enabled)

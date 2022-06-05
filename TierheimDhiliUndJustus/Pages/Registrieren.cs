@@ -8,13 +8,14 @@
     {
         string pwvalue;
         string evalue;
-        string augenart="/img/closedeye.png";
-        string inputtype="password";
+        public static string registrieren_augenart = "/img/closedeye.png";
+        public static string registrieren_inputtype = "password";
         string fehlermeldung = "";
         public static bool screenclosed = true;
         bool eingeloggt;
         Kunde eingeloggterKunde;
-        
+        WichtigeMethoden WichtigeMethoden = new WichtigeMethoden();
+
         public static List<Kunde> lstkunde = Kunde_DA.GetKunde();
 
         public async Task Kundeerstellen()
@@ -58,22 +59,6 @@
             }
             
 
-        }
-
-        public void ShowPasswort()
-        {
-            if (inputtype == "password")
-            {
-                inputtype = "text";
-                augenart = "/img/openedeye.png";
-
-            }
-            else
-            {
-                inputtype = "password";
-                augenart = "/img/closedeye.png";
-            }
-            
         }
     }
 }

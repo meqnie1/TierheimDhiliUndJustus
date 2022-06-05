@@ -7,6 +7,9 @@
 
 @code{
 
+    //wenn eine Checkbox im Filter angeklickt wird, ruft es diese Methode aus, welche die lst_checkbox von der Tierart/Tierrasse
+    //verändert. 
+    //In der Liste sind die angeklickten Felder reingespeichert.
     public void ChangeCheckedStatus(List<int> lst_checkbox, int tierid, object checkedValue)
     {
         if ((bool)checkedValue == true)
@@ -25,6 +28,7 @@
         }
     }
 
+    //Diese Methode wird noch überarbeitet, der Filter funktioniert also noch nicht so wie im Prototypen
     public List<Tier> GetTheRightTierList(List<int> lstcheckbox_tierrassen, List<int> lstcheckbox_tierart, bool fundtiere)
     {
         if(lstcheckbox_tierrassen.Count > 0 || lstcheckbox_tierart.Count > 0)
@@ -40,7 +44,7 @@
     public string GetGeschlecht(int tierid)
     {
         Tier tier = Tier_DA.GetOneTier(tierid);
-           
+
         if (tier.Geschlecht == "w")
         {
             return "img/weiblich.png";
@@ -74,7 +78,7 @@
             return false;
         }
     }
-    
+
     public bool IsUserAngemeldet()
     {
         if (LoginConfig.Angemeldet == 0)
@@ -85,5 +89,52 @@
         {
             return true;
         }
+    }
+
+    //Je nach Status wird der Inputtype geändert um das Passwort anzuzeigen
+    //Der Parameter typeofsite steht für die verschiedenen Seite, die diese Methode benutzen(Login, Registrieren, oder Accountansicht)
+    public void ShowPasswort(int typeofsite)
+    {
+
+        switch (typeofsite)
+        {
+            case 1:
+                if(Login.anmelden_inputtype == "password")
+                {
+                    Login.anmelden_inputtype = "text";
+                    Login.anmelden_augenart = "/img/openedeye.png";
+                }
+                else
+                {
+                    Login.anmelden_inputtype = "password";
+                    Login.anmelden_augenart = "/img/closedeye.png";
+                }
+                break;
+            case 2:
+                if(Registrieren.registrieren_inputtype == "password")
+                {
+                    Registrieren.registrieren_inputtype = "text";
+                    Registrieren.registrieren_augenart = "/img/openedeye.png";
+                }
+                else
+                {
+                    Registrieren.registrieren_inputtype = "password";
+                    Registrieren.registrieren_augenart = "/img/closedeye.png";
+                }
+                break;
+            case 3:
+                if(Accountansicht.account_inputtype == "password")
+                {
+                    Accountansicht.account_inputtype = "text";
+                    Accountansicht.account_augenart = "/img/openedeye.png";
+                }
+                else
+                {
+                    Accountansicht.account_inputtype = "password";
+                    Accountansicht.account_augenart = "/img/closedeye.png";
+                }
+                break;
+            }
+
     }
 }

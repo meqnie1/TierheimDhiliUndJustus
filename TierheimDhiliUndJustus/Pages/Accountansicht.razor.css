@@ -85,7 +85,7 @@ tr > td{
     padding-bottom:0.5vw;
 }
 
-#datenändern{
+#datenaendern{
     margin-left:7.5vw;
     margin-top:1.5vw;
     text-decoration:underline;
@@ -104,6 +104,9 @@ input[type=button] {
     display: block;
     height: 2.5vw;
     width: 9vw;
+}
+input[type=button]:hover {
+    background-color: #2A8262;
 }
 
 #fehlermeldung {
