@@ -84,7 +84,7 @@
                 @foreach(var rasse in Tierrasse_DA.GetTierrasseWithTierartID(counterTierrassen))
                 {   
                     counterForFormatting++;
-                    <input type="checkbox" id="@rasse.Tierrassennamen" name="@rasse.Tierrassennamen" value="@rasse.Tierrassennamen" @oninput="eventArgs => { WichtigeMethoden.ChangeCheckedStatus(lstcheckbox_tierart, rasse.ID_Tierrasse, eventArgs.Value); }">
+                    <input type="checkbox" id="@rasse.Tierrassennamen" name="@rasse.Tierrassennamen" value="@rasse.Tierrassennamen" @oninput="eventArgs => { WichtigeMethoden.ChangeCheckedStatus(lstcheckbox_tierrassen, rasse.ID_Tierrasse, eventArgs.Value); }">
                     <label for="@rasse.Tierrassennamen">@rasse.Tierrassennamen</label>
                     if(counterForFormatting % 2 == 0)
                     {
