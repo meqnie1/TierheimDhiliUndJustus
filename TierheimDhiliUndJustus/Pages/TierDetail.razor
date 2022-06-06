@@ -53,7 +53,10 @@
 <div id="tierfull">
     <div id="tierdetail_rahmen" >
         <img src=@srcimg alt="@CurrentTier.Tiername"/>
-        <input id="button_adoptieren" type="button" value="Adoptieren" @onclick="eventArgs => { ClickOnButton(3); }"/>
+        @if(CurrentTier.Fundtier == 0)
+        {
+            <input id="button_adoptieren" type="button" value="Adoptieren" @onclick="eventArgs => { ClickOnButton(3); }"/>
+        }
     </div>
     <div id="tierdetail_info">
         <table>
