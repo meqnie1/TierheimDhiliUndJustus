@@ -41,5 +41,6 @@ li > a > img {
 
 
 #anorabmelden{
-    padding-left: 21.5vw;
+    position:absolute;
+    right: 8vw;
 }

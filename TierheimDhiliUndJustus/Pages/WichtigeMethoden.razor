@@ -145,6 +145,18 @@
                     Accountansicht.account_augenart = "/img/closedeye.png";
                 }
                 break;
+            case 4:
+                if(Accountansicht.accountloeschen_inputtype == "password")
+                {
+                    Accountansicht.accountloeschen_inputtype = "text";
+                    Accountansicht.accountloeschen_augenart = "/img/openedeye.png";
+                }
+                else
+                {
+                    Accountansicht.accountloeschen_inputtype = "password";
+                    Accountansicht.accountloeschen_augenart = "/img/closedeye.png";
+                }
+                break;
             }
 
     }

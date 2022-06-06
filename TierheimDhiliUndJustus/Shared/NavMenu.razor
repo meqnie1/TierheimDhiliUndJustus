@@ -1,4 +1,5 @@
 @using TierheimDhiliUndJustus.Pages
+@using TierheimDhiliUndJustus.DAL
 
 
 
@@ -8,6 +9,10 @@
     <li><a href="fundtiere">Fundtiere</a></li>
     <li><a href="">Spenden</a></li>
     <li><a href="">Kontakt</a></li>
+    @if(Kunde_DA.GetRole(Kunde_DA.GetoneKunde(LoginConfig.Angemeldet).ID_Kunde) == "Admin")
+    {
+        <li><a href="/tierhinzufügen">Tiere hinzufügen</a></li>
+    }
     <li><a id="anorabmelden" @onclick="Abmelden" href=@link>@Status</a></li>
     <li><a href="@link2"><img src="img/user.png"/></a></li>  
 </ul>
@@ -35,6 +40,8 @@
         else
         {
             Status = "Anmelden";
+            link = "Login";
+            link2 = "Login";
         }
     }
 

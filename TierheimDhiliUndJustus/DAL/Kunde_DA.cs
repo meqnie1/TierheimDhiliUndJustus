@@ -119,5 +119,30 @@ namespace TierheimDhiliUndJustus.DAL
                 }
             }
         }
+
+        public static string GetRole(int kundenid)
+        {
+            using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
+            {
+                conn.Open();
+                string terminart = "";
+
+                string sqlstatement = "SELECT Rolle FROM kunde WHERE ID_Kunde = " + kundenid;
+
+                using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
+                {
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            terminart = (string)reader["Rolle"];
+                        }
+
+                    }
+                }
+
+                return terminart;
+            }
+        }
     }
 }

@@ -208,12 +208,38 @@ namespace TierheimDhiliUndJustus.DAL
             {
                 conn.Open();
 
-                string sqlstatement = "UPDATE termin SET FK_Kunde_Termin = null, FK_Tier_Termin = null,Gebucht = 0 FK_Kunde_Termin = " + kundenid;
+                string sqlstatement = "UPDATE termin SET FK_Kunde_Termin = null, FK_Tier_Termin = null,Gebucht = 0 WHERE FK_Kunde_Termin = " + kundenid;
 
                 using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
                 {
                     cmd.ExecuteNonQuery();
                 }
+
+            }
+        }
+
+        public static string GetTerminart(int terminid)
+        {
+            using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
+            {
+                conn.Open();
+                string terminart = "";
+
+                string sqlstatement = "SELECT terminart.bezeichnung FROM termin JOIN terminart ON termin.FK_Terminart_Termin = terminart.ID_terminart WHERE ID_Termin = " + terminid;
+
+                using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
+                {
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            terminart = (string)reader["bezeichnung"];
+                        }
+
+                    }
+                }
+
+            return terminart;
 
             }
         }

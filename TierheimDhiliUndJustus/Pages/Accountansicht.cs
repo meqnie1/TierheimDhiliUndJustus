@@ -12,16 +12,27 @@ namespace TierheimDhiliUndJustus.Pages
         int counter = 0;
         string pwvalue = Kunde_DA.GetoneKunde(LoginConfig.Angemeldet).Passwort;
         string evalue = Kunde_DA.GetoneKunde(LoginConfig.Angemeldet).Email;
+
         string pwinput = "";
         string fehlermeldung = "";
+        public static string löschenfehlermeldung = "";
+        bool enabled = false;
+        public static bool accountloeschen = false;
+
         public static string account_augenart = "/img/closedeye.png";
         public static string account_inputtype = "password";
-        bool enabled = false;
-        //static Kunde eingeloggterkunde;
+        public static string accountloeschen_augenart = "/img/closedeye.png";
+        public static string accountloeschen_inputtype = "password";
+
         List<Kunde> lstkunde = Kunde_DA.GetKunde();
         List<Termin> lstkundentermine = Termin_DA.GetTermineWithKunde(LoginConfig.Angemeldet);
+
         WichtigeMethoden WichtigeMethoden = new WichtigeMethoden();
-        
+
+        protected override async Task OnInitializedAsync()
+        {
+            accountloeschen = false;
+        }
 
         public void EnorDisable()
         {
@@ -34,7 +45,6 @@ namespace TierheimDhiliUndJustus.Pages
                 enabled = true;
             }
             
-       
         }
         
         public void Datenaendern()
@@ -80,12 +90,13 @@ namespace TierheimDhiliUndJustus.Pages
                      
         }
 
+
         public void Terminentfernen(int terminid)
         {
             Termin_DA.RemoveKundefromspecificTermin(terminid);                   
         }
 
-        public void Accountenfernen()
+        public void Accountentfernen()
         {
             Termin_DA.RemoveKundefromTermin(Kunde_DA.GetoneKunde(LoginConfig.Angemeldet).ID_Kunde);
             Kunde_DA.DeleteKunde(Kunde_DA.GetoneKunde(LoginConfig.Angemeldet).ID_Kunde);
@@ -93,7 +104,6 @@ namespace TierheimDhiliUndJustus.Pages
 
         public void Abmelden()
         {
-
             NavMenu.Abmelden();
             UriHelper.NavigateTo("/", true);
            
@@ -101,10 +111,20 @@ namespace TierheimDhiliUndJustus.Pages
 
         public void Accountloeschen()
         {
-            Abmelden();
-            accountloeschen = true;
-            Termin_DA.RemoveKundefromTermin(Kunde_DA.GetoneKunde(LoginConfig.Angemeldet).ID_Kunde);
-            Kunde_DA.DeleteKunde(Kunde_DA.GetoneKunde(LoginConfig.Angemeldet).ID_Kunde);
+            if (pwinput == Kunde_DA.GetoneKunde(LoginConfig.Angemeldet).Passwort)
+            {              
+                accountloeschen = false;
+                löschenfehlermeldung = "";
+                Termin_DA.RemoveKundefromTermin(Kunde_DA.GetoneKunde(LoginConfig.Angemeldet).ID_Kunde);
+                Kunde_DA.DeleteKunde(Kunde_DA.GetoneKunde(LoginConfig.Angemeldet).ID_Kunde);
+                Abmelden();
+            }
+            else
+            {
+                löschenfehlermeldung = "Geben Sie das richtige Passwort ein";
+            }
+            
+            
         }
 
         public void Accountloeschenabbrechenoderausfuehren()
@@ -112,14 +132,19 @@ namespace TierheimDhiliUndJustus.Pages
             if (accountloeschen == false)
             {
                 accountloeschen = true;
+
+
             }
             else
             {
                 accountloeschen = false;
+
             }
-            
+
         }
 
+
+        
 
 
     }
