@@ -2,6 +2,10 @@
 {
     public partial class Tierhinzufügen
     {
-        public string srcpetpicture = "img/insertpicture.png";
+        public string tierpicture = "img/insertpicture.png";
+        public string tiername = "";
+        public DateOnly geburtsdatum = "";
+        public string tierart = "";
+
     }
 }

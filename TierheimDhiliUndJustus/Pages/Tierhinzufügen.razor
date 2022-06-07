@@ -1,4 +1,4 @@
-﻿@page "/tierhinzufügen"
+﻿@page "/tierhinzufuegen"
 @inject NavigationManager UriHelper;
 @using TierheimDhiliUndJustus.BLL;
 @using TierheimDhiliUndJustus.DAL;
@@ -18,7 +18,43 @@
     <a href=""><p>Startseite</p></a><p> > </p><a href="/tierhinzufügen"><p>Tiere hinzufügen</p></a>
 </div>
 
-<img id="petpicture" src="@srcpetpicture"  />
+@if (LoginConfig.Angemeldet != 0)
+{
+    if(Kunde_DA.GetoneKunde(LoginConfig.Angemeldet).Rolle == "Admin")
+    {
+        <div id="left">
+            <h1>Tier hinzufügen</h1>
+            <img id="tierpicture" src="@tierpicture"  />
+        </div>
+        <div id="middle_info">
+            <label for="tiername">Tiername:</label>
+            <input type="text" id="tiername" name="tiername" @bind="tiername"> 
+
+            <label for="geburtsdatum">Geburtsdatum:</label>
+            <input type="date" id="geburtsdatum" name="geburtsdatum" @bind="geburtsdatum"> 
+
+            <label for="tiername">Tiername:</label>
+            <input type="text" id="tiername" name="tiername" @bind="tiername"> 
+        </div>
+    }
+    else
+    {
+        <div class="submitanderror">
+            <h1>Sie sind kein Admin.</h1>
+            <input class="buttoncss" type="button" value="Zurück zur Startseite" @onclick="@(()=>UriHelper.NavigateTo(""))"/>
+        </div>
+    }
+}
+else
+{
+    <div class="submitanderror">
+        <h1>Sie müssen sich zuerst anmelden.</h1>
+        <input class="buttoncss" type="button" value="Zum Anmelden" @onclick="@(()=>UriHelper.NavigateTo("/login"))"/>
+        <h2>Oder</h2>
+        <p>Registrieren Sie sich kostenlos. <a href="registrieren">Klicken Sie hier!</a></p>
+    </div>
+}
+
 
 
 

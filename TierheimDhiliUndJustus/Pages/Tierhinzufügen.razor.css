@@ -1,8 +1,54 @@
 ﻿
-#petpicture {
+#tierpicture {
     width: 10vw;
     background-color: lightgray;
     padding: 4vw 4vw 4vw 4vw;
     
+}
+.submitanderror {
+    text-align: center;
+    margin: 11vw;
+}
+
+.submitanderror > h1 {
+    font-size: 1.7vw;
+    text-transform: uppercase;
+    color: #339974;
+    margin-bottom: 1vw;
+}
+
+.submitanderror > h2 {
+    font-size: 1.2vw;
+    text-transform: uppercase;
+    margin: 2vw;
+}
+
+.submitanderror > input {
+    display: block;
+    margin: auto;
+}
+
+.submitanderror > p > a {
+    color: black;
+}
+
+.submitanderror > p {
+    font-size: 1vw;
+}
+
+.buttoncss {
+    height: 3vw;
+    width: 13vw;
+    color: white;
+    background-color: #339974;
+    border: none;
+    font-size: 1vw;
+    display: block;
+    margin: auto;
+    margin-top: 2vw;
+}
+
+.buttoncss:hover {
+    background-color: #2A8262;
 }
 

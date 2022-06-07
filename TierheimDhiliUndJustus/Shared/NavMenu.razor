@@ -7,11 +7,11 @@
     <li><a href=""><h2>Tierheim</h2><h1>Dhili & Justus</h1></a></li>
     <li><a href="unseretiere">Unsere Tiere</a></li>
     <li><a href="fundtiere">Fundtiere</a></li>
-    <li><a href="">Spenden</a></li>
+    <li><a href="spenden">Spenden</a></li>
     <li><a href="">Kontakt</a></li>
-    @if(Kunde_DA.GetRole(Kunde_DA.GetoneKunde(LoginConfig.Angemeldet).ID_Kunde) == "Admin")
+    @if(Kunde_DA.GetoneKunde(LoginConfig.Angemeldet).Rolle == "Admin")
     {
-        <li><a href="/tierhinzufügen">Tiere hinzufügen</a></li>
+        <li><a href="/tierhinzufuegen">Tiere hinzufügen</a></li>
     }
     <li><a id="anorabmelden" @onclick="Abmelden" href=@link>@Status</a></li>
     <li><a href="@link2"><img src="img/user.png"/></a></li>  
