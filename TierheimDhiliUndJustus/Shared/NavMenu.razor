@@ -1,4 +1,7 @@
 @using TierheimDhiliUndJustus.Pages
+@using TierheimDhiliUndJustus.DAL
+
+
 
 <ul>
     <li><a href=""><h2>Tierheim</h2><h1>Dhili & Justus</h1></a></li>
@@ -6,39 +9,47 @@
     <li><a href="fundtiere">Fundtiere</a></li>
     <li><a href="">Spenden</a></li>
     <li><a href="">Kontakt</a></li>
-    <li><a id="anorabmelden" @onclick="Abmelden" href=@link>@anmelden</a></li>
+    @if(Kunde_DA.GetRole(Kunde_DA.GetoneKunde(LoginConfig.Angemeldet).ID_Kunde) == "Admin")
+    {
+        <li><a href="/tierhinzufügen">Tiere hinzufügen</a></li>
+    }
+    <li><a id="anorabmelden" @onclick="Abmelden" href=@link>@Status</a></li>
     <li><a href="@link2"><img src="img/user.png"/></a></li>  
 </ul>
 
+
 @code{
-    string link = "Login";
-    string link2 = "Login";
+    static string link = "Login";
+    static string link2 = "Login";
     static int counter = 0;
-    string email = "";
-    string anmelden = "Anmelden";
+    static string email = "";
+    static string anmelden = "Anmelden";
     [CascadingParameter(Name ="Angemeldet")]
     public bool Angemeldet { get; set; }
+    public static string Status { get; set; } = "Anmelden";
 
 
     protected override async Task OnInitializedAsync()
     {
         if(LoginConfig.Angemeldet != 0)
         {
-            anmelden = "Abmelden";
+            Status = "Abmelden";
             link = "";
             link2 = "accountansicht";          
         }
+        else
+        {
+            Status = "Anmelden";
+            link = "Login";
+            link2 = "Login";
+        }
     }
 
-    private void Abmelden()
-    {
-        if(anmelden!="Anmelden")
-        {
-            anmelden = "anmelden";
-            LoginConfig.Angemeldet = 0;
-            link = "Login";
-            link2 = "Login";                     
-        }
-    }   
+    
+
 }
+
+
+
+
 

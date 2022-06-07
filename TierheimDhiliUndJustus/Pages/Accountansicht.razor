@@ -3,6 +3,7 @@
 @using TierheimDhiliUndJustus.BLL;
 @using TierheimDhiliUndJustus.DAL;
 @using TierheimDhiliUndJustus.Pages;
+@using TierheimDhiliUndJustus.Shared;
 @using MySqlConnector;
 @using System.Drawing;
 @using System.Data.SqlClient;
@@ -50,7 +51,6 @@
     
 else
 {
-   
     <div id="disabled">
             <div id="emailinput">
             <img id="email" src="/img/email2.png" />
@@ -80,6 +80,7 @@ else
         <th>Datum</th>
         <th>Uhrzeit</th>
         <th>Tier</th>
+        <th>Terminart</th>
     </tr>
     
     @{counter = 0;}
@@ -93,12 +94,51 @@ else
         <td>@termin.TerminDatum.ToString("dd.MM.yyyy")</td>
         <td>@termin.TerminDatum.ToString("HH:mm")</td>
         <td>@Termin_DA.GetTierfromTermin(termin.ID_Termin)</td>
+        <td>@Termin_DA.GetTerminart(termin.ID_Termin)</td>
         <td id="remove" @onclick="() => Terminentfernen(termin.ID_Termin)"><img src="img/remove.png"><a>Termin entfernen</a></td>
-        </tr>
         
+        </tr>      
     }
-
 </table>
+
+
+
+<div id="ueberschrift"><h1>Account verwalten</h1></div>
+@if(accountloeschen == false)
+{
+    <div id="accountverwalten">
+        <input type="button"  @onclick="Abmelden" name="abmelden"  value="Abmelden" />
+        <input type="button"  @onclick="Accountloeschenabbrechenoderausfuehren" name="Loeschen"  value="Account löschen" />
+    </div>
+}
+else
+{
+    <div id="loeschen">
+       
+        <a>Geben Sie ihr Passwort ein um die Löschung zu bestätigen</a>
+
+        <div id="passwordinput2">
+            <img id="schloss" src="/img/schloss.png" />
+            <a>Passwort:</a>  
+            <input type="@accountloeschen_inputtype" name="password"  @bind="pwinput"/>
+            <img id="closedeye" src="@accountloeschen_augenart" @onclick="eventArgs => { WichtigeMethoden.ShowPasswort(4);}" />
+        </div>
+
+        @if(löschenfehlermeldung!="")
+        {
+            <div id="fehlermeldung">@löschenfehlermeldung</div>
+        }
+
+        <div id="actionbuttons">
+            <input type="button" @onclick="Accountloeschen" name="bestaetigen"  value="Bestätigen" />
+            <input type="button" @onclick="Accountloeschenabbrechenoderausfuehren" name="abbrechen"  value="Abbrechen" />  
+        </div>
+
+       
+    </div>
+}
+
+
 
 
 

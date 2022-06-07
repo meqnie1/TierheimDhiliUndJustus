@@ -1,4 +1,4 @@
-﻿using MySqlConnector;
+using MySqlConnector;
 using System.Drawing;
 using TierheimDhiliUndJustus.BLL;
 using System.Data.SqlClient;
@@ -186,7 +186,7 @@ namespace TierheimDhiliUndJustus.DAL
             return tiername;
         }
 
-        public static void RemoveKundefromTermin(int terminid)
+        public static void RemoveKundefromspecificTermin(int terminid)
         {
             using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
             {
@@ -198,6 +198,47 @@ namespace TierheimDhiliUndJustus.DAL
                 {
                     cmd.ExecuteNonQuery();
                 }
+
+            }
+        }
+
+        public static void RemoveKundefromTermin(int kundenid)
+        {
+            using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
+            {
+                conn.Open();
+                string sqlstatement = "UPDATE termin SET FK_Kunde_Termin = null, FK_Tier_Termin = null,Gebucht = 0 WHERE FK_Kunde_Termin = " + kundenid;
+
+                using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+            }
+        }
+
+        public static string GetTerminart(int terminid)
+        {
+            using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
+            {
+                conn.Open();
+                string terminart = "";
+
+                string sqlstatement = "SELECT terminart.bezeichnung FROM termin JOIN terminart ON termin.FK_Terminart_Termin = terminart.ID_terminart WHERE ID_Termin = " + terminid;
+
+                using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
+                {
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            terminart = (string)reader["bezeichnung"];
+                        }
+
+                    }
+                }
+
+            return terminart;
 
             }
         }
