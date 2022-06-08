@@ -110,5 +110,42 @@
             }
             return tierart;
         }
+
+        public static List<Tierrasse> GetTierrassen()
+        {
+            List<Tierrasse> tierrasselist = new List<Tierrasse>();
+
+
+            using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
+            {
+                conn.Open();
+
+
+                sqlstatement = "SELECT * FROM tierrasse";
+
+
+                using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
+                {
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+
+                            Tierrasse tierrasse = new Tierrasse(
+                                (int)reader["ID_Tierrasse"],
+                                (string)reader["Tierrassenamen"],
+                                (int)reader["FK_Tierart_Tierrasse"]);
+
+                            tierrasselist.Add(tierrasse);
+                        }
+
+                    }
+                }
+
+
+            }
+            return tierrasselist;
+        }
     }
 }

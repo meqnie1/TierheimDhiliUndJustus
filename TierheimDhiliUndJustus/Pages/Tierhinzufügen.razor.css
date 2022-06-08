@@ -52,3 +52,14 @@
     background-color: #2A8262;
 }
 
+#tiername_text, # {
+    margin-left: 7vw;
+    background-color: rgba(81,154,114,11%);
+    width: 12vw;
+    border-radius: 15px;
+    border: none;
+    height: 2.5vw;
+    font-size: 1vw;
+    padding-left: 1vw;
+}
+

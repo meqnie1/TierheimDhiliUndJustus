@@ -27,14 +27,60 @@
             <img id="tierpicture" src="@tierpicture"  />
         </div>
         <div id="middle_info">
-            <label for="tiername">Tiername:</label>
-            <input type="text" id="tiername" name="tiername" @bind="tiername"> 
+            <label for="tiername_text">Tiername:</label>
+            <input type="text" id="tiername_text" name="tiername" @bind="tiername"> 
 
-            <label for="geburtsdatum">Geburtsdatum:</label>
-            <input type="date" id="geburtsdatum" name="geburtsdatum" @bind="geburtsdatum"> 
+            <label for="geburtsdatum_date">Geburtsdatum:</label>
+            <input type="date" id="geburtsdatum_date" name="geburtsdatum" @bind="geburtsdatum"> 
+            
+            <label for="tierart_drop">Wählen Sie eine Tierart aus:</label>
+            <select name="tierart_dropdown" id="tierart_drop" @onchange="eventArgs => { ChangeCurrentSelectedTierartAndTierrasse(eventArgs.Value, true); }">
+                @foreach (Tierart art in lst_tierarten)
+                {
+                    //es wird automatisch immer beim laden der seite der Wert von 'CurrentTierart' auf den ersten Wert aus der Liste gesetzt.
+                    //sonst wenn man nichts auswählt, wird nie die Methode 'ChangeCurrentSelectedTier' ausgeführt.
+                    if(lst_tierarten.ElementAt(0).ID_Tierart == art.ID_Tierart && lst_tierarten.Count >= 0 && currentTierart == 0)
+                    {
+                        currentTierart = art.ID_Tierart;
+                    }
+                    <option value="@art.ID_Tierart">@art.Tierartname</option>
+                }
+            </select>
+            <label for="tierart_text">Für eine neue Tierart:</label>
+            <input type="text" id="tierart_text" name="tierart_text" @bind="tierartText"> 
 
-            <label for="tiername">Tiername:</label>
-            <input type="text" id="tiername" name="tiername" @bind="tiername"> 
+            <label for="tierrasse_drop">Wählen Sie eine Tierrasse aus:</label>
+            <select name="tierrasse_dropdown" id="tierrasse_drop" @onchange="eventArgs => { ChangeCurrentSelectedTierartAndTierrasse(eventArgs.Value, true); }">
+                @{
+                        lst_tierrassen.Clear();
+                        lst_tierrassen = Tierrasse_DA.GetTierrasseWithTierartID(currentTierart);
+                }
+                @foreach (Tierrasse art in lst_tierrassen)
+                {
+                    //es wird automatisch immer beim laden der seite der Wert von 'CurrentTierrasse' auf den ersten Wert aus der Liste gesetzt.
+                    //sonst wenn man nichts auswählt, wird nie die Methode 'ChangeCurrentSelectedTier' ausgeführt.
+                    if(lst_tierrassen.ElementAt(0).ID_Tierrasse == art.ID_Tierrasse && lst_tierrassen.Count >= 0 && currentTierrasse == 0)
+                    {
+                        currentTierrasse = art.ID_Tierrasse;
+                    }
+                    <option value="@art.ID_Tierrasse">@art.Tierrassennamen</option>
+                }
+            </select>
+            <label for="tierrasse_text">Für eine neue Tierrasse:</label>
+            <input type="text" id="tierrasse_text" name="tierrasse_text" @bind="tierrasseText"> 
+
+            <label for="geschlecht_drop">Wählen Sie eine Tierrasse aus:</label>
+            <select name="geschlecht_dropdown" id="geschlecht_drop" @onchange="eventArgs => { ChangeCurrentSelectedGeschlecht(eventArgs.Value); }">
+                <option value="maennlich">männlich</option>
+                <option value="weiblich">weiblich</option>
+            </select>
+
+            <label for="fundtier_checkbox">Fundtier:</label>
+            <input type="checkbox" name="fundtier" id="fundtier_checkbox" @bind="fundtier">
+
+            <label for="beschreibung_text">Beschreibung:</label>
+            <textarea id="beschreibung_text" name="beschreibung" rows="4" cols="30" @bind="beschreibung"></textarea>
+
         </div>
     }
     else
