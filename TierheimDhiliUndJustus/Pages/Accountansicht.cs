@@ -9,7 +9,8 @@ namespace TierheimDhiliUndJustus.Pages
     public partial class Accountansicht
     {
         
-        int counter = 0;
+        int countertermine = 0;
+        int counterspenden = 0;
         string pwvalue = Kunde_DA.GetoneKunde(LoginConfig.Angemeldet).Passwort;
         string evalue = Kunde_DA.GetoneKunde(LoginConfig.Angemeldet).Email;
 
@@ -24,6 +25,11 @@ namespace TierheimDhiliUndJustus.Pages
         public static string accountloeschen_augenart = "/img/closedeye.png";
         public static string accountloeschen_inputtype = "password";
 
+        public static string pfeilarttermine = "/img/dropdownzu.png";
+        public static string pfeilartspende = "/img/dropdownzu.png";
+        
+
+
         List<Kunde> lstkunde = Kunde_DA.GetKunde();
         List<Termin> lstkundentermine = Termin_DA.GetTermineWithKunde(LoginConfig.Angemeldet);
 
@@ -32,6 +38,8 @@ namespace TierheimDhiliUndJustus.Pages
         protected override async Task OnInitializedAsync()
         {
             accountloeschen = false;
+            pfeilarttermine = "/img/dropdownzu.png";
+            pfeilartspende = "/img/dropdownzu.png";
         }
 
         public void EnorDisable()
@@ -84,7 +92,7 @@ namespace TierheimDhiliUndJustus.Pages
                 enabled = false;
                 Kunde_DA.GetoneKunde(LoginConfig.Angemeldet).Email = evalue;
                 Kunde_DA.GetoneKunde(LoginConfig.Angemeldet).Passwort = pwvalue;
-                counter = 0;
+                countertermine = 0;
                 
             }
                      
@@ -132,19 +140,39 @@ namespace TierheimDhiliUndJustus.Pages
             if (accountloeschen == false)
             {
                 accountloeschen = true;
-
-
             }
             else
             {
                 accountloeschen = false;
-
             }
 
         }
 
+        public void Changepfeiltermine()
+        {
+            if (pfeilarttermine == "/img/dropdownzu.png")
+            {
+                pfeilarttermine = "/img/dropdownoffen.png";
+            }
+            else
+            {
+                pfeilarttermine = "/img/dropdownzu.png";
+            }
+        }
 
-        
+        public void Changepfeilspende()
+        {
+            if (pfeilartspende == "/img/dropdownzu.png")
+            {
+                pfeilartspende = "/img/dropdownoffen.png";
+            }
+            else
+            {
+                pfeilartspende = "/img/dropdownzu.png";
+            }
+        }
+
+
 
 
     }

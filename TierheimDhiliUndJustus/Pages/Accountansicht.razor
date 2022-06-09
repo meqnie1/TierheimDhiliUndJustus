@@ -72,34 +72,82 @@ else
 
 
 
-<div id="ueberschrift"><h1>Meine Termine</h1></div>
+<div id="ueberschrift"><h1>Meine Termine</h1> <img id="pfeiltermine" src="@pfeilarttermine" @onclick="Changepfeiltermine"/></div> 
 
-<table id="termine">
-    <tr>
-        <th>Nr.</th>
-        <th>Datum</th>
-        <th>Uhrzeit</th>
-        <th>Tier</th>
-        <th>Terminart</th>
-    </tr>
-    
-    @{counter = 0;}
-
-    @foreach(Termin termin in Termin_DA.GetTermineWithKunde(LoginConfig.Angemeldet))
+@if(pfeilarttermine == "/img/dropdownoffen.png")
+{
+    if(Termin_DA.GetTermineWithKunde(LoginConfig.Angemeldet).Count == 0 )
     {
-        counter++;
-
-        <tr>
-        <td>@counter</td>
-        <td>@termin.TerminDatum.ToString("dd.MM.yyyy")</td>
-        <td>@termin.TerminDatum.ToString("HH:mm")</td>
-        <td>@Termin_DA.GetTierfromTermin(termin.ID_Termin)</td>
-        <td>@Termin_DA.GetTerminart(termin.ID_Termin)</td>
-        <td id="remove" @onclick="() => Terminentfernen(termin.ID_Termin)"><img src="img/remove.png"><a>Termin entfernen</a></td>
-        
-        </tr>      
+        <p id="fehlernichtvorhanden">Sie haben noch keine Termine. </p>
+        <p id="fehlernichtvorhanden">Suchen Sie sich hier ein Tier für ihren nächsten Termin aus: <a id="seitenlink" href="unseretiere">Unsere Tiere</a></p>
     }
-</table>
+    else
+    {
+        <table id="termine">
+            <tr>
+                <th>Nr.</th>
+                <th>Datum</th>
+                <th>Uhrzeit</th>
+                <th>Tier</th>
+                <th>Terminart</th>
+            </tr>
+    
+            @{countertermine = 0;}
+
+            @foreach(Termin termin in Termin_DA.GetTermineWithKunde(LoginConfig.Angemeldet))
+            {
+                countertermine++;
+
+                <tr>
+                <td>@countertermine</td>
+                <td>@termin.TerminDatum.ToString("dd.MM.yyyy")</td>
+                <td>@termin.TerminDatum.ToString("HH:mm")</td>
+                <td>@Termin_DA.GetTierfromTermin(termin.ID_Termin)</td>
+                <td>@Termin_DA.GetTerminart(termin.ID_Termin)</td>
+                <td id="remove" @onclick="() => Terminentfernen(termin.ID_Termin)"><img src="img/remove.png"><a>Termin entfernen</a></td>
+        
+                </tr>      
+            }
+        </table> 
+    }
+    
+}
+
+
+<div id="ueberschrift"><h1>Meine Spenden</h1><img id="pfeilspende" src="@pfeilartspende" @onclick="Changepfeilspende" /></div> 
+
+@if(pfeilartspende == "/img/dropdownoffen.png")
+{
+    if(Spende_DA.GetSpendenwithKunde(LoginConfig.Angemeldet).Count == 0 )
+    {
+        <p id="fehlernichtvorhanden">Sie haben noch keine Spenden. </p>
+        <p id="fehlernichtvorhanden">Spenden Sie hier: <a id="seitenlink" href="spenden">Spenden</a></p>
+    }
+    else
+    {
+        <table id="spenden">
+            <tr>
+                <th>Nr.</th>
+                <th>Betrag</th>
+                <th>Zahlungsart</th>
+            </tr>
+    
+            @{counterspenden = 0;}
+
+            @foreach(Spende spende in Spende_DA.GetSpendenwithKunde(LoginConfig.Angemeldet))
+            {
+                counterspenden++;
+                <tr>
+                <td>@counterspenden</td>
+                <td>@spende.Betrag</td>
+                <td>@Zahlungsart_DA.GetoneZahlungsart(spende.FK_Zahlungsart_Spende)</td>                      
+                </tr>      
+            }
+    </table>
+    }
+    
+
+}
 
 
 
