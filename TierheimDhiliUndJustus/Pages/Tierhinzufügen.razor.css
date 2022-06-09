@@ -1,9 +1,16 @@
 ﻿
-#tierpicture {
+#tierbild {
+    margin-top: 1vw;
     width: 10vw;
     background-color: lightgray;
     padding: 4vw 4vw 4vw 4vw;
+    margin-bottom: 1vw;
     
+}
+#ueberschrift {
+    font-size: 1.7vw;
+    text-transform: uppercase;
+    color: #339974;
 }
 .submitanderror {
     text-align: center;
@@ -52,8 +59,7 @@
     background-color: #2A8262;
 }
 
-#tiername_text, # {
-    margin-left: 7vw;
+#tiername_text, #geburtsdatum_date, #tierart_drop, #tierart_text, #tierrasse_drop, #tierrasse_text, #geschlecht_drop {
     background-color: rgba(81,154,114,11%);
     width: 12vw;
     border-radius: 15px;
@@ -61,5 +67,57 @@
     height: 2.5vw;
     font-size: 1vw;
     padding-left: 1vw;
+    padding-right: 1vw;
+    margin-bottom: 1vw;
+}
+#beschreibung_text {
+    background-color: rgba(81,154,114,11%);
+    border-radius: 15px;
+    border: none;
+    font-size: 1vw;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    margin-bottom: 1vw;
+}
+#fundtier_checkbox {
+    margin-bottom: 1vw;
+    height: 1vw;
+    width: 1vw;
+    margin-left: 1vw;
 }
 
+#tierart_text, #tierrasse_text, #tierart_label, #tierrasse_label {
+    margin-left: 1vw;
+}
+
+label {
+    font-size: 1vw;
+    font-weight: bold;
+    display: block;
+}
+
+#info_left{
+    display: inline-block;
+    width: 20vw;
+}
+
+#info_right{
+    display: inline-block;
+    width: 20vw;
+    vertical-align: top;
+}
+
+#left{
+    width: 20vw;
+    height: 20vw;
+    display: inline-block;
+    vertical-align: top;
+}
+
+#all{
+    margin: auto;
+    display: block;
+    width: 70vw;
+    height: 30vw;
+    margin-top: 5vw;
+}

@@ -7,7 +7,7 @@ namespace TierheimDhiliUndJustus.Pages
     {
         public string tierpicture = "img/insertpicture.png";
         public string tiername = "";
-        public DateOnly geburtsdatum;
+        public DateTime geburtsdatum = DateTime.Today;
         public string tierartText = "";
         public string tierrasseText = "";
         public bool fundtier = false;
