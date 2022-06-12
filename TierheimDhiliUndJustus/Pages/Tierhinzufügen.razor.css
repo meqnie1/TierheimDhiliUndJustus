@@ -1,11 +1,17 @@
 ﻿
-#tierbild {
-    margin-top: 1vw;
-    width: 10vw;
-    background-color: lightgray;
-    padding: 4vw 4vw 4vw 4vw;
-    margin-bottom: 1vw;
+#tierbild {   
+    width: 10vw;  
+    height:10vw;
     
+}
+
+#hintergrund {
+    background-color: lightgray;
+    width: 10vw;
+    height: 10vw;
+    align-content: center;
+    margin-top: 1vw;
+    margin-bottom: 1vw;
 }
 #ueberschrift {
     font-size: 1.7vw;
@@ -120,4 +126,8 @@ label {
     width: 70vw;
     height: 30vw;
     margin-top: 5vw;
+}
+
+#fehlermeldung{
+    color:red;
 }

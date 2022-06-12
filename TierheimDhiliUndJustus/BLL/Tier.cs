@@ -37,5 +37,16 @@ namespace TierheimDhiliUndJustus.BLL
         {
 
         }
+
+        public Tier(string tiername, DateTime geburtsdatum, string geschlecht, string beschreibung, sbyte fundtier, int fktierrasse)
+        {       
+            Tiername = tiername;
+            Geburtsdatum = geburtsdatum;
+            Geschlecht = geschlecht;
+            Beschreibung = beschreibung;
+            Fundtier = fundtier;
+            FK_Tierrasse_Tier = fktierrasse;
+
+        }
     }
 }
