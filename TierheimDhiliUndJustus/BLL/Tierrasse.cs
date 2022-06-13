@@ -14,5 +14,11 @@
             Tierrassennamen = tierrassenamen;
             FK_Tierart_Tierrasse = fktierart;
         }
+
+        public Tierrasse(string tierrassnamen, int fktierart)
+        {
+            Tierrassennamen = tierrassnamen;
+            FK_Tierart_Tierrasse = fktierart;
+        }
     }
 }

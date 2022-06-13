@@ -11,5 +11,10 @@
             ID_Tierart = id;
             Tierartname = tiername; 
         }
+
+        public Tierart(string tiername)
+        {
+            Tierartname = tiername;
+        }
     }
 }

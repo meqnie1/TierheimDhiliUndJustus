@@ -148,6 +148,28 @@
             return tierrasselist;
         }
 
-        
+        public static void CreateTierrasse(Tierrasse tierrasse, string tierartname)
+        {
+            using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
+            {
+                conn.Open();
+
+                string sqlstatement = "INSERT INTO tierrasse(`Tierrassenamen`, `FK_Tierart_Tierrasse`) VALUES (@tierrassennamen,@fk_tierart_tierrasse)";
+
+                using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
+                {
+                    cmd.Parameters.Add(new MySqlParameter("@tierrassennamen", MySqlDbType.VarChar, 25) { Value = tierrasse.Tierrassennamen });
+                    cmd.Parameters.Add(new MySqlParameter("@tierartname", MySqlDbType.VarChar, 25) { Value = tierrasse.Tierrassennamen });
+                    cmd.Parameters.Add(new MySqlParameter("@fk_tierart_tierrasse", MySqlDbType.Int32) { Value = Tierart_DA.GetTierartid(tierartname) });
+
+                    cmd.ExecuteNonQuery();
+                    tierrasse.ID_Tierrasse = (int)cmd.LastInsertedId;
+                    
+                    
+                }
+            }
+        }
+
+
     }
 }

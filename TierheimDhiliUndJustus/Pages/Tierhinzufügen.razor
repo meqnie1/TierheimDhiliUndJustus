@@ -64,7 +64,7 @@
                         
 
                         <label for="tierrasse_drop">Wählen Sie eine Tierrasse aus:</label>
-                        <select name="tierrasse_dropdown" id="tierrasse_drop" @onchange="eventArgs => { ChangeCurrentSelectedTierartAndTierrasse(eventArgs.Value, true); }">
+                        <select name="tierrasse_dropdown" id="tierrasse_drop" @onchange="eventArgs => { ChangeCurrentSelectedTierartAndTierrasse(eventArgs.Value, false); }">
                             @{
                                     lst_tierrassen.Clear();
                                     lst_tierrassen = Tierrasse_DA.GetTierrasseWithTierartID(currentTierart);

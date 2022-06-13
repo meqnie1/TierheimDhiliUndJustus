@@ -34,6 +34,7 @@ namespace TierheimDhiliUndJustus.Pages
                 currentTierart = Convert.ToInt32(checkedValue);
                 lst_tierrassen.Clear();
                 lst_tierrassen = Tierrasse_DA.GetTierrasseWithTierartID(currentTierart);
+                currentTierrasse = 1;
             }
             else
             {
@@ -91,7 +92,10 @@ namespace TierheimDhiliUndJustus.Pages
                 Tier tier = new Tier(tiername, geburtsdatum, currentgeschlecht, beschreibung, Convert.ToSByte(fundtier), currentTierrasse);
 
                 Tier_DA.CreateTier(tier);
+                AddTierrassenandTierarten();
                 File.Move("wwwroot/img/tiere/" + tierpicture.Substring(10), "wwwroot/img/tiere/" + tier.Tiername + ".jpg");
+
+                
             }
             
 
@@ -99,7 +103,11 @@ namespace TierheimDhiliUndJustus.Pages
 
         public void AddTierrassenandTierarten()
         {
+            Tierart tierart = new Tierart(tierartText);
+            Tierart_DA.CreateTierart(tierart);
 
+            Tierrasse tierrasse = new Tierrasse(tierrasseText, Tierart_DA.GetTierartid(tierartText));
+            Tierrasse_DA.CreateTierrasse(tierrasse, tierartText);
         }
     }
 }
