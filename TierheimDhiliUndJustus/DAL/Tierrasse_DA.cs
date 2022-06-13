@@ -102,7 +102,6 @@
                         {
                             tierart = (int)reader[0];
                         }
-
                     }
                 }
 

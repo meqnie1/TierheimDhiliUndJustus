@@ -8,6 +8,11 @@
 
         public int FK_Tierart_Tierrasse { get; set; }
 
+        public Tierrasse()
+        {
+            
+        }
+
         public Tierrasse(int id, string tierrassenamen, int fktierart)
         {
             ID_Tierrasse = id;

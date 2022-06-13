@@ -45,14 +45,7 @@ namespace TierheimDhiliUndJustus.Pages
         void ChangeCurrentSelectedGeschlecht(object checkedValue)
         {
             currentgeschlecht = Convert.ToString(checkedValue);
-            if (currentgeschlecht == "weiblich")
-            {
-                currentgeschlecht = "w";
-            }
-            else
-            {
-                currentgeschlecht = "m";
-            }
+            
         }
 
         protected async Task Uploadtierpicture(InputFileChangeEventArgs e)
@@ -74,6 +67,23 @@ namespace TierheimDhiliUndJustus.Pages
 
         public void CreateTier()
         {
+            Tierart tierart = new Tierart();
+            Tierrasse tierrasse = new Tierrasse();
+
+            if (currentTierart == -1 || currentTierrasse == -1)
+            {
+                tierart = new Tierart(tierartText);
+                Tierart_DA.CreateTierart(tierart);
+
+                tierrasse = new Tierrasse(tierrasseText, Tierart_DA.GetTierartid(tierartText));
+                Tierrasse_DA.CreateTierrasse(tierrasse, tierartText);
+            }
+            
+            if (currentTierart == -1)
+            {
+                currentTierrasse = tierrasse.ID_Tierrasse;
+            }
+
             if (tiername == "" || beschreibung == "" || tierpicture == "")
             {
                 fehlermeldung = "Bitte füllen Sie alle Felder aus!";
@@ -92,7 +102,7 @@ namespace TierheimDhiliUndJustus.Pages
                 Tier tier = new Tier(tiername, geburtsdatum, currentgeschlecht, beschreibung, Convert.ToSByte(fundtier), currentTierrasse);
 
                 Tier_DA.CreateTier(tier);
-                AddTierrassenandTierarten();
+                
                 File.Move("wwwroot/img/tiere/" + tierpicture.Substring(10), "wwwroot/img/tiere/" + tier.Tiername + ".jpg");
 
                 
@@ -101,13 +111,6 @@ namespace TierheimDhiliUndJustus.Pages
 
         }
 
-        public void AddTierrassenandTierarten()
-        {
-            Tierart tierart = new Tierart(tierartText);
-            Tierart_DA.CreateTierart(tierart);
-
-            Tierrasse tierrasse = new Tierrasse(tierrasseText, Tierart_DA.GetTierartid(tierartText));
-            Tierrasse_DA.CreateTierrasse(tierrasse, tierartText);
-        }
+        
     }
 }
