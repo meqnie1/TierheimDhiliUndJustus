@@ -1,18 +1,13 @@
 ﻿
-#tierbild {   
-    width: 10vw;  
-    height:10vw;
-    
+#tierbild {
+    height: 12vw;
+    width: 12vw;
+    object-fit: cover;
+    display: inline-block;
+    margin: 0.5vw;
+    background-color: lightgray;
 }
 
-#hintergrund {
-    background-color: lightgray;
-    width: 10vw;
-    height: 10vw;
-    align-content: center;
-    margin-top: 1vw;
-    margin-bottom: 1vw;
-}
 #ueberschrift {
     font-size: 1.7vw;
     text-transform: uppercase;
@@ -105,6 +100,7 @@ label {
 #info_left{
     display: inline-block;
     width: 20vw;
+    padding-left:2vw;
 }
 
 #info_right{
@@ -126,6 +122,7 @@ label {
     width: 70vw;
     height: 30vw;
     margin-top: 5vw;
+    margin-left:20vw;
 }
 
 #fehlermeldung{
