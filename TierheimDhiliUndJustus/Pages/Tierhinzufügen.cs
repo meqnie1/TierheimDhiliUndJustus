@@ -34,7 +34,7 @@ namespace TierheimDhiliUndJustus.Pages
                 currentTierart = Convert.ToInt32(checkedValue);
                 lst_tierrassen.Clear();
                 lst_tierrassen = Tierrasse_DA.GetTierrasseWithTierartID(currentTierart);
-                currentTierrasse = 1;
+                currentTierrasse = lst_tierrassen[0].ID_Tierrasse;
             }
             else
             {

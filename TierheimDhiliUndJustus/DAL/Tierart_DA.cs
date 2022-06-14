@@ -1,10 +1,10 @@
 ﻿namespace TierheimDhiliUndJustus.DAL
 {
-    using MySqlConnector;
     using System.Drawing;
     using TierheimDhiliUndJustus.BLL;
     using System.Data.SqlClient;
     using System.IO;
+    using MySql.Data.MySqlClient;
 
     public static class Tierart_DA
     {

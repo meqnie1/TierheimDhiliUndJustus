@@ -1,8 +1,8 @@
-using MySqlConnector;
 using System.Drawing;
 using TierheimDhiliUndJustus.BLL;
 using System.Data.SqlClient;
 using System.IO;
+using MySql.Data.MySqlClient;
 
 namespace TierheimDhiliUndJustus.DAL
 {

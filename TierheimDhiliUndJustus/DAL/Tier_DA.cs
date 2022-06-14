@@ -1,11 +1,10 @@
 ﻿namespace TierheimDhiliUndJustus.DAL
 {
-    using MySqlConnector;
     using System.Drawing;
     using TierheimDhiliUndJustus.BLL;
     using System.Data.SqlClient;
     using System.IO;
-
+    using MySql.Data.MySqlClient;
 
     public static class Tier_DA
     {
@@ -298,7 +297,7 @@
                     cmd.Parameters.Add(new MySqlParameter("@geburtsdatum", MySqlDbType.Date) { Value = neuestier.Geburtsdatum });
                     cmd.Parameters.Add(new MySqlParameter("@geschlecht", MySqlDbType.VarChar,1) { Value = neuestier.Geschlecht });
                     cmd.Parameters.Add(new MySqlParameter("@beschreibung", MySqlDbType.VarChar,300) { Value = neuestier.Beschreibung });
-                    cmd.Parameters.Add(new MySqlParameter("@fundtier", MySqlDbType.Bool) { Value = neuestier.Fundtier });
+                    cmd.Parameters.Add(new MySqlParameter("@fundtier", MySqlDbType.Int32) { Value = neuestier.Fundtier });
                     cmd.Parameters.Add(new MySqlParameter("@fk_tierrasse_tier", MySqlDbType.Int64) { Value = neuestier.FK_Tierrasse_Tier });
 
                     cmd.ExecuteNonQuery();

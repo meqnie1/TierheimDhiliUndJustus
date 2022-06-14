@@ -1,10 +1,9 @@
 namespace TierheimDhiliUndJustus.DAL
-
 {
-    using MySqlConnector;
+    using MySql.Data.MySqlClient;
     using TierheimDhiliUndJustus.BLL;
 
-    public class Kunde_DA
+    public static class Kunde_DA
     {
         public static List<Kunde> lstkunde = new List<Kunde>();
 
