@@ -11,7 +11,7 @@
     "TierheimDhiliUndJustus": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "https://localhost:7136",
+      "launchUrl": "https://localhost:7136/impressum",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

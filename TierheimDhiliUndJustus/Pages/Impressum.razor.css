@@ -1,0 +1,36 @@
+﻿body {
+}
+
+#all h1 {
+    font-size: 1.7vw;
+    text-transform: uppercase;
+    color: #339974;
+    margin: 0vw;
+}
+#all h2 {
+    font-size: 1vw;
+    font-weight: bold;
+    margin-top: 2vw;
+}
+#all p {
+    margin: 0vw;
+    padding: 0vw;
+}
+
+#left {
+    width: 20vw;
+    height: 20vw;
+    display: inline-block;
+}
+
+#right {
+    display: inline-block;
+    width: 20vw;
+    height: 20vw;
+}
+
+#all{
+    margin-top: 3vw;
+    margin-left: 5vw;
+    margin-bottom: 4vw;
+}
