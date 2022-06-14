@@ -1,0 +1,26 @@
+﻿@page "/kontakt"
+@inject NavigationManager UriHelper;
+@using TierheimDhiliUndJustus.BLL;
+@using TierheimDhiliUndJustus.DAL;
+@using TierheimDhiliUndJustus.Pages;
+@using TierheimDhiliUndJustus.Shared;
+@using MySqlConnector;
+@using System.Drawing;
+@using System.Data.SqlClient;
+@using System.IO;
+
+<PageTitle>Kontaktseite</PageTitle>
+
+<img id="startseitebanner" src="img/banner.jpg" alt="Willkommen im Tierheim">
+
+<div id="maps">
+    @*google maps html link*@
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2182.084015273212!2d9.722626828863115!3d47.49163491328376!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x479b128d072ee0e3%3A0xb09bf2907e84b38a!2sHinterfeldgasse%2019%2C%206900%20Bregenz!5e0!3m2!1sen!2sat!4v1655192974062!5m2!1sen!2sat" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    
+    <div id="text">
+        <h1>Wo Sie uns finden</h1>
+        <p>Hinterfeldgasse 19</p>
+        <p>6900 Bregenz</p>
+        <p>Österreich</p>
+    </div>
+</div>
