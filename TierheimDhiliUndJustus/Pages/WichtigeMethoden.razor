@@ -1,6 +1,5 @@
 ﻿@using TierheimDhiliUndJustus.BLL;
 @using TierheimDhiliUndJustus.DAL;
-@using MySqlConnector;
 @using System.Drawing;
 @using System.Data.SqlClient;
 @using System.IO;
@@ -31,8 +30,8 @@
     //Diese Methode wird noch überarbeitet, der Filter funktioniert also noch nicht so wie im Prototypen
     public List<Tier> GetTheRightTierList(List<int> lstcheckbox_tierrassen, List<int> lstcheckbox_tierart, bool fundtiere)
     {
-        List<int> TierartenToRemove = new List<int>();
         int tierart = 0;
+
         if(lstcheckbox_tierrassen.Count > 0 || lstcheckbox_tierart.Count > 0)
         {
             foreach (int tierrasse in lstcheckbox_tierrassen)
@@ -143,6 +142,18 @@
                 {
                     Accountansicht.account_inputtype = "password";
                     Accountansicht.account_augenart = "/img/closedeye.png";
+                }
+                break;
+            case 4:
+                if(Accountansicht.accountloeschen_inputtype == "password")
+                {
+                    Accountansicht.accountloeschen_inputtype = "text";
+                    Accountansicht.accountloeschen_augenart = "/img/openedeye.png";
+                }
+                else
+                {
+                    Accountansicht.accountloeschen_inputtype = "password";
+                    Accountansicht.accountloeschen_augenart = "/img/closedeye.png";
                 }
                 break;
             }

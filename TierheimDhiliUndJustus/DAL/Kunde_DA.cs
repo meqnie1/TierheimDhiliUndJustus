@@ -1,10 +1,9 @@
 namespace TierheimDhiliUndJustus.DAL
-
 {
-    using MySqlConnector;
+    using MySql.Data.MySqlClient;
     using TierheimDhiliUndJustus.BLL;
 
-    public class Kunde_DA
+    public static class Kunde_DA
     {
         public static List<Kunde> lstkunde = new List<Kunde>();
 
@@ -88,7 +87,7 @@ namespace TierheimDhiliUndJustus.DAL
             {
                 conn.Open();
 
-                string sqlstatement = "UPDATE kunde SET Email = '" + email + "' ,Passwort = '" + passwort + "' WHERE ID_Kunde = " + idkunde;
+                string sqlstatement = "UPDATE kunde SET Email = @email ,Passwort = @passwort WHERE ID_Kunde = " + idkunde;
 
                 using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
                 {
@@ -99,6 +98,24 @@ namespace TierheimDhiliUndJustus.DAL
                     
                 }
 
+            }
+        }
+
+        public static void DeleteKunde(int idkunde)
+        {
+            using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
+            {
+                conn.Open();
+
+                string sqlstatement = "DELETE FROM kunde WHERE ID_Kunde = " + idkunde;
+
+                using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
+                {
+
+
+                    cmd.ExecuteNonQuery();
+
+                }
             }
         }
     }

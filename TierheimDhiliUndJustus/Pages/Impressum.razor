@@ -1,0 +1,38 @@
+﻿@page "/impressum"
+@inject NavigationManager UriHelper;
+@using TierheimDhiliUndJustus.BLL;
+@using TierheimDhiliUndJustus.DAL;
+@using TierheimDhiliUndJustus.Pages;
+@using TierheimDhiliUndJustus.Shared;
+@using System.Drawing;
+@using System.Data.SqlClient;
+@using System.IO;
+
+
+<head>
+    <link href="css/backnav.css" rel="stylesheet" type="text/css" />
+</head>
+
+<div id="backnav">
+    <a href=""><p>Startseite</p></a><p> > </p><a href="/impressum"><p>Impressum</p></a>
+</div>
+
+<div id="all">
+    <h1>Impressum</h1>
+        <h2>Anbieter:</h2>
+        <p>Melanie Wolf, Hannah Scheidbach</p>
+        <p>Hinterfeldgasse 19</p>
+        <p>6900 Bregenz</p>
+
+        <h2>Kontakt:</h2>
+        <p>Telefon: 089/1234567-8</p>
+        <p>E-Mail: dhiliundjustus@tierheim.at</p>
+        <p>Website: www.tierheimdhiliundjustus.at</p>
+
+        <h2>Bei redaktionellen Inhalten:</h2>
+        <p>Verantwortlich nach § 55 Abs.2 RStV</p>
+        <p>Cornelia Mayer</p>
+        <p>Musterstraße 2</p>
+        <p>80999 München</p>
+</div>
+

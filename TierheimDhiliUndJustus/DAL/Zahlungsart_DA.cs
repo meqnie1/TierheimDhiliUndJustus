@@ -1,8 +1,8 @@
-﻿using MySqlConnector;
-using System.Drawing;
+﻿using System.Drawing;
 using TierheimDhiliUndJustus.BLL;
 using System.Data.SqlClient;
 using System.IO;
+using MySql.Data.MySqlClient;
 
 namespace TierheimDhiliUndJustus.DAL
 {
@@ -45,6 +45,35 @@ namespace TierheimDhiliUndJustus.DAL
 
             }
             return zahlungslist;
+        }
+
+        public static string GetoneZahlungsart(int idzahlungsart)
+        {
+            string zahlungsart = "";
+
+            using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
+            {
+                conn.Open();              
+                sqlstatement = "SELECT Zahlungsartname FROM zahlungsart WHERE ID_Zahlungsart = " + idzahlungsart;
+
+
+                using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
+                {
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+
+                            zahlungsart = (string)reader["Zahlungsartname"];
+                        }
+
+                    }
+                }
+
+
+            }
+            return zahlungsart;
         }
     }
 

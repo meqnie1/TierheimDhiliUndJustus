@@ -1,0 +1,130 @@
+﻿
+#tierbild {
+    height: 12vw;
+    width: 12vw;
+    object-fit: cover;
+    display: inline-block;
+    margin: 0.5vw;
+    background-color: lightgray;
+}
+
+#ueberschrift {
+    font-size: 1.7vw;
+    text-transform: uppercase;
+    color: #339974;
+}
+.submitanderror {
+    text-align: center;
+    margin: 11vw;
+}
+
+.submitanderror > h1 {
+    font-size: 1.7vw;
+    text-transform: uppercase;
+    color: #339974;
+    margin-bottom: 1vw;
+}
+
+.submitanderror > h2 {
+    font-size: 1.2vw;
+    text-transform: uppercase;
+    margin: 2vw;
+}
+
+.submitanderror > input {
+    display: block;
+    margin: auto;
+}
+
+.submitanderror > p > a {
+    color: black;
+}
+
+.submitanderror > p {
+    font-size: 1vw;
+}
+
+.buttoncss {
+    height: 3vw;
+    width: 13vw;
+    color: white;
+    background-color: #339974;
+    border: none;
+    font-size: 1vw;
+    display: block;
+    margin: auto;
+    margin-top: 2vw;
+}
+
+.buttoncss:hover {
+    background-color: #2A8262;
+}
+
+#tiername_text, #geburtsdatum_date, #tierart_drop, #tierart_text, #tierrasse_drop, #tierrasse_text, #geschlecht_drop {
+    background-color: rgba(81,154,114,11%);
+    width: 12vw;
+    border-radius: 15px;
+    border: none;
+    height: 2.5vw;
+    font-size: 1vw;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    margin-bottom: 1vw;
+}
+#beschreibung_text {
+    background-color: rgba(81,154,114,11%);
+    border-radius: 15px;
+    border: none;
+    font-size: 1vw;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    margin-bottom: 1vw;
+}
+#fundtier_checkbox {
+    margin-bottom: 1vw;
+    height: 1vw;
+    width: 1vw;
+    margin-left: 1vw;
+}
+
+#tierart_text, #tierrasse_text, #tierart_label, #tierrasse_label {
+    margin-left: 1vw;
+}
+
+label {
+    font-size: 1vw;
+    font-weight: bold;
+    display: block;
+}
+
+#info_left{
+    display: inline-block;
+    width: 20vw;
+    padding-left:2vw;
+}
+
+#info_right{
+    display: inline-block;
+    width: 20vw;
+    vertical-align: top;
+}
+
+#left{
+    width: 20vw;
+    height: 20vw;
+    display: inline-block;
+    vertical-align: top;
+}
+
+#all{
+    margin: auto;
+    display: block;
+    width: 70vw;
+    height: 30vw;
+    margin-top: 5vw;
+    margin-left:20vw;
+}
+
+#fehlermeldung{
+    color:red;
+}

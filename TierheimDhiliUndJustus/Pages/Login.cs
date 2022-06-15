@@ -33,7 +33,7 @@ namespace TierheimDhiliUndJustus.Pages
                     fehlermeldung = "";
                     LoginConfig.Angemeldet = eingeloggterKunde.ID_Kunde;
 
-                    navManager.NavigateTo("/");
+                    navManager.NavigateTo("/", true);
 
                     break;
                 }

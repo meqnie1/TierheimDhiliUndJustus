@@ -1,0 +1,148 @@
+﻿@page "/tierhinzufuegen"
+@inject NavigationManager UriHelper;
+@using TierheimDhiliUndJustus.BLL;
+@using TierheimDhiliUndJustus.DAL;
+@using TierheimDhiliUndJustus.Pages;
+@using TierheimDhiliUndJustus.Shared;
+@using System.Drawing;
+@using System.Data.SqlClient;
+@using System.IO;
+
+
+<head>
+    <link href="css/backnav.css" rel="stylesheet" type="text/css" />
+</head>
+
+<div id="backnav">
+    <a href=""><p>Startseite</p></a><p> > </p><a href="/tierhinzufuegen"><p>Tiere hinzufügen</p></a>
+</div>
+
+    @if (LoginConfig.Angemeldet != 0)
+    { 
+        if(Kunde_DA.GetoneKunde(LoginConfig.Angemeldet).Rolle == "Admin")
+        {
+            if (!tierhinzugefügt)
+            {
+                <div id="all">
+                    <div id="left">
+                        <h1 id="ueberschrift">Tier hinzufügen</h1>                    
+                        <img id="tierbild" src="@tierpicture"  />
+                        
+                        <InputFile accept="image/jpeg, image/png" OnChange="@Uploadtierpicture"/> 
+                    </div>
+                    <div id="info_left">
+                        <label for="tiername_text">Tiername:</label>
+                        <input type="text" id="tiername_text" name="tiername" @bind="tiername"> 
+
+                        <label for="geburtsdatum_date">Geburtsdatum:</label>
+                        <input type="date" id="geburtsdatum_date" name="geburtsdatum" @bind="geburtsdatum"> 
+            
+                        <label for="tierart_drop">Wählen Sie eine Tierart aus:</label>
+                        <select name="tierart_dropdown" id="tierart_drop" @onchange="eventArgs => { ChangeCurrentSelectedTierartAndTierrasse(eventArgs.Value, true); }">
+                            @foreach (Tierart art in lst_tierarten)
+                            {
+                                //es wird automatisch immer beim laden der seite der Wert von 'CurrentTierart' auf den ersten Wert aus der Liste gesetzt.
+                                //sonst wenn man nichts auswählt, wird nie die Methode 'ChangeCurrentSelectedTier' ausgeführt.
+                                if(lst_tierarten.ElementAt(0).ID_Tierart == art.ID_Tierart && lst_tierarten.Count >= 0 && currentTierart == 0)
+                                {
+                                    currentTierart = art.ID_Tierart;
+                                }
+                                <option value="@art.ID_Tierart">@art.Tierartname</option>
+                            }
+                            <option value=-1>-</option>
+                        </select>
+
+                        @if(currentTierart == -1)
+                        {
+                            <label for="tierart_text" id="tierart_label">Für eine neue Tierart:</label>
+                            <input type="text" id="tierart_text" name="tierart_text" @bind="tierartText"> 
+                        }
+                        
+
+                        
+
+                        <label for="tierrasse_drop">Wählen Sie eine Tierrasse aus:</label>
+                        <select name="tierrasse_dropdown" id="tierrasse_drop" @onchange="eventArgs => { ChangeCurrentSelectedTierartAndTierrasse(eventArgs.Value, false); }">
+                            @{
+                                    lst_tierrassen.Clear();
+                                    lst_tierrassen = Tierrasse_DA.GetTierrasseWithTierartID(currentTierart);
+                            }
+                            @foreach (Tierrasse art in lst_tierrassen)
+                            {
+                                //es wird automatisch immer beim laden der seite der Wert von 'CurrentTierrasse' auf den ersten Wert aus der Liste gesetzt.
+                                //sonst wenn man nichts auswählt, wird nie die Methode 'ChangeCurrentSelectedTier' ausgeführt.
+                                if(lst_tierrassen.ElementAt(0).ID_Tierrasse == art.ID_Tierrasse && lst_tierrassen.Count >= 0 && currentTierrasse == 0)
+                                {
+                                    currentTierrasse = art.ID_Tierrasse;
+                                }
+                                <option value="@art.ID_Tierrasse">@art.Tierrassennamen</option>
+                            }
+                            <option value=-1>-</option>
+                        </select>
+                        @if(currentTierrasse == -1 || currentTierart == -1)
+                        {
+                            <label for="tierrasse_text" id="tierrasse_label">Für eine neue Tierrasse:</label>
+                            <input type="text" id="tierrasse_text" name="tierrasse_text" @bind="tierrasseText"> 
+                            currentTierart = -1;
+                        }
+                        
+
+                     </div>
+                     <div id="info_right">
+                        <label for="geschlecht_drop">Geschlecht:</label>
+                        <select name="geschlecht_dropdown" id="geschlecht_drop" @onchange="eventArgs => { ChangeCurrentSelectedGeschlecht(eventArgs.Value); }">
+                            <option value="m">männlich</option>
+                            <option value="w">weiblich</option>
+                        </select>
+
+                        <label for="fundtier_checkbox" id="fundtier_label">Fundtier:
+                        <input type="checkbox" name="fundtier" id="fundtier_checkbox" @bind="fundtier"></label>
+
+                        <label for="beschreibung_text">Beschreibung:</label>
+                        <textarea id="beschreibung_text" name="beschreibung" rows="4" cols="28" @bind="beschreibung"></textarea>
+                        <p id="fehlermeldung">@fehlermeldung</p>
+                        <input class="buttoncss" type="button" name="fundtier" value="Tier hinzufügen" @onclick="CreateTier">
+                    </div>
+                </div>
+            }
+            else
+            {
+            hinzugefügtestier = tiername;
+            <div class="submitanderror">
+                <h1>Tier wurde hinzugefügt</h1>
+                 <p>Sie haben @tiername hinzugefügt </p>
+                 <p>Sie wollen das Tier sehen? <a href="unseretiere">Klicken Sie hier!</a></p>
+                 <h2>Oder</h2>
+                 <input type="button" value="Zurück zur Startseite" @onclick="@(()=>UriHelper.NavigateTo(""))"/>
+             </div>
+            }      
+        }
+        else
+        {
+            <div class="submitanderror">
+                <h1>Sie sind kein Admin.</h1>
+                <input class="buttoncss" type="button" value="Zurück zur Startseite" @onclick="@(()=>UriHelper.NavigateTo(""))"/>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="submitanderror">
+            <h1>Sie müssen sich zuerst anmelden.</h1>
+            <input class="buttoncss" type="button" value="Zum Anmelden" @onclick="@(()=>UriHelper.NavigateTo("/login"))"/>
+            <h2>Oder</h2>
+            <p>Registrieren Sie sich kostenlos. <a href="registrieren">Klicken Sie hier!</a></p>
+        </div>
+    }
+
+
+
+
+
+
+
+
+
+
+
+

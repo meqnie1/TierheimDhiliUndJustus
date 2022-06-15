@@ -1,0 +1,32 @@
+﻿body {
+}
+
+#startseitebanner {
+    width: 100%;
+    margin: 0vw;
+    padding: 0vw;
+    margin-top: -0.9vw;
+}
+#maps{
+   display: flex;
+   align-items: center;
+   margin-left: 5vw;
+   margin-top: 5vw;
+   margin-bottom: 5vw;
+}
+
+h1 {
+    font-size: 1.7vw;
+    text-transform: uppercase;
+    color: #339974;
+    margin-bottom: 1vw;
+}
+
+#text{
+    margin-left: 2vw;
+}
+
+#text > p{
+    padding: 0vw;
+    margin: 0vw;
+}

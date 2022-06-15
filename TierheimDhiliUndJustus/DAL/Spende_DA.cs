@@ -1,8 +1,8 @@
-﻿using MySqlConnector;
-using System.Drawing;
+﻿using System.Drawing;
 using TierheimDhiliUndJustus.BLL;
 using System.Data.SqlClient;
 using System.IO;
+using MySql.Data.MySqlClient;
 
 namespace TierheimDhiliUndJustus.DAL
 {
@@ -36,10 +36,44 @@ namespace TierheimDhiliUndJustus.DAL
 
                     cmd.ExecuteNonQuery();
                 }
-
-
             }
         }
+
+        public static List<Spende> GetSpendenwithKunde(int kundenid)
+        {
+            List<Spende> lstkundenspenden = new List<Spende>();
+
+            using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
+            {
+                conn.Open();
+
+
+                sqlstatement = "SELECT * FROM spende WHERE FK_Kunde_Spende = " + kundenid + " ORDER BY ID_Spende ASC";
+
+
+                using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
+                {
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Spende spende = new Spende(
+                            (int)reader["ID_Spende"],
+                            (decimal)reader["Betrag"],
+                            (int)reader["FK_Kunde_Spende"],
+                            (int)reader["FK_Zahlungsart_Spende"]);
+
+                            lstkundenspenden.Add(spende);
+                        }
+
+                    }
+                }
+            }
+            return lstkundenspenden;
+        }
+
+        
     }
 
 }

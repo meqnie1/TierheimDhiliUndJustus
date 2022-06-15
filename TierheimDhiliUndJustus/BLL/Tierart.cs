@@ -6,10 +6,20 @@
 
         public string Tierartname { get; set; }
 
+        public Tierart()
+        {
+
+        }
+
         public Tierart(int id, string tiername)
         {
             ID_Tierart = id;
             Tierartname = tiername; 
+        }
+
+        public Tierart(string tiername)
+        {
+            Tierartname = tiername;
         }
     }
 }
