@@ -19,7 +19,7 @@
 
     string srcimg = "img/tiere/" + CurrentTier.Tiername + ".jpg";
 
-    void ClickOnButton(int terminart)
+    void ClickOnButton(int? terminart = 0)
     {
         if (WichtigeMethoden.IsUserAngemeldet())
         {
@@ -34,9 +34,18 @@
                 case 3:
                     UriHelper.NavigateTo($"/unseretiere/tierdetail/{CurrentTier.ID_Tier}/adoptieren");
                     break;
+                default:
+                    enableAccountLöschen = true;
+                    break;
             }
         }
+    }
 
+    void DeleteCurrentTier()
+    {
+        Termin_DA.RemoveTierfromTermin(CurrentTier.ID_Tier);
+        Tier_DA.DeleteTier(CurrentTier.ID_Tier);
+        UriHelper.NavigateTo("/unseretiere");
     }
 }
 
@@ -55,6 +64,15 @@
         @if(CurrentTier.Fundtier == 0)
         {
             <input id="button_adoptieren" type="button" value="Adoptieren" @onclick="eventArgs => { ClickOnButton(3); }"/>
+        }
+        @if (LoginConfig.Angemeldet != 0)
+        {
+            <input id="button_adoptieren" type="button" value="Tier löschen" @onclick="eventArgs => { ClickOnButton(); }"/>
+        }
+        @if (enableAccountLöschen)
+        {
+            <h2 class="confirmlöschen">Wollen Sie das Tier wirklich löschen?</h2>
+            <h2 class="confirmlöschen" id="confirmlöschen_link" @onclick="eventArgs => { DeleteCurrentTier(); }">Klicken Sie hier.</h2>
         }
     </div>
     <div id="tierdetail_info">

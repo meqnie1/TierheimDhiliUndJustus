@@ -306,6 +306,25 @@
 
             }
         }
+
+        public static void DeleteTier(int tierid)
+        {
+            using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
+            {
+                conn.Open();
+
+
+                sqlstatement = "DELETE FROM tier WHERE ID_Tier = " + tierid;
+
+
+                using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+
+            }
+        }
     }
     
 }

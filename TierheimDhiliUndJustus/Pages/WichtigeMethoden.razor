@@ -31,19 +31,20 @@
     public List<Tier> GetTheRightTierList(List<int> lstcheckbox_tierrassen, List<int> lstcheckbox_tierart, bool fundtiere)
     {
         int tierart = 0;
+        List<int> lst_tierart = new List<int>(lstcheckbox_tierart);
 
         if(lstcheckbox_tierrassen.Count > 0 || lstcheckbox_tierart.Count > 0)
         {
             foreach (int tierrasse in lstcheckbox_tierrassen)
             {
                 tierart = Tierrasse_DA.GetTierartWithTierrasseID(tierrasse);
-                if (lstcheckbox_tierart.Contains(tierart))
+                if (lst_tierart.Contains(tierart))
                 {
-                    lstcheckbox_tierart.Remove(tierart);
+                    lst_tierart.Remove(tierart);
                 }
             }
 
-            return fundtiere ? Tier_DA.GetFundtierWithFilterTierrasse(lstcheckbox_tierrassen, lstcheckbox_tierart) : Tier_DA.GetTierWithFilterTierrasse(lstcheckbox_tierrassen, lstcheckbox_tierart);
+            return fundtiere ? Tier_DA.GetFundtierWithFilterTierrasse(lstcheckbox_tierrassen, lst_tierart) : Tier_DA.GetTierWithFilterTierrasse(lstcheckbox_tierrassen, lst_tierart);
         }
         else
         {

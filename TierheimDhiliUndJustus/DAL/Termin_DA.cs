@@ -270,6 +270,21 @@ namespace TierheimDhiliUndJustus.DAL
             }
             return count;
         }
+
+        public static void RemoveTierfromTermin(int tierid)
+        {
+            using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
+            {
+                conn.Open();
+                string sqlstatement = "UPDATE termin SET FK_Kunde_Termin = null, FK_Tier_Termin = null,Gebucht = 0 WHERE FK_Tier_Termin = " + tierid;
+
+                using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+            }
+        }
     }
     
 }

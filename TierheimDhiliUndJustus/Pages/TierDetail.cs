@@ -11,6 +11,7 @@
     public partial class TierDetail : ComponentBase
     {
         int counter = 0;
+        bool enableAccountLöschen = false;
         string srcgeschlecht;
         static WichtigeMethoden WichtigeMethoden = new WichtigeMethoden();
     }

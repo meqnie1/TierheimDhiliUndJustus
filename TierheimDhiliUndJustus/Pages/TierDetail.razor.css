@@ -21,13 +21,14 @@ img {
 
 #tierdetail_rahmen {
     display: inline-block;
-    height: 22vw;
     width: 18vw;
     padding: 0vw;
+    padding-bottom: 1vw;
     background-color: rgba(81, 154, 114, 30%);
     margin-top: 3vw;
     margin-left: 19vw;
 }
+
 #button_adoptieren {
     margin-top: 1vw;
     margin-left: 2.5vw;
@@ -100,7 +101,6 @@ input:hover {
 }
 
 #tierdetail_weiteretiere{
-    margin-top: 22vw;
     margin-left: 18vw;
     margin-bottom: 3vw;
 }
@@ -118,3 +118,20 @@ input:hover {
     color: #2A8262;
     display: inline;
 }
+
+#tierfull{
+    margin-bottom: 10vw;
+}
+
+.confirmlöschen {
+    font-size: 1vw;
+    color: #2A8262;
+    display: flex;
+    margin-left: 2.5vw;
+    margin-top: 1vw;
+}
+
+#confirmlöschen_link:hover {
+    color: red;
+}
+
