@@ -157,17 +157,16 @@ namespace TierheimDhiliUndJustus.DAL
             return lstkundentermine;
         }
 
-        public static string GetTierfromTermin(int terminid)
+        public static Tier GetTierfromTermin(int terminid)
         {
-            DateTime datum;
-            string tiername = "";
+            Tier tier = new Tier();
            
             using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
             {
                 conn.Open();
 
 
-                sqlstatement = "SELECT tier.Tiername FROM termin JOIN tier ON termin.FK_Tier_Termin = tier.ID_Tier WHERE termin.ID_Termin = " + terminid;
+                sqlstatement = "SELECT * FROM tier JOIN termin ON termin.FK_Tier_Termin = tier.ID_Tier WHERE termin.ID_Termin = " + terminid;
 
 
                 using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
@@ -177,13 +176,20 @@ namespace TierheimDhiliUndJustus.DAL
                     {
                         while (reader.Read())
                         {
-                            tiername = (string)reader["Tiername"];
+                            tier = new Tier(
+                            (int)reader["ID_Tier"],
+                            (string)reader["Tiername"],
+                            (DateTime)reader["Geburtsdatum"],
+                            (string)reader["Geschlecht"],
+                            (string)reader["Beschreibung"],
+                            (SByte)reader["Fundtier"],
+                            (int)reader["FK_Tierrasse_Tier"]); ;
                         }
 
                     }
                 }
             }
-            return tiername;
+            return tier;
         }
 
         public static void RemoveKundefromspecificTermin(int terminid)

@@ -5,11 +5,11 @@ namespace TierheimDhiliUndJustus.DAL
 
     public static class Kunde_DA
     {
-        public static List<Kunde> lstkunde = new List<Kunde>();
-
+        
         public static List<Kunde> GetKunde()
         {
-     
+            List<Kunde> lstkunde = new List<Kunde>();
+
             using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
             {
                 conn.Open();

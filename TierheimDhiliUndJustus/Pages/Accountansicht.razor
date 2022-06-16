@@ -101,7 +101,7 @@ else
                 <td>@countertermine</td>
                 <td>@termin.TerminDatum.ToString("dd.MM.yyyy")</td>
                 <td>@termin.TerminDatum.ToString("HH:mm")</td>
-                <td>@Termin_DA.GetTierfromTermin(termin.ID_Termin)</td>
+                <td>@Termin_DA.GetTierfromTermin(termin.ID_Termin).Tiername</td>
                 <td>@Termin_DA.GetTerminart(termin.ID_Termin)</td>
                 <td id="remove" @onclick="() => Terminentfernen(termin.ID_Termin)"><img src="img/remove.png"><a>Termin entfernen</a></td>
         

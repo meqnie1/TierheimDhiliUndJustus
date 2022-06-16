@@ -88,10 +88,8 @@ namespace TierheimDhiliUndJustus.Pages
             }
             if (fehlermeldung == "")
             {
-                Kunde_DA.UpdateKunde(Kunde_DA.GetoneKunde(LoginConfig.Angemeldet).ID_Kunde, evalue, pwvalue);
-                enabled = false;
-                Kunde_DA.GetoneKunde(LoginConfig.Angemeldet).Email = evalue;
-                Kunde_DA.GetoneKunde(LoginConfig.Angemeldet).Passwort = pwvalue;
+                Kunde_DA.UpdateKunde(LoginConfig.Angemeldet, evalue, pwvalue);
+                enabled = false;         
                 countertermine = 0;
                 
             }
