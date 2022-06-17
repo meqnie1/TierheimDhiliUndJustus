@@ -104,7 +104,7 @@
         @foreach(var item in Tier_DA.GetTierExceptTierID(CurrentTier.ID_Tier))
         {
             srcimg = "img/tiere/" + @item.Tiername + ".jpg";
-            srcgeschlecht = WichtigeMethoden_BLL.GetGeschlecht(item.ID_Tier);
+            srcgeschlecht = WichtigeMethoden_BLL.GetGeschlechtAsPictureTag(item.ID_Tier);
             if(counter <=2)
             {
                 <div class="weiteretiere_rahmen"><img class="weiteretiere_bild" src="@srcimg" @onclick="@(()=>UriHelper.NavigateTo($"/unseretiere/tierdetail/{@item.ID_Tier}"))"/>

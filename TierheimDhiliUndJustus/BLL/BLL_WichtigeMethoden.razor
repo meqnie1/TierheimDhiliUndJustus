@@ -29,7 +29,7 @@
         }
     }
 
-    public string GetGeschlecht(int tierid)
+    public string GetGeschlechtAsPictureTag(int tierid)
     {
         Tier tier = Tier_DA.GetOneTier(tierid);
 
@@ -64,18 +64,6 @@
         else
         {
             return false;
-        }
-    }
-
-    public bool IsUserAngemeldet()
-    {
-        if (LoginConfig.Angemeldet == 0)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
         }
     }
 }

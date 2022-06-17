@@ -36,7 +36,7 @@
             @foreach (var item in lst_filtertiere)
             {
                 counterForFormatting++;
-                string srcgeschlecht = WichtigeMethoden_BLL.GetGeschlecht(item.ID_Tier);
+                string srcgeschlecht = WichtigeMethoden_BLL.GetGeschlechtAsPictureTag(item.ID_Tier);
                 string srcimg = "img/tiere/" + @item.Tiername + ".jpg";
 
                 <div class="unseretiere_rahmen" ><img class="unseretiere_bild" src="@srcimg" @onclick="@(()=>UriHelper.NavigateTo($"/unseretiere/tierdetail/{@item.ID_Tier}"))">

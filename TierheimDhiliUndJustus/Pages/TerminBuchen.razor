@@ -70,7 +70,7 @@
                 <h1 id="termin_ueberschrift">@terminart</h1>
 
                 @{srcimg = "img/tiere/" + @CurrentTier.Tiername + ".jpg";
-                srcgeschlecht = WichtigeMethoden_BLL.GetGeschlecht(CurrentTier.ID_Tier);}
+                srcgeschlecht = WichtigeMethoden_BLL.GetGeschlechtAsPictureTag(CurrentTier.ID_Tier);}
                 <div id="termin_rahmen">
                     <img id="termin_bild" src="@srcimg"/>
                     <h1>@CurrentTier.Tiername</h1>
