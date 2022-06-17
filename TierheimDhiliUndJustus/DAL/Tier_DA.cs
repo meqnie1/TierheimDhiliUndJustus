@@ -9,21 +9,19 @@
     public static class Tier_DA
     {
         public static string sqlstatement = "";
-        public static List<Tier> GetTier()
+        public static List<Tier> GetAllTiere(int fundtier)
         {
-            List<Tier> tierList = new List<Tier>();
-            
+            List<Tier> lst_tiere = new List<Tier>();
 
             using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
             {
                 conn.Open();
-
                
-                sqlstatement = "SELECT * FROM tier WHERE Fundtier = 0";
-
+                sqlstatement = "SELECT * FROM tier WHERE Fundtier = @fundtier";
 
                 using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
                 {
+                    cmd.Parameters.Add(new MySqlParameter("@fundtier", MySqlDbType.Int32) { Value = fundtier });
 
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {                 
@@ -39,7 +37,7 @@
                             (SByte)reader["Fundtier"],
                             (int)reader["FK_Tierrasse_Tier"]); ;
 
-                            tierList.Add(tier);
+                            lst_tiere.Add(tier);
                         }
                                   
                     }
@@ -47,21 +45,20 @@
 
              
             }
-            return tierList;
+            return lst_tiere;
         }
 
-        public static Tier GetOneTier(int tierid)
+        public static Tier GetOneTier(int tier_id)
         {
             Tier neuesTier = new Tier();
             using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
             {
                 conn.Open();
-                sqlstatement = "SELECT * FROM tier WHERE ID_Tier = " + tierid;
-
-
+                sqlstatement = "SELECT * FROM tier WHERE ID_Tier = @tierid";
 
                 using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
                 {
+                    cmd.Parameters.Add(new MySqlParameter("@tierid", MySqlDbType.Int32) { Value = tier_id });
 
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -83,7 +80,7 @@
 
         }
 
-        public static List<Tier> GetTierWithFilterTierrasse(List<int> checkboxes_tr, List<int> checkboxes_ta)
+        public static List<Tier> GetTiereWithFilterTierrasse(List<int> checkboxes_tr, List<int> checkboxes_ta, int fundtier)
         {
             string whereStatement_tr = "IN(0)";
             string whereStatement_ta = "IN(0)";
@@ -97,18 +94,17 @@
                 whereStatement_ta = GetWhereStatement(checkboxes_ta);
             }
 
-            List<Tier> tierList = new List<Tier>();
+            List<Tier> lst_tiere = new List<Tier>();
 
             using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
             {
                 conn.Open();
                 sqlstatement = "SELECT * FROM tier JOIN tierrasse ON tier.FK_Tierrasse_Tier = " +
-                    "tierrasse.ID_Tierrasse WHERE fundtier = 0 and (tier.FK_Tierrasse_Tier " + whereStatement_tr + " OR tierrasse.FK_Tierart_Tierrasse " + whereStatement_ta + ")";
-
-
+                    "tierrasse.ID_Tierrasse WHERE fundtier = @fundtier and (tier.FK_Tierrasse_Tier " + whereStatement_tr + " OR tierrasse.FK_Tierart_Tierrasse " + whereStatement_ta + ")";
 
                 using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
                 {
+                    cmd.Parameters.Add(new MySqlParameter("@fundtier", MySqlDbType.Int32) { Value = fundtier });
 
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -123,12 +119,12 @@
                             (SByte)reader["Fundtier"],
                             (int)reader["FK_Tierrasse_Tier"]); ;
 
-                            tierList.Add(tier);
+                            lst_tiere.Add(tier);
                         }
                     }
                 }
             }
-            return tierList;
+            return lst_tiere;
 
         }
 
@@ -152,9 +148,9 @@
             return wherestatement;
         }
 
-        public static List<Tier> GetTierExceptTierID(int tierid)
+        public static List<Tier> GetTierExceptTierID(int tier_id)
         {
-            List<Tier> tierList = new List<Tier>();
+            List<Tier> lst_tiere = new List<Tier>();
 
 
             using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
@@ -162,11 +158,12 @@
                 conn.Open();
 
 
-                sqlstatement = "SELECT * FROM tier WHERE ID_Tier != " + tierid;
+                sqlstatement = "SELECT * FROM tier WHERE ID_Tier != @tierid";
 
 
                 using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
                 {
+                    cmd.Parameters.Add(new MySqlParameter("@tierid", MySqlDbType.Int32) { Value = tier_id });
 
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -182,7 +179,7 @@
                             (SByte)reader["Fundtier"],
                             (int)reader["FK_Tierrasse_Tier"]); ;
 
-                            tierList.Add(tier);
+                            lst_tiere.Add(tier);
                         }
 
                     }
@@ -190,97 +187,7 @@
 
 
             }
-            return tierList;
-        }
-
-        public static List<Tier> GetFundtiere()
-        {
-            List<Tier> tierList = new List<Tier>();
-
-
-            using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
-            {
-                conn.Open();
-
-
-                sqlstatement = "SELECT * FROM tier WHERE Fundtier = 1";
-
-
-                using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
-                {
-
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-
-                            Tier tier = new Tier(
-                            (int)reader["ID_Tier"],
-                            (string)reader["Tiername"],
-                            (DateTime)reader["Geburtsdatum"],
-                            (string)reader["Geschlecht"],
-                            (string)reader["Beschreibung"],
-                            (SByte)reader["Fundtier"],
-                            (int)reader["FK_Tierrasse_Tier"]); ;
-
-                            tierList.Add(tier);
-                        }
-
-                    }
-                }
-
-
-            }
-            return tierList;
-        }
-
-        public static List<Tier> GetFundtierWithFilterTierrasse(List<int> checkboxes_tr, List<int> checkboxes_ta)
-        {
-            string whereStatement_tr = "IN(0)";
-            string whereStatement_ta = "IN(0)";
-
-            if (checkboxes_tr.Count != 0)
-            {
-                whereStatement_tr = GetWhereStatement(checkboxes_tr);
-            }
-            if (checkboxes_ta.Count != 0)
-            {
-                whereStatement_ta = GetWhereStatement(checkboxes_ta);
-            }
-
-            List<Tier> tierList = new List<Tier>();
-
-            using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
-            {
-                conn.Open();
-                sqlstatement = "SELECT * FROM tier JOIN tierrasse ON tier.FK_Tierrasse_Tier = " +
-                    "tierrasse.ID_Tierrasse WHERE Fundtier = 1 AND (tier.FK_Tierrasse_Tier " + whereStatement_tr + " OR tierrasse.FK_Tierart_Tierrasse " + whereStatement_ta + ")";
-
-
-
-                using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
-                {
-
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            Tier tier = new Tier(
-                            (int)reader["ID_Tier"],
-                            (string)reader["Tiername"],
-                            (DateTime)reader["Geburtsdatum"],
-                            (string)reader["Geschlecht"],
-                            (string)reader["Beschreibung"],
-                            (SByte)reader["Fundtier"],
-                            (int)reader["FK_Tierrasse_Tier"]); ;
-
-                            tierList.Add(tier);
-                        }
-                    }
-                }
-            }
-            return tierList;
-
+            return lst_tiere;
         }
 
         public static void CreateTier(Tier neuestier)
@@ -307,18 +214,19 @@
             }
         }
 
-        public static void DeleteTier(int tierid)
+        public static void DeleteTier(int tier_id)
         {
             using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
             {
                 conn.Open();
 
 
-                sqlstatement = "DELETE FROM tier WHERE ID_Tier = " + tierid;
+                sqlstatement = "DELETE FROM tier WHERE ID_Tier = @tierid";
 
 
                 using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
                 {
+                    cmd.Parameters.Add(new MySqlParameter("@tierid", MySqlDbType.Int32) { Value = tier_id });
                     cmd.ExecuteNonQuery();
                 }
 

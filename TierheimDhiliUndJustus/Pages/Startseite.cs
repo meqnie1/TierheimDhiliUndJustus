@@ -13,7 +13,7 @@
     {
         public int counter = 0;
         public string geschlechtsource = "";
-        public List<Tier> lsttier = Tier_DA.GetTier();
+        public List<Tier> lsttier = Tier_DA.GetAllTiere(0);
         WichtigeMethoden WichtigeMethoden = new WichtigeMethoden();
 
     }

@@ -11,8 +11,8 @@ namespace TierheimDhiliUndJustus.Pages
         
         int countertermine = 0;
         int counterspenden = 0;
-        string pwvalue = Kunde_DA.GetoneKunde(LoginConfig.Angemeldet).Passwort;
-        string evalue = Kunde_DA.GetoneKunde(LoginConfig.Angemeldet).Email;
+        string pwvalue = Kunde_DA.GetOneKunde(LoginConfig.Angemeldet).Passwort;
+        string evalue = Kunde_DA.GetOneKunde(LoginConfig.Angemeldet).Email;
 
         string pwinput = "";
         string fehlermeldung = "";
@@ -30,7 +30,7 @@ namespace TierheimDhiliUndJustus.Pages
         
 
 
-        List<Kunde> lstkunde = Kunde_DA.GetKunde();
+        List<Kunde> lstkunde = Kunde_DA.GetKunden();
         List<Termin> lstkundentermine = Termin_DA.GetTermineWithKunde(LoginConfig.Angemeldet);
 
         WichtigeMethoden WichtigeMethoden = new WichtigeMethoden();
@@ -99,13 +99,13 @@ namespace TierheimDhiliUndJustus.Pages
 
         public void Terminentfernen(int terminid)
         {
-            Termin_DA.RemoveKundefromspecificTermin(terminid);                   
+            Termin_DA.RemoveKundefromSpecificTermin(terminid);                   
         }
 
         public void Accountentfernen()
         {
-            Termin_DA.RemoveKundefromTermin(Kunde_DA.GetoneKunde(LoginConfig.Angemeldet).ID_Kunde);
-            Kunde_DA.DeleteKunde(Kunde_DA.GetoneKunde(LoginConfig.Angemeldet).ID_Kunde);
+            Termin_DA.RemoveKundefromTermin(Kunde_DA.GetOneKunde(LoginConfig.Angemeldet).ID_Kunde);
+            Kunde_DA.DeleteKunde(Kunde_DA.GetOneKunde(LoginConfig.Angemeldet).ID_Kunde);
         }
 
         public void Abmelden()
@@ -117,12 +117,12 @@ namespace TierheimDhiliUndJustus.Pages
 
         public void Accountloeschen()
         {
-            if (pwinput == Kunde_DA.GetoneKunde(LoginConfig.Angemeldet).Passwort)
+            if (pwinput == Kunde_DA.GetOneKunde(LoginConfig.Angemeldet).Passwort)
             {              
                 accountloeschen = false;
                 löschenfehlermeldung = "";
-                Termin_DA.RemoveKundefromTermin(Kunde_DA.GetoneKunde(LoginConfig.Angemeldet).ID_Kunde);
-                Kunde_DA.DeleteKunde(Kunde_DA.GetoneKunde(LoginConfig.Angemeldet).ID_Kunde);
+                Termin_DA.RemoveKundefromTermin(Kunde_DA.GetOneKunde(LoginConfig.Angemeldet).ID_Kunde);
+                Kunde_DA.DeleteKunde(Kunde_DA.GetOneKunde(LoginConfig.Angemeldet).ID_Kunde);
                 Abmelden();
             }
             else

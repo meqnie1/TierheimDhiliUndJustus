@@ -7,14 +7,12 @@
     using MySql.Data.MySqlClient;
 
     public class Tierrasse_DA
-
-        //TIERRASSEN METHODE UMBENENNEN AUF TIERRASSENWITHTIERARTID
     {
         public static string sqlstatement = "";
 
         public static List<Tierrasse> GetTierrasseWithTierartID(int tierart_ID)
         {
-            List<Tierrasse> tierrasselist = new List<Tierrasse>();
+            List<Tierrasse> lst_tierrasse = new List<Tierrasse>();
 
 
             using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
@@ -22,11 +20,12 @@
                 conn.Open();
 
 
-                sqlstatement = "SELECT * FROM tierrasse WHERE FK_Tierart_Tierrasse = " + tierart_ID;
+                sqlstatement = "SELECT * FROM tierrasse WHERE FK_Tierart_Tierrasse = tierartid";
 
 
                 using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
                 {
+                    cmd.Parameters.Add(new MySqlParameter("@tierartid", MySqlDbType.Int32) { Value = tierart_ID });
 
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -38,7 +37,7 @@
                                 (string)reader["Tierrassenamen"],
                                 (int)reader["FK_Tierart_Tierrasse"]);
 
-                            tierrasselist.Add(tierrasse);
+                            lst_tierrasse.Add(tierrasse);
                         }
 
                     }
@@ -46,24 +45,23 @@
 
 
             }
-            return tierrasselist;
+            return lst_tierrasse;
         }
 
-        public static int GetTierartWithTierID(int tierid)
+        public static int GetTierartWithTierID(int tier_id)
         {
             int tierart = 1;
-
 
             using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
             {
                 conn.Open();
 
-
-                sqlstatement = "SELECT tierrasse.FK_Tierart_Tierrasse FROM tierrasse JOIN tier ON tierrasse.ID_Tierrasse = tier.FK_Tierrasse_Tier WHERE tier.ID_Tier = " + tierid;
+                sqlstatement = "SELECT tierrasse.FK_Tierart_Tierrasse FROM tierrasse JOIN tier ON tierrasse.ID_Tierrasse = tier.FK_Tierrasse_Tier WHERE tier.ID_Tier = @tierid";
 
 
                 using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
                 {
+                    cmd.Parameters.Add(new MySqlParameter("@tierid", MySqlDbType.Int32) { Value = tier_id });
 
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -80,21 +78,21 @@
             return tierart;
         }
 
-        public static int GetTierartWithTierrasseID(int tierrasseid)
+        public static int GetTierartWithTierrasseID(int tierrasse_id)
         {
             int tierart = 0;
-
 
             using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
             {
                 conn.Open();
 
 
-                sqlstatement = "SELECT FK_Tierart_Tierrasse FROM tierrasse WHERE ID_Tierrasse = " + tierrasseid;
+                sqlstatement = "SELECT FK_Tierart_Tierrasse FROM tierrasse WHERE ID_Tierrasse = @tierrasseid";
 
 
                 using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
                 {
+                    cmd.Parameters.Add(new MySqlParameter("@tierid", MySqlDbType.Int32) { Value = tierrasse_id });
 
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -110,9 +108,9 @@
             return tierart;
         }
 
-        public static List<Tierrasse> GetTierrassen()
+        public static List<Tierrasse> GetAllTierrassen()
         {
-            List<Tierrasse> tierrasselist = new List<Tierrasse>();
+            List<Tierrasse> lst_tierrassen = new List<Tierrasse>();
 
 
             using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
@@ -136,7 +134,7 @@
                                 (string)reader["Tierrassenamen"],
                                 (int)reader["FK_Tierart_Tierrasse"]);
 
-                            tierrasselist.Add(tierrasse);
+                            lst_tierrassen.Add(tierrasse);
                         }
 
                     }
@@ -144,7 +142,7 @@
 
 
             }
-            return tierrasselist;
+            return lst_tierrassen;
         }
 
         public static void CreateTierrasse(Tierrasse tierrasse, string tierartname)
@@ -159,7 +157,7 @@
                 {
                     cmd.Parameters.Add(new MySqlParameter("@tierrassennamen", MySqlDbType.VarChar, 25) { Value = tierrasse.Tierrassennamen });
                     cmd.Parameters.Add(new MySqlParameter("@tierartname", MySqlDbType.VarChar, 25) { Value = tierrasse.Tierrassennamen });
-                    cmd.Parameters.Add(new MySqlParameter("@fk_tierart_tierrasse", MySqlDbType.Int32) { Value = Tierart_DA.GetTierartid(tierartname) });
+                    cmd.Parameters.Add(new MySqlParameter("@fk_tierart_tierrasse", MySqlDbType.Int32) { Value = Tierart_DA.GetTierartID(tierartname) });
 
                     cmd.ExecuteNonQuery();
                     tierrasse.ID_Tierrasse = (int)cmd.LastInsertedId;

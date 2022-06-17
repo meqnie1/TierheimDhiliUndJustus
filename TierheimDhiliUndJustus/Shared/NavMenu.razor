@@ -9,7 +9,7 @@
     <li><a href="fundtiere">Fundtiere</a></li>
     <li><a href="spenden">Spenden</a></li>
     <li><a href="kontakt">Kontakt</a></li>
-    @if(Kunde_DA.GetoneKunde(LoginConfig.Angemeldet).Rolle == "Admin")
+    @if(Kunde_DA.GetOneKunde(LoginConfig.Angemeldet).Rolle == "Admin")
     {
         <li><a href="/tierhinzufuegen">Tiere hinzufügen</a></li>
     }

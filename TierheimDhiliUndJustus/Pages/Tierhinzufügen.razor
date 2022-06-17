@@ -19,7 +19,7 @@
 
     @if (LoginConfig.Angemeldet != 0)
     { 
-        if(Kunde_DA.GetoneKunde(LoginConfig.Angemeldet).Rolle == "Admin")
+        if(Kunde_DA.GetOneKunde(LoginConfig.Angemeldet).Rolle == "Admin")
         {
             if (!tierhinzugefügt)
             {

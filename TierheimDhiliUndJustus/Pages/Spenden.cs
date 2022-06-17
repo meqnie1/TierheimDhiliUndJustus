@@ -13,7 +13,7 @@
     {
         WichtigeMethoden WichtigeMethoden = new WichtigeMethoden();
 
-        public List<Zahlungsart> lst_zahlungsarten = Zahlungsart_DA.GetZahlungsarten();
+        public List<Zahlungsart> lst_zahlungsarten = Zahlungsart_DA.GetAllZahlungsarten();
         int currentzahlungsart = 0;
         double currentbetrag = 0;
         bool gespendet = false;

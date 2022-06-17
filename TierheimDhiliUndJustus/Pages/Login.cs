@@ -19,7 +19,7 @@ namespace TierheimDhiliUndJustus.Pages
         Kunde eingeloggterKunde;
         WichtigeMethoden WichtigeMethoden = new WichtigeMethoden();
 
-        public static List<Kunde> lstkunde = Kunde_DA.GetKunde();
+        public static List<Kunde> lstkunde = Kunde_DA.GetKunden();
 
         private async Task Anmelden()
         {

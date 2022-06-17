@@ -54,14 +54,14 @@ else
             <div id="emailinput">
             <img id="email" src="/img/email2.png" />
             <a>E-Mail:</a>  
-            <input type="email" name="email" value="@Kunde_DA.GetoneKunde(LoginConfig.Angemeldet).Email" disabled />   
+            <input type="email" name="email" value="@Kunde_DA.GetOneKunde(LoginConfig.Angemeldet).Email" disabled />   
         </div>
 
 
         <div id="passwordinput">
             <img id="schloss" src="/img/schloss.png" />
             <a>Passwort:</a>  
-            <input type="@account_inputtype" name="password" value="@Kunde_DA.GetoneKunde(LoginConfig.Angemeldet).Passwort" disabled/>
+            <input type="@account_inputtype" name="password" value="@Kunde_DA.GetOneKunde(LoginConfig.Angemeldet).Passwort" disabled/>
             <img id="closedeye" src="@account_augenart" @onclick="eventArgs => { WichtigeMethoden.ShowPasswort(3);}" />
         </div>
     </div>
@@ -101,8 +101,8 @@ else
                 <td>@countertermine</td>
                 <td>@termin.TerminDatum.ToString("dd.MM.yyyy")</td>
                 <td>@termin.TerminDatum.ToString("HH:mm")</td>
-                <td>@Termin_DA.GetTierfromTermin(termin.ID_Termin).Tiername</td>
-                <td>@Termin_DA.GetTerminart(termin.ID_Termin)</td>
+                <td>@Termin_DA.GetTiernamefromTermin(termin.ID_Termin)</td>
+                <td>@Termin_DA.GetTerminartWithTerminID(termin.ID_Termin)</td>
                 <td id="remove" @onclick="() => Terminentfernen(termin.ID_Termin)"><img src="img/remove.png"><a>Termin entfernen</a></td>
         
                 </tr>      
@@ -139,7 +139,7 @@ else
                 <tr>
                 <td>@counterspenden</td>
                 <td>@spende.Betrag</td>
-                <td>@Zahlungsart_DA.GetoneZahlungsart(spende.FK_Zahlungsart_Spende)</td>                      
+                <td>@Zahlungsart_DA.GetOneZahlungsart(spende.FK_Zahlungsart_Spende)</td>                      
                 </tr>      
             }
     </table>

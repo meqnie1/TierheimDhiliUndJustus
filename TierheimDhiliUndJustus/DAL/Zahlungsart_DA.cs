@@ -10,9 +10,9 @@ namespace TierheimDhiliUndJustus.DAL
     {
         public static string sqlstatement = "";
 
-        public static List<Zahlungsart> GetZahlungsarten()
+        public static List<Zahlungsart> GetAllZahlungsarten()
         {
-            List<Zahlungsart> zahlungslist = new List<Zahlungsart>();
+            List<Zahlungsart> lst_zahlungsarten = new List<Zahlungsart>();
             DateTime datum;
 
 
@@ -36,7 +36,7 @@ namespace TierheimDhiliUndJustus.DAL
                             (int)reader["ID_Zahlungsart"],
                             (string)reader["Zahlungsartname"]);
 
-                            zahlungslist.Add(art);
+                            lst_zahlungsarten.Add(art);
                         }
 
                     }
@@ -44,27 +44,27 @@ namespace TierheimDhiliUndJustus.DAL
 
 
             }
-            return zahlungslist;
+            return lst_zahlungsarten;
         }
 
-        public static string GetoneZahlungsart(int idzahlungsart)
+        public static string GetOneZahlungsart(int zahlungsart_id)
         {
             string zahlungsart = "";
 
             using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
             {
                 conn.Open();              
-                sqlstatement = "SELECT Zahlungsartname FROM zahlungsart WHERE ID_Zahlungsart = " + idzahlungsart;
+                sqlstatement = "SELECT Zahlungsartname FROM zahlungsart WHERE ID_Zahlungsart = @zahlungsartid";
 
 
                 using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
                 {
+                    cmd.Parameters.Add(new MySqlParameter("@zahlungsartid", MySqlDbType.Int32) { Value = zahlungsart_id });
 
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-
                             zahlungsart = (string)reader["Zahlungsartname"];
                         }
 

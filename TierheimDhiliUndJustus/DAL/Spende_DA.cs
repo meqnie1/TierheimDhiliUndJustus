@@ -16,7 +16,6 @@ namespace TierheimDhiliUndJustus.DAL
             {
                 conn.Open();
 
-
                 sqlstatement = "INSERT INTO spende(Betrag, FK_Kunde_Spende, FK_Zahlungsart_Spende) VALUES (@betrag,@kundeid,@zahlungsartid)";
 
 
@@ -39,20 +38,21 @@ namespace TierheimDhiliUndJustus.DAL
             }
         }
 
-        public static List<Spende> GetSpendenwithKunde(int kundenid)
+        public static List<Spende> GetSpendenwithKunde(int kunde_id)
         {
-            List<Spende> lstkundenspenden = new List<Spende>();
+            List<Spende> lst_kundenspenden = new List<Spende>();
 
             using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
             {
                 conn.Open();
 
 
-                sqlstatement = "SELECT * FROM spende WHERE FK_Kunde_Spende = " + kundenid + " ORDER BY ID_Spende ASC";
+                sqlstatement = "SELECT * FROM spende WHERE FK_Kunde_Spende = @kundeid ORDER BY ID_Spende ASC";
 
 
                 using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
                 {
+                    cmd.Parameters.Add(new MySqlParameter("@kundeid", MySqlDbType.Int32) { Value = kunde_id });
 
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -64,13 +64,13 @@ namespace TierheimDhiliUndJustus.DAL
                             (int)reader["FK_Kunde_Spende"],
                             (int)reader["FK_Zahlungsart_Spende"]);
 
-                            lstkundenspenden.Add(spende);
+                            lst_kundenspenden.Add(spende);
                         }
 
                     }
                 }
             }
-            return lstkundenspenden;
+            return lst_kundenspenden;
         }
 
         

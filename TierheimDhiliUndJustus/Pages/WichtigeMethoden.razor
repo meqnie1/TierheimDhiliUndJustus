@@ -44,11 +44,11 @@
                 }
             }
 
-            return fundtiere ? Tier_DA.GetFundtierWithFilterTierrasse(lstcheckbox_tierrassen, lst_tierart) : Tier_DA.GetTierWithFilterTierrasse(lstcheckbox_tierrassen, lst_tierart);
+            return fundtiere ? Tier_DA.GetTiereWithFilterTierrasse(lstcheckbox_tierrassen, lst_tierart, 1) : Tier_DA.GetTiereWithFilterTierrasse(lstcheckbox_tierrassen, lst_tierart, 0);
         }
         else
         {
-            return fundtiere ? Tier_DA.GetFundtiere() : Tier_DA.GetTier();
+            return fundtiere ? Tier_DA.GetAllTiere(1) : Tier_DA.GetAllTiere(0);
         }
     }
 

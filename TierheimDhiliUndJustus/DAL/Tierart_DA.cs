@@ -9,9 +9,10 @@
     public static class Tierart_DA
     {
         public static string sqlstatement = "";
+
         public static List<Tierart> GetTierarten()
         {
-            List<Tierart> tierartlist = new List<Tierart>();
+            List<Tierart> lst_tierarten = new List<Tierart>();
 
             using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
             {
@@ -33,14 +34,14 @@
                                 (int)reader["ID_Tierart"],
                                 (string)reader["Tierartname"]);
 
-                            tierartlist.Add(tierart);
+                            lst_tierarten.Add(tierart);
                         }
 
                     }
                 }
 
             }
-            return tierartlist;
+            return lst_tierarten;
         }
 
         public static void CreateTierart(Tierart tierart)
@@ -61,19 +62,15 @@
             }
         }
 
-        public static int GetTierartid(string tierartname)
+        public static int GetTierartID(string tierartname)
         {
-            List<Tierart> tierartlist = new List<Tierart>();
-            string sqlstatement = "";
-            int tierartid = 0;
+            int tierart_id = 0;
 
             using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
             {
                 conn.Open();
 
                 sqlstatement = "SELECT ID_Tierart FROM tierart WHERE tierart.Tierartname = @tierartname";
-
-
 
                 using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
                 {
@@ -83,12 +80,12 @@
                     {
                         while (reader.Read())
                         {
-                            tierartid = (int)reader["ID_Tierart"];
+                            tierart_id = (int)reader["ID_Tierart"];
                         }
                     }
                 }
             }
-            return tierartid;
+            return tierart_id;
         }
     } 
 }

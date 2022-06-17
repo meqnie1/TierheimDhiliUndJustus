@@ -6,9 +6,9 @@ namespace TierheimDhiliUndJustus.DAL
     public static class Kunde_DA
     {
         
-        public static List<Kunde> GetKunde()
+        public static List<Kunde> GetKunden()
         {
-            List<Kunde> lstkunde = new List<Kunde>();
+            List<Kunde> lst_kunden = new List<Kunde>();
 
             using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
             {
@@ -25,23 +25,26 @@ namespace TierheimDhiliUndJustus.DAL
                                 (string)reader["Passwort"],
                                 (string)reader["Rolle"]);
 
-                            lstkunde.Add(kunde);
+                            lst_kunden.Add(kunde);
                         }
                     }
                 }
             }
-            return lstkunde;
+            return lst_kunden;
 
         }
 
-        public static Kunde GetoneKunde(int id_kunde)
+        public static Kunde GetOneKunde(int kunde_id)
         {
             Kunde kunde = new Kunde();
+
             using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
             {
                 conn.Open();
-                using (MySqlCommand cmd = new MySqlCommand("SELECT * FROM kunde WHERE ID_Kunde = " + id_kunde , conn))
+                using (MySqlCommand cmd = new MySqlCommand("SELECT * FROM kunde WHERE ID_Kunde = @kundeid", conn))
                 {
+                    cmd.Parameters.Add(new MySqlParameter("@kundeid", MySqlDbType.Int32) { Value = kunde_id });
+
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
@@ -81,13 +84,13 @@ namespace TierheimDhiliUndJustus.DAL
             }
         }
 
-        public static void UpdateKunde(int idkunde, string email, string passwort)
+        public static void UpdateKunde(int kunde_id, string email, string passwort)
         {
             using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
             {
                 conn.Open();
 
-                string sqlstatement = "UPDATE kunde SET Email = @email ,Passwort = @passwort WHERE ID_Kunde = " + idkunde;
+                string sqlstatement = "UPDATE kunde SET Email = @email ,Passwort = @passwort WHERE ID_Kunde = " + kunde_id;
 
                 using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
                 {
@@ -101,17 +104,17 @@ namespace TierheimDhiliUndJustus.DAL
             }
         }
 
-        public static void DeleteKunde(int idkunde)
+        public static void DeleteKunde(int kunde_id)
         {
             using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
             {
                 conn.Open();
 
-                string sqlstatement = "DELETE FROM kunde WHERE ID_Kunde = " + idkunde;
+                string sqlstatement = "DELETE FROM kunde WHERE ID_Kunde = @kundeid";
 
                 using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
                 {
-
+                    cmd.Parameters.Add(new MySqlParameter("@kundeid", MySqlDbType.Int32) { Value = kunde_id });
 
                     cmd.ExecuteNonQuery();
 

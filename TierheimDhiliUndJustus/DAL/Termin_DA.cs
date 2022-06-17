@@ -10,22 +10,22 @@ namespace TierheimDhiliUndJustus.DAL
     {
         public static string sqlstatement = "";
 
-        public static List<Termin> GetTermineWithTerminart(int terminartid)
+        public static List<Termin> GetTermineWithTerminart(int terminart_id)
         {
-            List<Termin> terminlist = new List<Termin>();
+            List<Termin> lst_termine = new List<Termin>();
             DateTime datum;
-
 
             using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
             {
                 conn.Open();
 
 
-                sqlstatement = "SELECT ID_Termin, Datum, Uhrzeit, Gebucht, FK_Terminart_Termin FROM termin WHERE Gebucht = 0 AND FK_Terminart_Termin = " + terminartid;
+                sqlstatement = "SELECT ID_Termin, Datum, Uhrzeit, Gebucht, FK_Terminart_Termin FROM termin WHERE Gebucht = 0 AND FK_Terminart_Termin = @terminartid";
 
 
                 using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
                 {
+                    cmd.Parameters.Add(new MySqlParameter("@terminartid", MySqlDbType.Int32) { Value = terminart_id });
 
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -40,7 +40,7 @@ namespace TierheimDhiliUndJustus.DAL
                             (SByte)reader["Gebucht"],
                             (int)reader["FK_Terminart_Termin"]);
 
-                            terminlist.Add(termin);
+                            lst_termine.Add(termin);
                         }
 
                     }
@@ -48,10 +48,10 @@ namespace TierheimDhiliUndJustus.DAL
 
 
             }
-            return terminlist;
+            return lst_termine;
         }
 
-        public static Termin GetTermin(int idtermin)
+        public static Termin GetTermin(int termin_id)
         {
             Termin termin = new Termin();
             DateTime datum;
@@ -62,11 +62,12 @@ namespace TierheimDhiliUndJustus.DAL
                 conn.Open();
 
 
-                sqlstatement = "SELECT ID_Termin, Datum, Uhrzeit, Gebucht, FK_Terminart_Termin FROM termin WHERE ID_Termin = " + idtermin;
+                sqlstatement = "SELECT ID_Termin, Datum, Uhrzeit, Gebucht, FK_Terminart_Termin FROM termin WHERE ID_Termin = @terminid";
 
 
                 using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
                 {
+                    cmd.Parameters.Add(new MySqlParameter("@terminid", MySqlDbType.Int32) { Value = termin_id });
 
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -117,23 +118,20 @@ namespace TierheimDhiliUndJustus.DAL
             }
         }
         
-        public static List<Termin> GetTermineWithKunde(int kundenid)
+        public static List<Termin> GetTermineWithKunde(int kunde_id)
         {
-            
             DateTime datum;
-            List<Termin> lstkundentermine = new List<Termin>();
-
+            List<Termin> lst_kundentermine = new List<Termin>();
 
             using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
             {
                 conn.Open();
 
-
-                sqlstatement = "SELECT ID_Termin, Datum, Uhrzeit, Gebucht, FK_Terminart_Termin FROM termin WHERE FK_Kunde_Termin = " + kundenid + " ORDER BY Datum";
-
+                sqlstatement = "SELECT ID_Termin, Datum, Uhrzeit, Gebucht, FK_Terminart_Termin FROM termin WHERE FK_Kunde_Termin = @kundeid ORDER BY Datum";
 
                 using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
                 {
+                    cmd.Parameters.Add(new MySqlParameter("@kundeid", MySqlDbType.Int32) { Value = kunde_id });
 
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -148,92 +146,88 @@ namespace TierheimDhiliUndJustus.DAL
                             (SByte)reader["Gebucht"],
                             (int)reader["FK_Terminart_Termin"]);
 
-                            lstkundentermine.Add(termin);
+                            lst_kundentermine.Add(termin);
                         }
 
                     }
                 }
             }
-            return lstkundentermine;
+            return lst_kundentermine;
         }
 
-        public static Tier GetTierfromTermin(int terminid)
+        public static string GetTiernamefromTermin(int termin_id)
         {
-            Tier tier = new Tier();
-           
+            string name = "";
+
             using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
             {
                 conn.Open();
 
-
-                sqlstatement = "SELECT * FROM tier JOIN termin ON termin.FK_Tier_Termin = tier.ID_Tier WHERE termin.ID_Termin = " + terminid;
-
+                sqlstatement = "SELECT Tiername FROM tier JOIN termin ON termin.FK_Tier_Termin = tier.ID_Tier WHERE termin.ID_Termin = @terminid";
 
                 using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
                 {
+                    cmd.Parameters.Add(new MySqlParameter("@terminid", MySqlDbType.Int32) { Value = termin_id });
 
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            tier = new Tier(
-                            (int)reader["ID_Tier"],
-                            (string)reader["Tiername"],
-                            (DateTime)reader["Geburtsdatum"],
-                            (string)reader["Geschlecht"],
-                            (string)reader["Beschreibung"],
-                            (SByte)reader["Fundtier"],
-                            (int)reader["FK_Tierrasse_Tier"]); ;
+                            name = (string)reader["Tiername"];
                         }
-
                     }
                 }
             }
-            return tier;
+            return name;
         }
 
-        public static void RemoveKundefromspecificTermin(int terminid)
+        public static void RemoveKundefromSpecificTermin(int termin_id)
         {
             using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
             {
                 conn.Open();
 
-                string sqlstatement = "UPDATE termin SET FK_Kunde_Termin = null, FK_Tier_Termin = null,Gebucht = 0 WHERE ID_Termin = " + terminid;
+                string sqlstatement = "UPDATE termin SET FK_Kunde_Termin = null, FK_Tier_Termin = null,Gebucht = 0 WHERE ID_Termin = @terminid";
 
                 using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
                 {
+                    cmd.Parameters.Add(new MySqlParameter("@terminid", MySqlDbType.Int32) { Value = termin_id });
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static void RemoveKundefromTermin(int kunde_id)
+        {
+            using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
+            {
+                conn.Open();
+                string sqlstatement = "UPDATE termin SET FK_Kunde_Termin = null, FK_Tier_Termin = null,Gebucht = 0 WHERE FK_Kunde_Termin = @kundeid";
+
+                using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
+                {
+                    cmd.Parameters.Add(new MySqlParameter("@kundeid", MySqlDbType.Int32) { Value = kunde_id });
+
                     cmd.ExecuteNonQuery();
                 }
 
             }
         }
 
-        public static void RemoveKundefromTermin(int kundenid)
-        {
-            using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
-            {
-                conn.Open();
-                string sqlstatement = "UPDATE termin SET FK_Kunde_Termin = null, FK_Tier_Termin = null,Gebucht = 0 WHERE FK_Kunde_Termin = " + kundenid;
-
-                using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
-                {
-                    cmd.ExecuteNonQuery();
-                }
-
-            }
-        }
-
-        public static string GetTerminart(int terminid)
+        public static string GetTerminartWithTerminID(int termin_id)
         {
             using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
             {
                 conn.Open();
                 string terminart = "";
 
-                string sqlstatement = "SELECT terminart.bezeichnung FROM termin JOIN terminart ON termin.FK_Terminart_Termin = terminart.ID_terminart WHERE ID_Termin = " + terminid;
+                string sqlstatement = "SELECT terminart.bezeichnung FROM termin JOIN terminart ON termin.FK_Terminart_Termin = terminart.ID_terminart WHERE ID_Termin = @terminid";
 
                 using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
                 {
+                    cmd.Parameters.Add(new MySqlParameter("@terminid", MySqlDbType.Int32) { Value = termin_id });
+
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
@@ -249,7 +243,7 @@ namespace TierheimDhiliUndJustus.DAL
             }
         }
 
-        public static long GetTermineWithKundeForCertainTier(int tierid)
+        public static long GetTermineWithKundeForCertainTier(int tier_id)
         {
             long count = 0;
 
@@ -258,11 +252,12 @@ namespace TierheimDhiliUndJustus.DAL
                 conn.Open();
 
 
-                sqlstatement = "SELECT COUNT(ID_Termin) AS 'count' FROM termin WHERE FK_Kunde_Termin = " + LoginConfig.Angemeldet + " AND FK_Tier_Termin = " + tierid;
+                sqlstatement = "SELECT COUNT(ID_Termin) AS 'count' FROM termin WHERE FK_Kunde_Termin = " + LoginConfig.Angemeldet + " AND FK_Tier_Termin = @tierid";
 
 
                 using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
                 {
+                    cmd.Parameters.Add(new MySqlParameter("@tierid", MySqlDbType.Int32) { Value = tier_id });
 
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -277,15 +272,17 @@ namespace TierheimDhiliUndJustus.DAL
             return count;
         }
 
-        public static void RemoveTierfromTermin(int tierid)
+        public static void RemoveTierfromTermin(int tier_id)
         {
             using (MySqlConnection conn = new MySqlConnection(Config.CONNSTRING))
             {
                 conn.Open();
-                string sqlstatement = "UPDATE termin SET FK_Kunde_Termin = null, FK_Tier_Termin = null,Gebucht = 0 WHERE FK_Tier_Termin = " + tierid;
+                string sqlstatement = "UPDATE termin SET FK_Kunde_Termin = null, FK_Tier_Termin = null,Gebucht = 0 WHERE FK_Tier_Termin = @tierid";
 
                 using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
                 {
+                    cmd.Parameters.Add(new MySqlParameter("@tierid", MySqlDbType.Int32) { Value = tier_id });
+
                     cmd.ExecuteNonQuery();
                 }
 

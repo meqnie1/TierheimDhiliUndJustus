@@ -20,7 +20,7 @@ namespace TierheimDhiliUndJustus.Pages
         
 
         List<Tierart> lst_tierarten = Tierart_DA.GetTierarten();
-        List<Tierrasse> lst_tierrassen = Tierrasse_DA.GetTierrassen();
+        List<Tierrasse> lst_tierrassen = Tierrasse_DA.GetAllTierrassen();
 
         int currentTierrasse = 0;
         int currentTierart = 0;
@@ -75,7 +75,7 @@ namespace TierheimDhiliUndJustus.Pages
                 tierart = new Tierart(tierartText);
                 Tierart_DA.CreateTierart(tierart);
 
-                tierrasse = new Tierrasse(tierrasseText, Tierart_DA.GetTierartid(tierartText));
+                tierrasse = new Tierrasse(tierrasseText, Tierart_DA.GetTierartID(tierartText));
                 Tierrasse_DA.CreateTierrasse(tierrasse, tierartText);
             }
             

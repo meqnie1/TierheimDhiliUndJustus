@@ -16,7 +16,7 @@
         Kunde eingeloggterKunde;
         WichtigeMethoden WichtigeMethoden = new WichtigeMethoden();
 
-        public static List<Kunde> lstkunde = Kunde_DA.GetKunde();
+        public static List<Kunde> lstkunde = Kunde_DA.GetKunden();
 
         public async Task Kundeerstellen()
         {
