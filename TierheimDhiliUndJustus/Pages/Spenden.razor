@@ -17,7 +17,7 @@
     <a href=""><p>Startseite</p></a><p> > </p><a href="/spenden"><p>Spenden</p></a>
 </div>
 
-@if (WichtigeMethoden.IsUserAngemeldet())
+@if (LoginConfig.Angemeldet != 0)
 {
     @if (!gespendet)
     {   

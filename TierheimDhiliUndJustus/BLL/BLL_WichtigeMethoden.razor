@@ -1,0 +1,81 @@
+﻿@using TierheimDhiliUndJustus.BLL;
+@using TierheimDhiliUndJustus.DAL;
+@using System.Drawing;
+@using System.Data.SqlClient;
+@using System.IO;
+
+@code {
+    public List<Tier> GetTheRightTierList(List<int> lstcheckbox_tierrassen, List<int> lstcheckbox_tierart, bool fundtiere)
+    {
+        int tierart = 0;
+        List<int> lst_tierart = new List<int>(lstcheckbox_tierart);
+
+        if(lstcheckbox_tierrassen.Count > 0 || lstcheckbox_tierart.Count > 0)
+        {
+            foreach (int tierrasse in lstcheckbox_tierrassen)
+            {
+                tierart = Tierrasse_DA.GetTierartWithTierrasseID(tierrasse);
+                if (lst_tierart.Contains(tierart))
+                {
+                    lst_tierart.Remove(tierart);
+                }
+            }
+
+            return fundtiere ? Tier_DA.GetTierWithFilterTierrasse(lstcheckbox_tierrassen, lst_tierart, 1) : Tier_DA.GetTierWithFilterTierrasse(lstcheckbox_tierrassen, lst_tierart, 0);
+        }
+        else
+        {
+            return fundtiere ? Tier_DA.GetAllTiere(1) : Tier_DA.GetAllTiere(0);
+        }
+    }
+
+    public string GetGeschlecht(int tierid)
+    {
+        Tier tier = Tier_DA.GetOneTier(tierid);
+
+        if (tier.Geschlecht == "w")
+        {
+            return "img/weiblich.png";
+        }
+        else
+        {
+            return "img/männlich.png";
+        }             
+    }
+
+    public string GetGeschlechtAsText(Tier CurrentTier)
+    { 
+        if (CurrentTier.Geschlecht == "w")
+        {
+            return "weiblich";
+        }
+        else
+        {
+            return "männlich";
+        }             
+    }
+
+    public bool IsTierHund(Tier CurrentTier)
+    {
+        if (Tierrasse_DA.GetTierartWithTierID(CurrentTier.ID_Tier) == 2)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool IsUserAngemeldet()
+    {
+        if (LoginConfig.Angemeldet == 0)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+}

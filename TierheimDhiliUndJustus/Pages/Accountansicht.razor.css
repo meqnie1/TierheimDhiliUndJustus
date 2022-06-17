@@ -211,3 +211,34 @@ input[type=button]:hover {
     color: #339974;
 }
 
+.submitanderror {
+    text-align: center;
+    margin: 11vw;
+}
+
+.submitanderror > h1 {
+    font-size: 1.7vw;
+    text-transform: uppercase;
+    color: #339974;
+    margin-bottom: 1vw;
+}
+
+.submitanderror > h2 {
+    font-size: 1.2vw;
+    text-transform: uppercase;
+    margin: 2vw;
+}
+
+.submitanderror > input {
+    display: block;
+    margin: auto;
+}
+
+.submitanderror > p > a {
+    color: black;
+}
+
+.submitanderror > p {
+    font-size: 1vw;
+}
+

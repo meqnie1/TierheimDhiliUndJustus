@@ -20,7 +20,7 @@
                 conn.Open();
 
 
-                sqlstatement = "SELECT * FROM tierrasse WHERE FK_Tierart_Tierrasse = tierartid";
+                sqlstatement = "SELECT * FROM tierrasse WHERE FK_Tierart_Tierrasse = @tierartid";
 
 
                 using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
@@ -92,7 +92,7 @@
 
                 using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
                 {
-                    cmd.Parameters.Add(new MySqlParameter("@tierid", MySqlDbType.Int32) { Value = tierrasse_id });
+                    cmd.Parameters.Add(new MySqlParameter("@tierrasseid", MySqlDbType.Int32) { Value = tierrasse_id });
 
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {

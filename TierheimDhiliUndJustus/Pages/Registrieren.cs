@@ -14,14 +14,13 @@
         public static bool screenclosed = true;
         bool eingeloggt;
         Kunde eingeloggterKunde;
-        WichtigeMethoden WichtigeMethoden = new WichtigeMethoden();
 
-        public static List<Kunde> lstkunde = Kunde_DA.GetKunden();
+        public static List<Kunde> lst_kunde = Kunde_DA.GetKunden();
 
         public async Task Kundeerstellen()
         {
             fehlermeldung = "";
-            foreach (Kunde kunde in lstkunde)
+            foreach (Kunde kunde in lst_kunde)
             {
                 if (kunde.Email != evalue)
                 {
@@ -59,6 +58,20 @@
             }
             
 
+        }
+
+        public void ChangePasswortVisibility()
+        {
+            if (registrieren_inputtype == "password")
+            {
+                registrieren_inputtype = "text";
+                registrieren_augenart = "/img/openedeye.png";
+            }
+            else
+            {
+                registrieren_inputtype = "password";
+                registrieren_augenart = "/img/closedeye.png";
+            }
         }
     }
 }

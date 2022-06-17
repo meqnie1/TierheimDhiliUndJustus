@@ -15,9 +15,10 @@
         bool gebucht = false;
         string srcimg = "";
         string srcgeschlecht = "";
-        Startseite startseite = new Startseite();
         Termin selectedTermin = Termin_DA.GetTermin(currentdateid);
-        WichtigeMethoden WichtigeMethoden = new WichtigeMethoden();
+
+        BLL_WichtigeMethoden WichtigeMethoden_BLL = new BLL_WichtigeMethoden();
+        PL_WichtigeMethoden WichtigeMethoden_PL = new PL_WichtigeMethoden();
 
         void ChangeCurrentSelectedDate(object checkedValue)
         {

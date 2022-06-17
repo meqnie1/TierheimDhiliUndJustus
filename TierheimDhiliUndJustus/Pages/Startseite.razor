@@ -14,9 +14,9 @@
     <div id="neuetiere_bilder"> 
     
     @{counter = 0;}
-    @foreach(var item in lsttier)
+    @foreach(var item in lst_tiere)
     {
-        string srcgeschlecht = WichtigeMethoden.GetGeschlecht(item.ID_Tier);
+        string srcgeschlecht = WichtigeMethoden_BLL.GetGeschlecht(item.ID_Tier);
         string srcimg = "img/tiere/" + @item.Tiername + ".jpg";
 
         //Counter, sodass nur 3 Tiere dargestellt werden

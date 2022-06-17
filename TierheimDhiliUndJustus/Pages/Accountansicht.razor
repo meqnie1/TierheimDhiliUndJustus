@@ -17,7 +17,9 @@
     <a href=""><p>Startseite</p></a><p> > </p><a href="/accountansicht"><p>Meine Daten</p></a>
 </div>
 
-<div id="ueberschrift"><h1>Meine Daten</h1></div>
+@if(LoginConfig.Angemeldet != 0)
+{
+    <div id="ueberschrift"><h1>Meine Daten</h1></div>
 
 @if(enabled == true)
 {
@@ -33,7 +35,7 @@
             <img id="schloss" src="/img/schloss.png" />
             <a>Passwort:</a>  
             <input type="@account_inputtype" name="password" @bind-value="pwvalue"/>
-            <img id="closedeye" src="@account_augenart" @onclick="eventArgs => { WichtigeMethoden.ShowPasswort(3);}" />
+            <img id="closedeye" src="@account_augenart" @onclick="eventArgs => { ChangePasswortVisibilityOfAccount();}" />
         </div>
     </div>
 
@@ -62,7 +64,7 @@ else
             <img id="schloss" src="/img/schloss.png" />
             <a>Passwort:</a>  
             <input type="@account_inputtype" name="password" value="@Kunde_DA.GetOneKunde(LoginConfig.Angemeldet).Passwort" disabled/>
-            <img id="closedeye" src="@account_augenart" @onclick="eventArgs => { WichtigeMethoden.ShowPasswort(3);}" />
+            <img id="closedeye" src="@account_augenart" @onclick="eventArgs => { ChangePasswortVisibilityOfAccount();}" />
         </div>
     </div>
     <div id="datenaendern" @onclick="EnorDisable">Benutzerdaten ändern</div>
@@ -91,14 +93,14 @@ else
                 <th>Terminart</th>
             </tr>
     
-            @{countertermine = 0;}
+            @{counter_termine = 0;}
 
             @foreach(Termin termin in Termin_DA.GetTermineWithKunde(LoginConfig.Angemeldet))
             {
-                countertermine++;
+                counter_termine++;
 
                 <tr>
-                <td>@countertermine</td>
+                <td>@counter_termine</td>
                 <td>@termin.TerminDatum.ToString("dd.MM.yyyy")</td>
                 <td>@termin.TerminDatum.ToString("HH:mm")</td>
                 <td>@Termin_DA.GetTiernamefromTermin(termin.ID_Termin)</td>
@@ -110,78 +112,85 @@ else
         </table> 
     }
     
-}
+    }
 
+    <div id="ueberschrift"><h1>Meine Spenden</h1><img id="pfeilspende" src="@pfeilartspende" @onclick="Changepfeilspende" /></div> 
 
-<div id="ueberschrift"><h1>Meine Spenden</h1><img id="pfeilspende" src="@pfeilartspende" @onclick="Changepfeilspende" /></div> 
-
-@if(pfeilartspende == "/img/dropdownoffen.png")
-{
-    if(Spende_DA.GetSpendenwithKunde(LoginConfig.Angemeldet).Count == 0 )
+    @if(pfeilartspende == "/img/dropdownoffen.png")
     {
-        <p id="fehlernichtvorhanden">Sie haben noch keine Spenden. </p>
-        <p id="fehlernichtvorhanden">Spenden Sie hier: <a id="seitenlink" href="spenden">Spenden</a></p>
+        if(Spende_DA.GetSpendenwithKunde(LoginConfig.Angemeldet).Count == 0 )
+        {
+            <p id="fehlernichtvorhanden">Sie haben noch keine Spenden. </p>
+            <p id="fehlernichtvorhanden">Spenden Sie hier: <a id="seitenlink" href="spenden">Spenden</a></p>
+        }
+        else
+        {
+            <table id="spenden">
+                <tr>
+                    <th>Nr.</th>
+                    <th>Betrag</th>
+                    <th>Zahlungsart</th>
+                </tr>
+    
+                @{counter_spenden = 0;}
+
+                @foreach(Spende spende in Spende_DA.GetSpendenwithKunde(LoginConfig.Angemeldet))
+                {
+                    counter_spenden++;
+                    <tr>
+                    <td>@counter_spenden</td>
+                    <td>@spende.Betrag</td>
+                    <td>@Zahlungsart_DA.GetOneZahlungsart(spende.FK_Zahlungsart_Spende)</td>                      
+                    </tr>      
+                }
+        </table>
+        }
+    
+
+    }
+
+    <div id="ueberschrift"><h1>Account verwalten</h1></div>
+    @if(accountloeschen == false)
+    {
+        <div id="accountverwalten">
+            <input type="button"  @onclick="Abmelden" name="abmelden"  value="Abmelden" />
+            <input type="button"  @onclick="Accountloeschenabbrechenoderausfuehren" name="Loeschen"  value="Account löschen" />
+        </div>
     }
     else
     {
-        <table id="spenden">
-            <tr>
-                <th>Nr.</th>
-                <th>Betrag</th>
-                <th>Zahlungsart</th>
-            </tr>
-    
-            @{counterspenden = 0;}
+        <div id="loeschen">
+       
+            <a>Geben Sie ihr Passwort ein um die Löschung zu bestätigen</a>
 
-            @foreach(Spende spende in Spende_DA.GetSpendenwithKunde(LoginConfig.Angemeldet))
+            <div id="passwordinput2">
+                <img id="schloss" src="/img/schloss.png" />
+                <a>Passwort:</a>  
+                <input type="@accountloeschen_inputtype" name="password"  @bind="pwinput"/>
+                <img id="closedeye" src="@accountloeschen_augenart" @onclick="eventArgs => { ChangePasswortVisibilityOfDelete();}" />
+            </div>
+
+            @if(löschenfehlermeldung!="")
             {
-                counterspenden++;
-                <tr>
-                <td>@counterspenden</td>
-                <td>@spende.Betrag</td>
-                <td>@Zahlungsart_DA.GetOneZahlungsart(spende.FK_Zahlungsart_Spende)</td>                      
-                </tr>      
+                <div id="fehlermeldung">@löschenfehlermeldung</div>
             }
-    </table>
+
+            <div id="actionbuttons">
+                <input type="button" @onclick="Accountloeschen" name="bestaetigen"  value="Bestätigen" />
+                <input type="button" @onclick="Accountloeschenabbrechenoderausfuehren" name="abbrechen"  value="Abbrechen" />  
+            </div>
+
+       
+        </div>
     }
-    
-
-}
-
-
-
-<div id="ueberschrift"><h1>Account verwalten</h1></div>
-@if(accountloeschen == false)
-{
-    <div id="accountverwalten">
-        <input type="button"  @onclick="Abmelden" name="abmelden"  value="Abmelden" />
-        <input type="button"  @onclick="Accountloeschenabbrechenoderausfuehren" name="Loeschen"  value="Account löschen" />
-    </div>
 }
 else
 {
-    <div id="loeschen">
-       
-        <a>Geben Sie ihr Passwort ein um die Löschung zu bestätigen</a>
-
-        <div id="passwordinput2">
-            <img id="schloss" src="/img/schloss.png" />
-            <a>Passwort:</a>  
-            <input type="@accountloeschen_inputtype" name="password"  @bind="pwinput"/>
-            <img id="closedeye" src="@accountloeschen_augenart" @onclick="eventArgs => { WichtigeMethoden.ShowPasswort(4);}" />
-        </div>
-
-        @if(löschenfehlermeldung!="")
-        {
-            <div id="fehlermeldung">@löschenfehlermeldung</div>
-        }
-
-        <div id="actionbuttons">
-            <input type="button" @onclick="Accountloeschen" name="bestaetigen"  value="Bestätigen" />
-            <input type="button" @onclick="Accountloeschenabbrechenoderausfuehren" name="abbrechen"  value="Abbrechen" />  
-        </div>
-
-       
+    <div class="submitanderror">
+        <h1>Sie müssen sich zuerst anmelden.</h1>
+        <input class="buttoncss" type="button" value="Zum Anmelden" @onclick="@(()=>UriHelper.NavigateTo("/login"))"/>
+        <h2>Oder</h2>
+        <p>Registrieren Sie sich kostenlos. <a href="registrieren">Klicken Sie hier!</a></p>
     </div>
 }
 

@@ -31,7 +31,7 @@
     <img id="schloss" src="/img/schloss.png" />
     <a>Passwort:</a>  
     <input type="@registrieren_inputtype" name="password" @bind="pwvalue"> 
-    <img id="closedeye" src="@registrieren_augenart" @onclick="eventArgs => { WichtigeMethoden.ShowPasswort(2);}" />
+    <img id="closedeye" src="@registrieren_augenart" @onclick="eventArgs => { ChangePasswortVisibility();}" />
 </div>
 
 @if(fehlermeldung!="")

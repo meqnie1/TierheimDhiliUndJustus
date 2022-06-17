@@ -1,7 +1,6 @@
 ﻿
 using TierheimDhiliUndJustus.DAL;
 using TierheimDhiliUndJustus.BLL;
-using TierheimDhiliUndJustus.Pages;
 using TierheimDhiliUndJustus.Shared;
 
 namespace TierheimDhiliUndJustus.Pages
@@ -9,8 +8,8 @@ namespace TierheimDhiliUndJustus.Pages
     public partial class Accountansicht
     {
         
-        int countertermine = 0;
-        int counterspenden = 0;
+        int counter_termine = 0;
+        int counter_spenden = 0;
         string pwvalue = Kunde_DA.GetOneKunde(LoginConfig.Angemeldet).Passwort;
         string evalue = Kunde_DA.GetOneKunde(LoginConfig.Angemeldet).Email;
 
@@ -30,16 +29,42 @@ namespace TierheimDhiliUndJustus.Pages
         
 
 
-        List<Kunde> lstkunde = Kunde_DA.GetKunden();
-        List<Termin> lstkundentermine = Termin_DA.GetTermineWithKunde(LoginConfig.Angemeldet);
-
-        WichtigeMethoden WichtigeMethoden = new WichtigeMethoden();
+        List<Kunde> lst_kunden = Kunde_DA.GetKunden();
+        List<Termin> lst_kundentermine = Termin_DA.GetTermineWithKunde(LoginConfig.Angemeldet);
 
         protected override async Task OnInitializedAsync()
         {
             accountloeschen = false;
             pfeilarttermine = "/img/dropdownzu.png";
             pfeilartspende = "/img/dropdownzu.png";
+        }
+
+        public void ChangePasswortVisibilityOfAccount()
+        {
+            if (account_inputtype == "password")
+            {
+                account_inputtype = "text";
+                account_augenart = "/img/openedeye.png";
+            }
+            else
+            {
+                account_inputtype = "password";
+                account_augenart = "/img/closedeye.png";
+            }
+        }
+
+        public void ChangePasswortVisibilityOfDelete()
+        {
+            if (accountloeschen_inputtype == "password")
+            {
+                accountloeschen_inputtype = "text";
+                accountloeschen_augenart = "/img/openedeye.png";
+            }
+            else
+            {
+                accountloeschen_inputtype = "password";
+                accountloeschen_augenart = "/img/closedeye.png";
+            }
         }
 
         public void EnorDisable()
@@ -58,7 +83,7 @@ namespace TierheimDhiliUndJustus.Pages
         public void Datenaendern()
         {
             fehlermeldung = "";
-            foreach (Kunde kunde in lstkunde)
+            foreach (Kunde kunde in lst_kunden)
             {
                 if (kunde.Email != evalue)
                 {            
@@ -90,7 +115,7 @@ namespace TierheimDhiliUndJustus.Pages
             {
                 Kunde_DA.UpdateKunde(LoginConfig.Angemeldet, evalue, pwvalue);
                 enabled = false;         
-                countertermine = 0;
+                counter_termine = 0;
                 
             }
                      

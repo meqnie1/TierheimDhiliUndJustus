@@ -24,8 +24,8 @@
     <div id="unseretiere_bilder">
     
         @{
-            counterForFormatting = 0;
-            lst_filtertiere = WichtigeMethoden.GetTheRightTierList(lstcheckbox_tierrassen, lstcheckbox_tierart, true);
+            counter_formatting = 0;
+            lst_filtertiere = WichtigeMethoden_BLL.GetTheRightTierList(lstcheckbox_tierrassen, lstcheckbox_tierart, true);
         }
         @if(lst_filtertiere.Count == 0)
         {
@@ -35,14 +35,14 @@
         {
             foreach (var item in lst_filtertiere)
             {
-                counterForFormatting++;
-                string srcgeschlecht = WichtigeMethoden.GetGeschlecht(item.ID_Tier);
+                counter_formatting++;
+                string srcgeschlecht = WichtigeMethoden_BLL.GetGeschlecht(item.ID_Tier);
                 string srcimg = "img/tiere/" + @item.Tiername + ".jpg";
 
                 <div class="unseretiere_rahmen" ><img class="unseretiere_bild" src="@srcimg" @onclick="@(()=>UriHelper.NavigateTo($"/unseretiere/tierdetail/{@item.ID_Tier}"))">
                 <h1 @onclick="@(()=>UriHelper.NavigateTo($"/unseretiere/tierdetail/{@item.ID_Tier}"))">@item.Tiername</h1>
                 <img class="unseretiere_geschlecht" src=@srcgeschlecht /></div>
-                if(counterForFormatting % 3 == 0)
+                if(counter_formatting % 3 == 0)
                 {
                         <div class="block"></div>   
                 }
@@ -56,14 +56,14 @@
     <h2>Tierarten</h2>
     <hr />
     <div class="unseretiere_tierarten">
-        @{counterForFormatting=0;}
+        @{counter_formatting=0;}
         <div class="checkboxes">
         @foreach(var art in Tierart_DA.GetTierarten())
         {
-            counterForFormatting++;
-                <input type="checkbox" id="@art.Tierartname" name="@art.Tierartname" value="@art.Tierartname" @oninput="eventArgs => { WichtigeMethoden.ChangeCheckedStatus(lstcheckbox_tierart, art.ID_Tierart, eventArgs.Value); }">
+            counter_formatting++;
+                <input type="checkbox" id="@art.Tierartname" name="@art.Tierartname" value="@art.Tierartname" @oninput="eventArgs => { WichtigeMethoden_PL.ChangeCheckedStatus(lstcheckbox_tierart, art.ID_Tierart, eventArgs.Value); }">
                 <label for="@art.Tierartname">@art.Tierartname</label>
-                @if(counterForFormatting % 2 == 0)
+                @if(counter_formatting % 2 == 0)
                 {
                     <div id="block"></div>
                 }
@@ -73,19 +73,19 @@
     <h2>Tierrassen</h2>
     <hr />
     <div class="unseretiere_tierarten">
-        @{counterTierrassen = 0;}
+        @{counter_tierrassen = 0;}
         @foreach(var art in lst_tierarten)
         {
-            counterTierrassen++;
+            counter_tierrassen++;
             <div class="checkboxes">
                 <h3>@art.Tierartname<span>rassen:</span></h3>
-                @{counterForFormatting = 0;}
-                @foreach(var rasse in Tierrasse_DA.GetTierrasseWithTierartID(counterTierrassen))
+                @{counter_formatting = 0;}
+                @foreach(var rasse in Tierrasse_DA.GetTierrasseWithTierartID(counter_tierrassen))
                 {   
-                    counterForFormatting++;
-                    <input type="checkbox" id="@rasse.Tierrassennamen" name="@rasse.Tierrassennamen" value="@rasse.Tierrassennamen" @oninput="eventArgs => { WichtigeMethoden.ChangeCheckedStatus(lstcheckbox_tierrassen, rasse.ID_Tierrasse, eventArgs.Value); }">
+                    counter_formatting++;
+                    <input type="checkbox" id="@rasse.Tierrassennamen" name="@rasse.Tierrassennamen" value="@rasse.Tierrassennamen" @oninput="eventArgs => { WichtigeMethoden_PL.ChangeCheckedStatus(lstcheckbox_tierrassen, rasse.ID_Tierrasse, eventArgs.Value); }">
                     <label for="@rasse.Tierrassennamen">@rasse.Tierrassennamen</label>
-                    if(counterForFormatting % 2 == 0)
+                    if(counter_formatting % 2 == 0)
                     {
                         <div id="block"></div>
                     }

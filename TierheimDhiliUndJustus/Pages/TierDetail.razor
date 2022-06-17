@@ -21,7 +21,7 @@
 
     void ClickOnButton(int? terminart = 0)
     {
-        if (WichtigeMethoden.IsUserAngemeldet())
+        if (LoginConfig.Angemeldet != 0)
         {
             switch (terminart)
             {
@@ -35,7 +35,7 @@
                     UriHelper.NavigateTo($"/unseretiere/tierdetail/{CurrentTier.ID_Tier}/adoptieren");
                     break;
                 default:
-                    enableAccountLöschen = true;
+                    enableTierLöschen = true;
                     break;
             }
         }
@@ -65,11 +65,11 @@
         {
             <input id="button_adoptieren" type="button" value="Adoptieren" @onclick="eventArgs => { ClickOnButton(3); }"/>
         }
-        @if (LoginConfig.Angemeldet != 0)
+        @if (LoginConfig.Angemeldet != 0 && Kunde_DA.GetOneKunde(LoginConfig.Angemeldet).Rolle == "Admin")
         {
-            <input id="button_adoptieren" type="button" value="Tier löschen" @onclick="eventArgs => { ClickOnButton(); }"/>
+            <input id="button_loeschen" type="button" value="Tier löschen" @onclick="eventArgs => { ClickOnButton(); }"/>
         }
-        @if (enableAccountLöschen)
+        @if (enableTierLöschen)
         {
             <h2 class="confirmlöschen">Wollen Sie das Tier wirklich löschen?</h2>
             <h2 class="confirmlöschen" id="confirmlöschen_link" @onclick="eventArgs => { DeleteCurrentTier(); }">Klicken Sie hier.</h2>
@@ -78,18 +78,18 @@
     <div id="tierdetail_info">
         <table>
             <tr><td><h1>Name:</h1></td><td><h2>@CurrentTier.Tiername</h2></td></tr>
-            <tr><td><h1>Geschlecht:</h1></td><td><h2>@WichtigeMethoden.GetGeschlechtAsText(CurrentTier)</h2></td></tr>
+            <tr><td><h1>Geschlecht:</h1></td><td><h2>@WichtigeMethoden_BLL.GetGeschlechtAsText(CurrentTier)</h2></td></tr>
             <tr><td><h1>Geburtstag:</h1></td><td><h2>@CurrentTier.Geburtsdatum.ToShortDateString()</h2></td></tr>
             <tr><td></td></tr>
             <tr><td><h1>Beschreibung:</h1></td></tr>
             <tr><td colspan="2"><h2>@CurrentTier.Beschreibung</h2></td></tr>
             <tr><td><input type="button" value="Besichtigung buchen" @onclick="eventArgs => { ClickOnButton(1); }"/></td>
-                @if (WichtigeMethoden.IsTierHund(CurrentTier))
+                @if (WichtigeMethoden_BLL.IsTierHund(CurrentTier))
                 {
                     <td><input type="button" value="Gassigehen buchen" @onclick="eventArgs => { ClickOnButton(2); }"/></td>
                 }
             </tr>
-            @if (!WichtigeMethoden.IsUserAngemeldet())
+            @if (LoginConfig.Angemeldet == 0)
             {
                 <tr><td colspan="2"><h2 class="fehleranmelden">Sie müssen sich zuerst anmelden oder registrieren, um einen Termin buchen zu können. </h2><a href="login" class="fehleranmelden">Klicken Sie hier! </a></td></tr>
             }
@@ -104,7 +104,7 @@
         @foreach(var item in Tier_DA.GetTierExceptTierID(CurrentTier.ID_Tier))
         {
             srcimg = "img/tiere/" + @item.Tiername + ".jpg";
-            srcgeschlecht = WichtigeMethoden.GetGeschlecht(item.ID_Tier);
+            srcgeschlecht = WichtigeMethoden_BLL.GetGeschlecht(item.ID_Tier);
             if(counter <=2)
             {
                 <div class="weiteretiere_rahmen"><img class="weiteretiere_bild" src="@srcimg" @onclick="@(()=>UriHelper.NavigateTo($"/unseretiere/tierdetail/{@item.ID_Tier}"))"/>

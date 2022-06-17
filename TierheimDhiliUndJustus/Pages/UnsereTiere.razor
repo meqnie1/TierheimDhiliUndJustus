@@ -25,7 +25,7 @@
     <div id="unseretiere_bilder">
         @{
             counterForFormatting = 0;
-            lst_filtertiere = WichtigeMethoden.GetTheRightTierList(lstcheckbox_tierrassen, lstcheckbox_tierart, false);
+            lst_filtertiere = WichtigeMethoden_BLL.GetTheRightTierList(lstcheckbox_tierrassen, lstcheckbox_tierart, false);
         }
         @if(lst_filtertiere.Count == 0)
         {
@@ -36,7 +36,7 @@
             @foreach (var item in lst_filtertiere)
             {
                 counterForFormatting++;
-                string srcgeschlecht = WichtigeMethoden.GetGeschlecht(item.ID_Tier);
+                string srcgeschlecht = WichtigeMethoden_BLL.GetGeschlecht(item.ID_Tier);
                 string srcimg = "img/tiere/" + @item.Tiername + ".jpg";
 
                 <div class="unseretiere_rahmen" ><img class="unseretiere_bild" src="@srcimg" @onclick="@(()=>UriHelper.NavigateTo($"/unseretiere/tierdetail/{@item.ID_Tier}"))">
@@ -62,7 +62,7 @@
         @foreach(var item in Tierart_DA.GetTierarten())
         {
             counterForFormatting++;
-                <input type="checkbox" id="@item.Tierartname" name="@item.Tierartname" value="@item.Tierartname" @oninput="eventArgs => { WichtigeMethoden.ChangeCheckedStatus(lstcheckbox_tierart,item.ID_Tierart, eventArgs.Value); }">
+                <input type="checkbox" id="@item.Tierartname" name="@item.Tierartname" value="@item.Tierartname" @oninput="eventArgs => { WichtigeMethoden_PL.ChangeCheckedStatus(lstcheckbox_tierart,item.ID_Tierart, eventArgs.Value); }">
                 <label for="@item.Tierartname">@item.Tierartname</label>
                 @if(counterForFormatting % 2 == 0)
                 {
@@ -85,7 +85,7 @@
                 @foreach(var rasse in Tierrasse_DA.GetTierrasseWithTierartID(counterTierrassen))
                 {   
                     counterForFormatting++;
-                    <input type="checkbox" id="@rasse.Tierrassennamen" name="@rasse.Tierrassennamen" value="@rasse.Tierrassennamen" @oninput="eventArgs => { WichtigeMethoden.ChangeCheckedStatus(lstcheckbox_tierrassen, rasse.ID_Tierrasse, eventArgs.Value); }">
+                    <input type="checkbox" id="@rasse.Tierrassennamen" name="@rasse.Tierrassennamen" value="@rasse.Tierrassennamen" @oninput="eventArgs => { WichtigeMethoden_PL.ChangeCheckedStatus(lstcheckbox_tierrassen, rasse.ID_Tierrasse, eventArgs.Value); }">
                     <label for="@rasse.Tierrassennamen">@rasse.Tierrassennamen</label>
                     if(counterForFormatting % 2 == 0)
                     {

@@ -80,7 +80,7 @@
 
         }
 
-        public static List<Tier> GetTiereWithFilterTierrasse(List<int> checkboxes_tr, List<int> checkboxes_ta, int fundtier)
+        public static List<Tier> GetTierWithFilterTierrasse(List<int> checkboxes_tr, List<int> checkboxes_ta, int fundtier)
         {
             string whereStatement_tr = "IN(0)";
             string whereStatement_ta = "IN(0)";
@@ -105,7 +105,6 @@
                 using (MySqlCommand cmd = new MySqlCommand(sqlstatement, conn))
                 {
                     cmd.Parameters.Add(new MySqlParameter("@fundtier", MySqlDbType.Int32) { Value = fundtier });
-
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
