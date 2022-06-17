@@ -33,8 +33,15 @@ namespace TierheimDhiliUndJustus.Pages
             {
                 currentTierart = Convert.ToInt32(checkedValue);
                 lst_tierrassen.Clear();
-                lst_tierrassen = Tierrasse_DA.GetTierrasseWithTierartID(currentTierart);
-                currentTierrasse = lst_tierrassen[0].ID_Tierrasse;
+                if(currentTierart != -1)
+                {
+                    lst_tierrassen = Tierrasse_DA.GetTierrasseWithTierartID(currentTierart);
+                    currentTierrasse = lst_tierrassen[0].ID_Tierrasse;
+                }
+                else
+                {
+                    currentTierrasse = -1;
+                }
             }
             else
             {
@@ -70,26 +77,23 @@ namespace TierheimDhiliUndJustus.Pages
             Tierart tierart = new Tierart();
             Tierrasse tierrasse = new Tierrasse();
 
-            if (currentTierart == -1 || currentTierrasse == -1)
-            {
-                tierart = new Tierart(tierartText);
-                Tierart_DA.CreateTierart(tierart);
-
-                tierrasse = new Tierrasse(tierrasseText, Tierart_DA.GetTierartID(tierartText));
-                Tierrasse_DA.CreateTierrasse(tierrasse, tierartText);
-            }
-            
-            if (currentTierart == -1)
-            {
-                currentTierrasse = tierrasse.ID_Tierrasse;
-            }
-
-            if (tiername == "" || beschreibung == "" || tierpicture == "")
+            if (tiername == "" || beschreibung == "" || tierpicture == "" || (currentTierart == -1 && tierartText == "") || (currentTierrasse == -1 && tierrasseText == ""))
             {
                 fehlermeldung = "Bitte füllen Sie alle Felder aus!";
             }
             else
             {
+                if (currentTierart == -1 || currentTierrasse == -1)
+                {
+                    tierart = new Tierart(tierartText);
+                    Tierart_DA.CreateTierart(tierart);
+
+                    tierrasse = new Tierrasse(tierrasseText, Tierart_DA.GetTierartID(tierartText));
+                    Tierrasse_DA.CreateTierrasse(tierrasse, tierartText);
+
+                    currentTierrasse = tierrasse.ID_Tierrasse;
+                }
+
                 if (currentgeschlecht == "weiblich")
                 {
                     currentgeschlecht = "w";
@@ -98,7 +102,9 @@ namespace TierheimDhiliUndJustus.Pages
                 {
                     currentgeschlecht = "m";
                 }
+
                 tierhinzugefügt = true;
+
                 Tier tier = new Tier(tiername, geburtsdatum, currentgeschlecht, beschreibung, Convert.ToSByte(fundtier), currentTierrasse);
 
                 Tier_DA.CreateTier(tier);

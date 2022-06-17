@@ -67,7 +67,7 @@
         }
         @if (LoginConfig.Angemeldet != 0 && Kunde_DA.GetOneKunde(LoginConfig.Angemeldet).Rolle == "Admin")
         {
-            <input id="button_loeschen" type="button" value="Tier löschen" @onclick="eventArgs => { ClickOnButton(); }"/>
+            <input id="button_adoptieren" type="button" value="Tier löschen" @onclick="eventArgs => { ClickOnButton(); }"/>
         }
         @if (enableTierLöschen)
         {
